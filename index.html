@@ -3,474 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>브레인숲 온라인 운영 대시보드</title>
+<title>박지현 · 온라인 운영 대시보드</title>
 <style>
   :root {
     color-scheme: light;
-    --forest-deep: #1F4D2D;
-    --forest-main: #2D6A4F;
-    --forest-mid: #40916C;
-    --sage: #95D5B2;
-    --sage-soft: #D8F3DC;
-    --gold: #C9A961;
-    --gold-soft: #F5E6B8;
-    --cream: #FAF8F3;
+    --purple-deep: #4C1D95;
+    --purple-main: #6D28D9;
+    --purple-mid: #8B5CF6;
+    --purple-soft: #C4B5FD;
+    --purple-bg: #F3EFFF;
+    --yellow-deep: #B7791F;
+    --yellow-main: #ECC94B;
+    --yellow-soft: #FAF089;
+    --yellow-bg: #FEF9E7;
+    --cream: #FCFBF7;
     --paper: #FFFFFF;
-    --ink: #1A2E22;
-    --ink-soft: #4A5D52;
-    --line: #E5E0D5;
-    --danger: #B85450;
-    --shadow: 0 4px 20px rgba(31, 77, 45, 0.08);
-    --shadow-lg: 0 10px 40px rgba(31, 77, 45, 0.15);
+    --ink: #1A1033;
+    --ink-soft: #5B4B7A;
+    --line: #E8E2F0;
+    --danger: #C53030;
+    --shadow: 0 4px 20px rgba(109, 40, 217, 0.08);
+    --shadow-lg: 0 10px 40px rgba(109, 40, 217, 0.18);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
-    background: linear-gradient(135deg, #FAF8F3 0%, #F0EFEA 100%);
-    color: var(--ink);
-    line-height: 1.6;
-    min-height: 100vh;
+    background: linear-gradient(135deg, #FAF8FF 0%, #F5F0FA 100%);
+    color: var(--ink); line-height: 1.6; min-height: 100vh;
   }
-
-  /* ===== HEADER ===== */
   .header {
-    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-main) 60%, var(--forest-mid) 100%);
-    color: white;
-    padding: 32px 40px 28px;
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    overflow: hidden;
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-main) 60%, var(--purple-mid) 100%);
+    color: white; padding: 32px 40px 28px;
+    box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
   }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -50%; right: -10%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(201,169,97,0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: -60%; left: -5%;
-    width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(149,213,178,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .header-inner {
-    max-width: 1400px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    position: relative; z-index: 1;
-    flex-wrap: wrap; gap: 16px;
-  }
-  .brand {
-    display: flex; align-items: center; gap: 16px;
-  }
-  .logo-mark {
-    width: 56px; height: 56px;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 16px rgba(201,169,97,0.4);
-    font-size: 28px;
-  }
-  .brand-title {
-    font-size: 26px; font-weight: 800; letter-spacing: -0.5px;
-  }
-  .brand-sub {
-    font-size: 13px; opacity: 0.85; font-weight: 400; margin-top: 2px;
-    letter-spacing: 0.5px;
-  }
-  .status-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 16px;
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 100px;
-    font-size: 13px; font-weight: 500;
-  }
-  .status-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--sage);
-    box-shadow: 0 0 12px var(--sage);
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
+  .header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(236,201,75,0.25) 0%, transparent 70%); pointer-events: none; }
+  .header::after { content: ''; position: absolute; bottom: -60%; left: -5%; width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(250,240,137,0.18) 0%, transparent 70%); pointer-events: none; }
+  .header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;
+    position: relative; z-index: 1; flex-wrap: wrap; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .logo-mark { width: 56px; height: 56px;
+    background: linear-gradient(135deg, var(--yellow-main) 0%, var(--yellow-soft) 100%);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(236,201,75,0.4); font-size: 28px; }
+  .brand-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+  .brand-sub { font-size: 13px; opacity: 0.9; font-weight: 400; margin-top: 2px; letter-spacing: 0.5px; }
+  .status-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
+    background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 100px; font-size: 13px; font-weight: 500; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--yellow-main);
+    box-shadow: 0 0 12px var(--yellow-main); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-  /* ===== TAB NAV ===== */
-  .nav-wrap {
-    background: var(--paper);
-    border-bottom: 1px solid var(--line);
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: var(--shadow);
-  }
-  .nav {
-    max-width: 1400px; margin: 0 auto;
-    display: flex; align-items: center; padding: 0 40px;
-    overflow-x: auto;
-    gap: 4px;
-  }
-  .nav button {
-    background: none; border: none; cursor: pointer;
-    padding: 18px 22px;
-    font-family: inherit; font-size: 15px; font-weight: 600;
-    color: var(--ink-soft);
-    border-bottom: 3px solid transparent;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .nav button:hover {
-    color: var(--forest-main);
-    background: var(--sage-soft);
-  }
-  .nav button.active {
-    color: var(--forest-deep);
-    border-bottom-color: var(--gold);
-  }
-  .nav button .lock-ico {
-    font-size: 12px; opacity: 0.6;
-  }
-  .lock-status {
-    margin-left: auto;
-    display: flex; align-items: center; gap: 12px;
-    padding: 8px 16px;
-    border-radius: 100px;
-    font-size: 13px; font-weight: 600;
-  }
-  .lock-status.locked {
-    background: #FEF3F2; color: var(--danger);
-  }
-  .lock-status.unlocked {
-    background: var(--sage-soft); color: var(--forest-deep);
-  }
-  .lock-status .ico {
-    font-size: 14px;
-  }
+  .nav-wrap { background: var(--paper); border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+  .nav { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; padding: 0 40px;
+    overflow-x: auto; gap: 4px; }
+  .nav button.tab-btn { background: none; border: none; cursor: pointer; padding: 18px 22px;
+    font-family: inherit; font-size: 15px; font-weight: 600; color: var(--ink-soft);
+    border-bottom: 3px solid transparent; transition: all 0.2s ease; white-space: nowrap;
+    display: flex; align-items: center; gap: 8px; }
+  .nav button.tab-btn:hover { color: var(--purple-main); background: var(--purple-bg); }
+  .nav button.tab-btn.active { color: var(--purple-deep); border-bottom-color: var(--yellow-main); }
+  .nav button .lock-ico { font-size: 12px; opacity: 0.6; }
+  .lock-status { margin-left: auto; display: flex; align-items: center; gap: 12px; padding: 8px 16px;
+    border-radius: 100px; font-size: 13px; font-weight: 600; }
+  .lock-status.locked { background: #FEF3F2; color: var(--danger); }
+  .lock-status.unlocked { background: var(--purple-bg); color: var(--purple-deep); }
+  .lock-status .ico { font-size: 14px; }
 
-  /* ===== MAIN ===== */
-  main {
-    max-width: 1400px; margin: 0 auto; padding: 32px 40px 64px;
-  }
-  .panel {
-    display: none;
-    animation: fadeIn 0.3s ease;
-  }
+  main { max-width: 1400px; margin: 0 auto; padding: 32px 40px 64px; }
+  .panel { display: none; animation: fadeIn 0.3s ease; }
   .panel.active { display: block; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  .panel-header {
-    margin-bottom: 24px;
-  }
-  .panel-title {
-    font-size: 28px; font-weight: 800;
-    color: var(--forest-deep);
-    letter-spacing: -0.5px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .panel-desc {
-    color: var(--ink-soft); margin-top: 6px; font-size: 14px;
-  }
+  .panel-header { margin-bottom: 24px; display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; }
+  .panel-title { font-size: 28px; font-weight: 800; color: var(--purple-deep); letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 12px; }
+  .panel-desc { color: var(--ink-soft); margin-top: 6px; font-size: 14px; }
 
-  /* ===== CARDS ===== */
-  .card {
-    background: var(--paper);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--line);
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-  .card-head {
-    padding: 20px 24px;
-    background: linear-gradient(135deg, var(--sage-soft) 0%, #EBF6EE 100%);
-    border-bottom: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 12px;
-  }
-  .card-head h3 {
-    font-size: 17px; font-weight: 700; color: var(--forest-deep);
-    display: flex; align-items: center; gap: 10px;
-  }
-  .badge {
-    display: inline-block; padding: 4px 12px;
-    background: var(--forest-main); color: white;
-    border-radius: 100px; font-size: 12px; font-weight: 600;
-  }
-  .badge.gold { background: var(--gold); }
-  .badge.sage { background: var(--forest-mid); }
+  .year-tabs { display: flex; gap: 8px; background: var(--purple-bg); padding: 6px; border-radius: 14px; }
+  .year-tab { background: none; border: none; cursor: pointer; padding: 10px 22px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--ink-soft);
+    border-radius: 10px; transition: all 0.2s; }
+  .year-tab:hover { color: var(--purple-deep); }
+  .year-tab.active { background: white; color: var(--purple-deep); box-shadow: 0 2px 8px rgba(109,40,217,0.15); }
 
-  /* ===== TABLES ===== */
-  .table-wrap {
-    overflow-x: auto;
-  }
-  table {
-    width: 100%; border-collapse: collapse; font-size: 13.5px;
-  }
-  th {
-    background: var(--cream);
-    text-align: left; padding: 14px 16px;
-    font-weight: 700; color: var(--forest-deep);
-    border-bottom: 2px solid var(--forest-mid);
-    white-space: nowrap;
-    position: sticky; top: 0;
-  }
-  td {
-    padding: 13px 16px; border-bottom: 1px solid var(--line);
-    vertical-align: top;
-    word-break: break-all;
-  }
-  tr:hover td { background: #FAFCFA; }
+  .card { background: var(--paper); border-radius: 16px; box-shadow: var(--shadow);
+    border: 1px solid var(--line); overflow: hidden; margin-bottom: 20px; }
+  .card-head { padding: 20px 24px;
+    background: linear-gradient(135deg, var(--purple-bg) 0%, #FBF9FF 100%);
+    border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .card-head h3 { font-size: 17px; font-weight: 700; color: var(--purple-deep);
+    display: flex; align-items: center; gap: 10px; }
+  .badge { display: inline-block; padding: 4px 12px; background: var(--purple-main); color: white;
+    border-radius: 100px; font-size: 12px; font-weight: 600; }
+  .badge.gold { background: var(--yellow-main); color: #6B5520; }
+  .badge.lavender { background: var(--purple-soft); color: var(--purple-deep); }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { background: var(--cream); text-align: left; padding: 14px 16px;
+    font-weight: 700; color: var(--purple-deep); border-bottom: 2px solid var(--purple-main);
+    white-space: nowrap; position: sticky; top: 0; }
+  td { padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; word-break: break-all; }
+  tr:hover td { background: #FCFBFF; }
   tr:last-child td { border-bottom: none; }
   td.mono { font-family: 'SF Mono', Menlo, monospace; font-size: 12.5px; }
-  td a { color: var(--forest-main); text-decoration: none; font-weight: 500; }
+  td a { color: var(--purple-main); text-decoration: none; font-weight: 500; }
   td a:hover { text-decoration: underline; }
   .note { color: var(--ink-soft); font-size: 12px; white-space: pre-wrap; }
 
-  /* ===== SECRET (locked) ===== */
-  .secret {
-    filter: blur(8px);
-    user-select: none;
-    transition: filter 0.3s ease;
-  }
+  .secret { filter: blur(8px); user-select: none; transition: filter 0.3s ease; }
   .unlocked .secret { filter: none; user-select: text; }
 
-  /* ===== LOCK PANEL ===== */
-  .lock-panel {
-    background: var(--paper);
-    border-radius: 20px;
-    padding: 48px 40px;
-    box-shadow: var(--shadow-lg);
-    max-width: 480px; margin: 40px auto;
-    text-align: center;
-    border: 1px solid var(--line);
-  }
-  .lock-icon-big {
-    width: 80px; height: 80px;
-    background: linear-gradient(135deg, var(--forest-main) 0%, var(--forest-mid) 100%);
-    border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    margin-bottom: 24px;
-    font-size: 36px;
-    box-shadow: 0 8px 24px rgba(45,106,79,0.3);
-  }
-  .lock-panel h2 {
-    font-size: 24px; color: var(--forest-deep); margin-bottom: 8px;
-    font-weight: 800;
-  }
-  .lock-panel p {
-    color: var(--ink-soft); margin-bottom: 28px; font-size: 14px;
-  }
-  .lock-form {
-    display: flex; gap: 8px;
-  }
-  .lock-input {
-    flex: 1;
-    padding: 14px 18px;
-    border: 2px solid var(--line);
-    border-radius: 12px;
-    font-size: 15px; font-family: inherit;
-    transition: border-color 0.2s;
-    background: var(--cream);
-  }
-  .lock-input:focus {
-    outline: none;
-    border-color: var(--forest-mid);
-    background: white;
-  }
-  .btn {
-    padding: 14px 22px;
-    background: linear-gradient(135deg, var(--forest-main) 0%, var(--forest-mid) 100%);
-    color: white; border: none; border-radius: 12px;
-    font-size: 14px; font-weight: 700; cursor: pointer;
-    font-family: inherit;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(45,106,79,0.3);
-  }
-  .btn-gold {
-    background: linear-gradient(135deg, var(--gold) 0%, #B89952 100%);
-  }
-  .btn-ghost {
-    background: white; color: var(--forest-main);
-    border: 2px solid var(--forest-mid);
-  }
-  .btn-ghost:hover {
-    background: var(--sage-soft);
-  }
-  .err {
-    color: var(--danger); font-size: 13px; margin-top: 12px;
-    min-height: 18px;
-  }
-  .hint {
-    margin-top: 24px; padding: 14px;
-    background: var(--gold-soft);
-    border-radius: 10px;
-    font-size: 12.5px; color: #6B5520;
-    text-align: left;
-  }
+  .lock-panel { background: var(--paper); border-radius: 20px; padding: 48px 40px;
+    box-shadow: var(--shadow-lg); max-width: 480px; margin: 40px auto;
+    text-align: center; border: 1px solid var(--line); }
+  .lock-icon-big { width: 80px; height: 80px;
+    background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-mid) 100%);
+    border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 24px; font-size: 36px; box-shadow: 0 8px 24px rgba(109,40,217,0.3); }
+  .lock-panel h2 { font-size: 24px; color: var(--purple-deep); margin-bottom: 8px; font-weight: 800; }
+  .lock-panel p { color: var(--ink-soft); margin-bottom: 28px; font-size: 14px; }
+  .lock-form { display: flex; gap: 8px; }
+  .lock-input { flex: 1; padding: 14px 18px; border: 2px solid var(--line); border-radius: 12px;
+    font-size: 15px; font-family: inherit; transition: border-color 0.2s; background: var(--cream); }
+  .lock-input:focus { outline: none; border-color: var(--purple-mid); background: white; }
+  .btn { padding: 14px 22px;
+    background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-mid) 100%);
+    color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: inherit; transition: all 0.2s; white-space: nowrap; }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(109,40,217,0.35); }
+  .btn-gold { background: linear-gradient(135deg, var(--yellow-main) 0%, #D4A93A 100%); color: #4A3A14; }
+  .btn-ghost { background: white; color: var(--purple-main); border: 2px solid var(--purple-mid); }
+  .btn-ghost:hover { background: var(--purple-bg); }
+  .btn-sm { padding: 8px 14px; font-size: 12.5px; border-radius: 10px; }
+  .btn-danger { background: linear-gradient(135deg, #C53030 0%, #9B2C2C 100%); }
+  .err { color: var(--danger); font-size: 13px; margin-top: 12px; min-height: 18px; }
+  .hint { margin-top: 24px; padding: 14px; background: var(--yellow-bg); border-radius: 10px;
+    font-size: 12.5px; color: #6B5520; text-align: left; }
   .hint b { color: #4A3A14; }
 
-  /* ===== CALENDAR ===== */
-  .cal-month {
-    margin-bottom: 32px;
-  }
-  .cal-month h3 {
-    font-size: 20px; color: var(--forest-deep); margin-bottom: 12px;
-    padding-bottom: 8px; border-bottom: 2px solid var(--gold);
-    display: inline-block; padding-right: 24px;
-  }
-  .cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    background: var(--line);
-    padding: 4px;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .cal-dow {
-    background: var(--forest-deep); color: white;
-    padding: 10px; text-align: center;
-    font-weight: 700; font-size: 12px;
-    letter-spacing: 1px;
-  }
-  .cal-dow:first-child { color: #FFB8B8; }
-  .cal-dow:last-child { color: #B8D4FF; }
-  .cal-cell {
-    background: white;
-    min-height: 90px;
-    padding: 8px;
-    font-size: 11.5px;
-    position: relative;
-    overflow: hidden;
-  }
-  .cal-cell.empty { background: #FAFAFA; }
-  .cal-date {
-    font-weight: 700; color: var(--ink); margin-bottom: 4px;
-    font-size: 13px;
-  }
+  .cal-month { margin-bottom: 32px; }
+  .cal-month h3 { font-size: 20px; color: var(--purple-deep); margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--yellow-main);
+    display: inline-block; padding-right: 24px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+    background: var(--line); padding: 4px; border-radius: 12px; overflow: hidden; }
+  .cal-dow { background: var(--purple-deep); color: white; padding: 10px; text-align: center;
+    font-weight: 700; font-size: 12px; letter-spacing: 1px; }
+  .cal-dow:first-child { color: #FFD4D4; }
+  .cal-dow:last-child { color: #D4DAFF; }
+  .cal-cell { background: white; min-height: 100px; padding: 8px; font-size: 11.5px;
+    position: relative; cursor: pointer; transition: background 0.15s; }
+  .cal-cell:hover { background: #FBF9FF; }
+  .cal-cell.empty { background: #FAFAFA; cursor: default; }
+  .cal-cell.empty:hover { background: #FAFAFA; }
+  .cal-date { font-weight: 700; color: var(--ink); margin-bottom: 4px; font-size: 13px;
+    display: flex; align-items: center; justify-content: space-between; }
   .cal-cell.holiday .cal-date { color: var(--danger); }
   .cal-cell.sun .cal-date { color: #C84545; }
   .cal-cell.sat .cal-date { color: #4570C8; }
-  .cal-evt {
-    display: block;
-    background: var(--sage-soft);
-    color: var(--forest-deep);
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-bottom: 2px;
-    font-size: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .cal-evt.gonggu { background: var(--sage-soft); color: var(--forest-deep); }
-  .cal-evt.coupang { background: #FFE4D6; color: #9A4A1F; }
-  .cal-evt.event { background: var(--gold-soft); color: #6B5520; }
+  .cal-add-mini { opacity: 0; font-size: 14px; color: var(--purple-mid); transition: opacity 0.15s;
+    background: var(--purple-bg); width: 18px; height: 18px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; line-height: 1; font-weight: bold; }
+  .cal-cell:hover .cal-add-mini { opacity: 1; }
+  .cal-evt { display: block; background: var(--purple-bg); color: var(--purple-deep);
+    padding: 2px 6px; border-radius: 4px; margin-bottom: 2px; font-size: 10px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+  .cal-evt:hover { filter: brightness(0.92); }
+  .cal-evt.gonggu { background: var(--purple-bg); color: var(--purple-deep); }
+  .cal-evt.coupang { background: #FFE9D6; color: #9A4A1F; }
+  .cal-evt.event { background: var(--yellow-bg); color: #6B5520; }
   .cal-evt.holiday-text { background: #FFE0E0; color: var(--danger); font-weight: 600; }
+  .cal-evt.user { background: #DCFCE7; color: #15803D; border-left: 2px solid #16A34A; }
+  .cal-evt.meeting { background: #DBEAFE; color: #1E3A8A; }
+  .cal-evt.internal { background: #FCE7F3; color: #831843; }
 
-  .legend {
-    display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
-    font-size: 12px; color: var(--ink-soft);
-  }
+  .legend { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
+    font-size: 12px; color: var(--ink-soft); align-items: center; }
   .legend-item { display: flex; align-items: center; gap: 6px; }
-  .legend-swatch {
-    width: 14px; height: 14px; border-radius: 4px;
-  }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 4px; }
 
-  /* ===== STATS ===== */
-  .stats {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px; margin-bottom: 28px;
-  }
-  .stat {
-    background: var(--paper);
-    padding: 20px;
-    border-radius: 14px;
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow);
-    position: relative;
-    overflow: hidden;
-  }
-  .stat::before {
-    content: ''; position: absolute;
-    top: 0; right: 0; width: 80px; height: 80px;
-    background: radial-gradient(circle, var(--sage-soft) 0%, transparent 70%);
-    transform: translate(30%, -30%);
-  }
-  .stat-label {
-    font-size: 12px; color: var(--ink-soft);
-    text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;
-  }
-  .stat-value {
-    font-size: 32px; font-weight: 800; color: var(--forest-deep);
-    margin-top: 4px;
-    letter-spacing: -1px;
-  }
-  .stat-sub {
-    font-size: 12px; color: var(--forest-mid); margin-top: 4px;
-    font-weight: 500;
-  }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px; margin-bottom: 28px; }
+  .stat { background: var(--paper); padding: 20px; border-radius: 14px;
+    border: 1px solid var(--line); box-shadow: var(--shadow); position: relative; overflow: hidden; }
+  .stat::before { content: ''; position: absolute; top: 0; right: 0; width: 80px; height: 80px;
+    background: radial-gradient(circle, var(--purple-bg) 0%, transparent 70%); transform: translate(30%, -30%); }
+  .stat-label { font-size: 12px; color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  .stat-value { font-size: 32px; font-weight: 800; color: var(--purple-deep);
+    margin-top: 4px; letter-spacing: -1px; }
+  .stat-sub { font-size: 12px; color: var(--purple-main); margin-top: 4px; font-weight: 500; }
 
-  .delivery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
-  }
-  .delivery-card {
-    padding: 20px;
-    background: linear-gradient(135deg, var(--sage-soft) 0%, white 100%);
-    border-radius: 12px;
-    border: 1px solid var(--line);
-    text-align: center;
-  }
-  .delivery-card .type {
-    font-size: 18px; font-weight: 800; color: var(--forest-deep);
-  }
-  .delivery-card .size {
-    font-size: 12px; color: var(--ink-soft); margin: 4px 0 8px;
-  }
-  .delivery-card .price {
-    font-size: 22px; font-weight: 800; color: var(--gold);
-  }
-  .delivery-card .price::after {
-    content: '원'; font-size: 13px; color: var(--ink-soft); margin-left: 2px;
-  }
+  .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .delivery-card { padding: 20px;
+    background: linear-gradient(135deg, var(--purple-bg) 0%, white 100%);
+    border-radius: 12px; border: 1px solid var(--line); text-align: center; }
+  .delivery-card .type { font-size: 18px; font-weight: 800; color: var(--purple-deep); }
+  .delivery-card .size { font-size: 12px; color: var(--ink-soft); margin: 4px 0 8px; }
+  .delivery-card .price { font-size: 22px; font-weight: 800; color: var(--yellow-deep); }
+  .delivery-card .price::after { content: '원'; font-size: 13px; color: var(--ink-soft); margin-left: 2px; }
 
-  /* ===== FOOTER ===== */
-  footer {
-    text-align: center;
-    padding: 24px;
-    color: var(--ink-soft);
-    font-size: 12px;
-    border-top: 1px solid var(--line);
-    background: var(--paper);
-  }
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(26,16,51,0.55);
+    z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+  .modal-bg.show { display: flex; }
+  .modal { background: white; border-radius: 20px; box-shadow: var(--shadow-lg);
+    width: 460px; max-width: 92vw; max-height: 90vh; overflow: auto;
+    animation: modalIn 0.2s ease; }
+  @keyframes modalIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-head { padding: 22px 26px;
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-main) 100%);
+    color: white; border-radius: 20px 20px 0 0; }
+  .modal-head h3 { font-size: 18px; font-weight: 800; }
+  .modal-head p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .modal-body { padding: 24px 26px; }
+  .modal-body label { display: block; font-size: 12.5px; font-weight: 700;
+    color: var(--purple-deep); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .modal-body input, .modal-body select, .modal-body textarea {
+    width: 100%; padding: 11px 14px; border: 2px solid var(--line); border-radius: 10px;
+    font-family: inherit; font-size: 14px; margin-bottom: 16px; background: var(--cream);
+    transition: border-color 0.2s; }
+  .modal-body input:focus, .modal-body select:focus, .modal-body textarea:focus {
+    outline: none; border-color: var(--purple-mid); background: white; }
+  .modal-foot { padding: 18px 26px 22px; display: flex; gap: 8px; justify-content: flex-end;
+    border-top: 1px solid var(--line); background: var(--cream); border-radius: 0 0 20px 20px; }
 
-  /* ===== HIGHLIGHT TODAY ===== */
-  .cal-cell.today {
-    background: linear-gradient(135deg, #FFF8E1 0%, white 100%);
-    box-shadow: inset 0 0 0 2px var(--gold);
-  }
+  .event-mgr { background: var(--paper); border-radius: 14px; border: 1px solid var(--line);
+    padding: 16px; margin-bottom: 20px; }
+  .event-mgr-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .event-mgr-bar .spacer { flex: 1; }
+
+  footer { text-align: center; padding: 24px; color: var(--ink-soft);
+    font-size: 12px; border-top: 1px solid var(--line); background: var(--paper); }
 
   @media (max-width: 768px) {
     .header { padding: 24px 20px; }
     .nav { padding: 0 20px; }
     main { padding: 24px 20px 48px; }
     .brand-title { font-size: 20px; }
-    .cal-cell { min-height: 60px; padding: 4px; font-size: 10px; }
+    .cal-cell { min-height: 70px; padding: 4px; font-size: 10px; }
     .cal-evt { font-size: 9px; padding: 1px 3px; }
     .lock-status { display: none; }
   }
@@ -481,15 +258,15 @@
 <div class="header">
   <div class="header-inner">
     <div class="brand">
-      <div class="logo-mark">🌳</div>
+      <div class="logo-mark">💜</div>
       <div>
-        <div class="brand-title">브레인숲 온라인 운영 대시보드</div>
-        <div class="brand-sub">BRAINSOOP · Online Operation Center</div>
+        <div class="brand-title">박지현 · 온라인 운영 대시보드</div>
+        <div class="brand-sub">PARK JIHYUN · Online Operation Center</div>
       </div>
     </div>
     <div class="status-pill">
       <span class="status-dot"></span>
-      <span>2026.05.28 · 운영중</span>
+      <span id="todayPill">2026.05.28 · 운영중</span>
     </div>
   </div>
 </div>
@@ -510,207 +287,142 @@
 
 <main>
 
-<!-- ============ SCHEDULE ============ -->
 <section class="panel active" id="panel-schedule">
   <div class="panel-header">
-    <div class="panel-title">📅 2025 행사일정표</div>
-    <div class="panel-desc">공동구매 · 오픈마켓행사 · 펀딩 · 유료광고 통합 캘린더</div>
+    <div>
+      <div class="panel-title">📅 행사일정표</div>
+      <div class="panel-desc">공동구매 · 오픈마켓 · 펀딩 · 회의 · 사내일정 통합 캘린더 (수정 가능)</div>
+    </div>
+    <div class="year-tabs">
+      <button class="year-tab" data-year="2025">2025년</button>
+      <button class="year-tab active" data-year="2026">2026년</button>
+    </div>
   </div>
 
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-label">총 공동구매</div>
-      <div class="stat-value">24+</div>
-      <div class="stat-sub">2025년 진행/예정</div>
+  <div class="stats" id="statsHost"></div>
+
+  <div class="event-mgr">
+    <div class="event-mgr-bar">
+      <button class="btn btn-sm" id="addEvtBtn">＋ 일정 추가</button>
+      <button class="btn btn-sm btn-ghost" id="exportBtn">📥 일정 내보내기</button>
+      <button class="btn btn-sm btn-ghost" id="importBtn">📤 일정 불러오기</button>
+      <input type="file" id="importFile" accept=".json" style="display:none">
+      <div class="spacer"></div>
+      <button class="btn btn-sm btn-danger" id="resetBtn">↺ 기본값으로 복원</button>
     </div>
-    <div class="stat">
-      <div class="stat-label">파트너 인플루언서</div>
-      <div class="stat-value">20+</div>
-      <div class="stat-sub">맘인플루언서 협업</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">쿠팡 프로모션</div>
-      <div class="stat-value">6+</div>
-      <div class="stat-sub">와우위크/시즌행사</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">진행 채널</div>
-      <div class="stat-value">30+</div>
-      <div class="stat-sub">온라인몰 통합</div>
+    <div style="margin-top:10px; font-size:12px; color:var(--ink-soft);">
+      💡 캘린더의 빈 날짜를 클릭하면 일정 추가 · 이벤트 클릭하면 수정/삭제 · localStorage에 자동 저장됩니다.
     </div>
   </div>
 
   <div class="card">
-    <div class="card-head">
-      <h3>📌 운영 참고사항</h3>
-    </div>
+    <div class="card-head"><h3>📌 운영 참고사항</h3></div>
     <div style="padding: 20px 24px;">
-      <p style="margin-bottom: 8px;"><b style="color:var(--forest-deep)">공동구매</b> · 동일 품목 최소 7~14일 간격을 두고 진행. 마감 +7~14일 이내 실판매수량 확인 후 수수료 정산.</p>
-      <p><b style="color:var(--forest-deep)">오픈마켓행사</b> · 각 오픈마켓별 행사일정에 따라 진행. 제안 후 확정 시 진행내용만 진행.</p>
+      <p style="margin-bottom: 8px;"><b style="color:var(--purple-deep)">공동구매</b> · 동일 품목 최소 7~14일 간격을 두고 진행. 마감 +7~14일 이내 실판매수량 확인 후 수수료 정산.</p>
+      <p style="margin-bottom: 8px;"><b style="color:var(--purple-deep)">오픈마켓행사</b> · 각 오픈마켓별 행사일정에 따라 진행. 제안 후 확정 시 진행내용만 진행.</p>
+      <p><b style="color:var(--purple-deep)">공구 정산</b> · 1~15일 행사건 → 익월 15일 지급 / 16~말일 행사건 → 익월 말일 지급</p>
     </div>
   </div>
 
   <div class="legend">
-    <div class="legend-item"><span class="legend-swatch" style="background:#D8F3DC"></span> 공동구매</div>
-    <div class="legend-item"><span class="legend-swatch" style="background:#FFE4D6"></span> 쿠팡/오픈마켓</div>
-    <div class="legend-item"><span class="legend-swatch" style="background:#F5E6B8"></span> 펀딩/특별행사</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#F3EFFF"></span> 공동구매</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#FFE9D6"></span> 쿠팡/오픈마켓</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#FEF9E7"></span> 펀딩/특별행사</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#DBEAFE"></span> 회의</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#FCE7F3"></span> 사내일정</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#DCFCE7"></span> 사용자 추가</div>
     <div class="legend-item"><span class="legend-swatch" style="background:#FFE0E0"></span> 공휴일</div>
   </div>
 
   <div id="calendarHost"></div>
 </section>
 
-<!-- ============ LOGIN INFO ============ -->
 <section class="panel" id="panel-login">
   <div class="panel-header">
-    <div class="panel-title">🔐 쇼핑몰 로그인 정보 <span class="badge gold">SECRET</span></div>
-    <div class="panel-desc">전 채널 로그인 정보 · 비밀번호 인증 후 열람 가능</div>
-  </div>
-
-  <div class="card">
-    <div class="card-head">
-      <h3>📂 전체 채널 로그인 정보</h3>
-      <span class="badge">총 90+ 채널</span>
+    <div>
+      <div class="panel-title">🔐 채널별 로그인 정보 <span class="badge gold">SECRET</span></div>
+      <div class="panel-desc">판매채널을 성격별로 6개 그룹으로 분리 · 비밀번호 인증 후 열람 가능</div>
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th style="width:22%">몰명</th><th style="width:18%">ID</th><th style="width:18%">PW</th><th style="width:22%">URL</th><th>담당자/비고</th></tr>
-        </thead>
-        <tbody id="loginTbody"></tbody>
-      </table>
-    </div>
+    <div class="year-tabs" id="loginGroupTabs"></div>
   </div>
+  <div id="loginGroupHost"></div>
 </section>
 
-<!-- ============ SABANGNET ============ -->
 <section class="panel" id="panel-sabang">
   <div class="panel-header">
-    <div class="panel-title">🌐 사방넷 연동몰 <span class="badge gold">SECRET</span></div>
-    <div class="panel-desc">상품+주문 취합 통합 관리 · 비밀번호 인증 후 열람 가능</div>
+    <div><div class="panel-title">🌐 사방넷 연동몰 <span class="badge gold">SECRET</span></div>
+    <div class="panel-desc">상품+주문 취합 통합 관리 · 비밀번호 인증 후 열람 가능</div></div>
   </div>
-
   <div class="card">
-    <div class="card-head">
-      <h3>📡 사방넷 통합관리 채널</h3>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>몰명</th><th>ID</th><th>PW</th><th>관리 URL</th><th>마켓 URL</th><th>비고</th></tr>
-        </thead>
-        <tbody id="sabangTbody"></tbody>
-      </table>
-    </div>
+    <div class="card-head"><h3>📡 사방넷 통합관리 채널</h3></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>몰명</th><th>ID</th><th>PW</th><th>관리 URL</th><th>마켓 URL</th><th>비고</th></tr></thead>
+      <tbody id="sabangTbody"></tbody>
+    </table></div>
   </div>
 </section>
 
-<!-- ============ INSTITUTION ============ -->
 <section class="panel" id="panel-institution">
   <div class="panel-header">
-    <div class="panel-title">🏢 온라인 기관몰 & 쿠팡로켓 <span class="badge gold">SECRET</span></div>
-    <div class="panel-desc">개별 관리 채널 · 비밀번호 인증 후 열람 가능</div>
+    <div><div class="panel-title">🏢 온라인 기관몰 & 쿠팡로켓 <span class="badge gold">SECRET</span></div>
+    <div class="panel-desc">개별 관리 채널 · 비밀번호 인증 후 열람 가능</div></div>
   </div>
-
   <div class="card">
-    <div class="card-head">
-      <h3>🎓 기관몰</h3>
-      <span class="badge sage">8개 채널</span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>몰명</th><th>ID</th><th>PW</th><th>관리 URL</th><th>마켓 URL</th><th>담당자</th></tr></thead>
-        <tbody id="instTbody"></tbody>
-      </table>
-    </div>
+    <div class="card-head"><h3>🎓 기관몰</h3><span class="badge lavender">8개 채널</span></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>몰명</th><th>ID</th><th>PW</th><th>관리 URL</th><th>마켓 URL</th><th>담당자</th></tr></thead>
+      <tbody id="instTbody"></tbody>
+    </table></div>
   </div>
-
   <div class="card">
-    <div class="card-head">
-      <h3>🚀 쿠팡로켓 · 마케팅</h3>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>몰명</th><th>ID</th><th>PW</th><th>관리 URL</th></tr></thead>
-        <tbody id="marketTbody"></tbody>
-      </table>
-    </div>
+    <div class="card-head"><h3>🚀 쿠팡로켓 · 마케팅</h3></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>몰명</th><th>ID</th><th>PW</th><th>관리 URL</th></tr></thead>
+      <tbody id="marketTbody"></tbody>
+    </table></div>
   </div>
 </section>
 
-<!-- ============ DELIVERY ============ -->
 <section class="panel" id="panel-delivery">
   <div class="panel-header">
-    <div class="panel-title">📦 한진택배 운임표 (2025년)</div>
-    <div class="panel-desc">타입별 사이즈 기준 배송비 안내</div>
+    <div><div class="panel-title">📦 한진택배 운임표 (2025년)</div>
+    <div class="panel-desc">타입별 사이즈 기준 배송비 안내</div></div>
   </div>
-
   <div class="card">
     <div class="card-head"><h3>📐 타입별 운임표</h3></div>
     <div style="padding: 24px;">
       <div class="delivery-grid">
-        <div class="delivery-card">
-          <div class="type">A Type</div>
-          <div class="size">80cm 이하</div>
-          <div class="price">2,470</div>
-        </div>
-        <div class="delivery-card">
-          <div class="type">B Type</div>
-          <div class="size">100cm 이하</div>
-          <div class="price">2,970</div>
-        </div>
-        <div class="delivery-card">
-          <div class="type">C Type</div>
-          <div class="size">120cm 이하</div>
-          <div class="price">3,300</div>
-        </div>
-        <div class="delivery-card">
-          <div class="type">D Type</div>
-          <div class="size">140cm 이하</div>
-          <div class="price">5,000</div>
-        </div>
-        <div class="delivery-card">
-          <div class="type">E Type</div>
-          <div class="size">160cm 이하</div>
-          <div class="price">5,700</div>
-        </div>
+        <div class="delivery-card"><div class="type">A Type</div><div class="size">80cm 이하</div><div class="price">2,470</div></div>
+        <div class="delivery-card"><div class="type">B Type</div><div class="size">100cm 이하</div><div class="price">2,970</div></div>
+        <div class="delivery-card"><div class="type">C Type</div><div class="size">120cm 이하</div><div class="price">3,300</div></div>
+        <div class="delivery-card"><div class="type">D Type</div><div class="size">140cm 이하</div><div class="price">5,000</div></div>
+        <div class="delivery-card"><div class="type">E Type</div><div class="size">160cm 이하</div><div class="price">5,700</div></div>
       </div>
-      <div style="margin-top: 20px; padding: 16px; background: var(--gold-soft); border-radius: 10px; font-size: 13px; color: #6B5520;">
+      <div style="margin-top: 20px; padding: 16px; background: var(--yellow-bg); border-radius: 10px; font-size: 13px; color: #6B5520;">
         <b>📍 추가 요금</b> · 도서지역 +5,000원 · 제주도 +5,000원<br>
         <small>※ 사이즈 = 가로 + 세로 + 높이 합산 기준</small>
       </div>
     </div>
   </div>
-
   <div class="card">
-    <div class="card-head">
-      <h3>📞 한진택배 담당자</h3>
-      <span class="badge sage">SECRET <span class="lock-ico">🔒</span></span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <tbody>
-          <tr><td style="width:30%; font-weight:700;">로그인 정보</td><td class="mono">ID: <span class="secret">8009526</span> / PW: <span class="secret">Soop2025@@@</span></td></tr>
-          <tr><td style="font-weight:700;">한진택배 담당자</td><td class="mono"><span class="secret">010-4411-5040-4</span></td></tr>
-          <tr><td style="font-weight:700;">계약담당자</td><td class="mono"><span class="secret">010-4759-9905</span></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="card-head"><h3>📞 한진택배 담당자</h3><span class="badge lavender">SECRET 🔒</span></div>
+    <div class="table-wrap"><table><tbody>
+      <tr><td style="width:30%; font-weight:700;">로그인 정보</td><td class="mono">ID: <span class="secret">8009526</span> / PW: <span class="secret">Soop2025@@@</span></td></tr>
+      <tr><td style="font-weight:700;">한진택배 담당자</td><td class="mono"><span class="secret">010-4411-5040-4</span></td></tr>
+      <tr><td style="font-weight:700;">계약담당자</td><td class="mono"><span class="secret">010-4759-9905</span></td></tr>
+    </tbody></table></div>
   </div>
 </section>
 
-<!-- ============ SECURITY ============ -->
 <section class="panel" id="panel-security">
   <div class="panel-header">
-    <div class="panel-title">⚙️ 보안 설정</div>
-    <div class="panel-desc">전체 잠금 / 해제 · 비밀번호 변경</div>
+    <div><div class="panel-title">⚙️ 보안 설정</div>
+    <div class="panel-desc">전체 잠금 / 해제 · 비밀번호 변경</div></div>
   </div>
-
   <div class="lock-panel">
     <div class="lock-icon-big">🔐</div>
     <h2 id="secTitle">전체 잠금 해제</h2>
     <p id="secDesc">마스터 비밀번호를 입력하면 모든 민감 정보(로그인 ID/PW)가 표시됩니다.</p>
-
     <div id="lockBox">
       <div class="lock-form">
         <input type="password" id="pwInput" class="lock-input" placeholder="마스터 비밀번호 입력" autocomplete="off">
@@ -718,409 +430,523 @@
       </div>
       <div class="err" id="errMsg"></div>
     </div>
-
     <div id="unlockedBox" style="display:none;">
-      <p style="color:var(--forest-main); font-weight:700; font-size:16px;">✅ 모든 정보가 표시 중입니다</p>
-      <div style="margin-top: 20px; display: flex; gap: 8px; justify-content: center;">
+      <p style="color:var(--purple-main); font-weight:700; font-size:16px;">✅ 모든 정보가 표시 중입니다</p>
+      <div style="margin-top: 20px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
         <button class="btn btn-ghost" id="lockBtn">🔒 다시 잠금</button>
         <button class="btn btn-gold" id="changePwBtn">🔑 비밀번호 변경</button>
       </div>
     </div>
-
     <div class="hint">
       <b>💡 사용 안내</b><br>
-      · 초기 비밀번호: <b>brainsoop</b><br>
+      · 초기 비밀번호: <b>brainsoop</b> (꼭 변경하세요!)<br>
       · 잠금해제 시 모든 탭의 ID/PW 정보가 표시됩니다<br>
-      · 한 번 해제하면 페이지를 떠나기 전까지 유지됩니다<br>
-      · 비밀번호는 브라우저(localStorage)에 저장됩니다
+      · 비밀번호와 일정은 브라우저(localStorage)에 안전하게 저장됩니다
     </div>
   </div>
 </section>
 
 </main>
 
-<footer>
-  🌳 브레인숲 (BRAINSOOP) · 온라인 운영 대시보드 · 2026
-</footer>
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">일정 추가</h3>
+      <p id="modalSub">날짜와 일정 내용을 입력하세요</p>
+    </div>
+    <div class="modal-body">
+      <label>날짜</label>
+      <input type="date" id="evtDate">
+      <label>일정 내용</label>
+      <input type="text" id="evtTitle" placeholder="예: 공구 - 별주니맘 칠교">
+      <label>카테고리</label>
+      <select id="evtCat">
+        <option value="user">📌 일반 (초록)</option>
+        <option value="gonggu">🛍️ 공동구매 (퍼플)</option>
+        <option value="coupang">🚀 쿠팡/오픈마켓 (오렌지)</option>
+        <option value="event">⭐ 펀딩/특별행사 (옐로우)</option>
+        <option value="meeting">📋 회의 (파랑)</option>
+        <option value="internal">👥 사내일정 (핑크)</option>
+        <option value="holiday-text">🏖️ 공휴일 (레드)</option>
+      </select>
+      <label>메모 (선택)</label>
+      <textarea id="evtNote" rows="2" placeholder="추가 설명..."></textarea>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-sm btn-danger" id="evtDelBtn" style="display:none;">삭제</button>
+      <button class="btn btn-sm btn-ghost" id="evtCancelBtn">취소</button>
+      <button class="btn btn-sm" id="evtSaveBtn">저장</button>
+    </div>
+  </div>
+</div>
+
+<footer>💜 박지현 · 온라인 운영 대시보드 · 2026</footer>
 
 <script>
-// ====== DATA ======
-const LOGIN_DATA = [
-  ["네이버 아이디 통합 로그인","(네이버아이디로 로그인)","Soop2021@@","",""],
-  ["11번가","brainsoop","peer2023@@","https://wing.coupang.com/tenants/vendor-join/vendor/landing","윤지영 매니저 / 02-6119-2750 / 010-5238-5367 / chloeyun@sk.com"],
-  ["가비아(도메인호스팅)","woodpeer","dfqks","",""],
-  ["가비아(이미지호스팅)","woodpeer / woodpeer.speedgabia.com","wood2022!!","http://biz.wemakeprice.com/partner/login",""],
-  ["고도몰(우디피아 자사몰)","woodpeer","wood3399!!","",""],
-  ["공영홈쇼핑","상품등록/수정/정산","GY111033","",""],
-  ["그립","-","-","https://www.erpia.net/ERPiaSCM/index.asp",""],
-  ["까페24(브레인숲 자사몰)","brainsoop","soop2022@@","https://partner.cjmall.com/websquare/wsengine/uiPath.fo",""],
-  ["꼬망세","edu000030","soop2020","https://store.edupre.co.kr/_prozn/_system/member/login.php","주문관련 1588-1978 / 반품물류센터 031-923-1460"],
-  ["네이버 검색광고","brainsoop","Soop2021!!","http://imagetool.gabia.com/login",""],
-  ["네이버 이메일(브레인숲)","brainsoop@naver.com","Soop2021!!","",""],
-  ["네이버이메일(우드피아)","woodpeer1985","wood3233!!","",""],
-  ["도서인증센터 ISBN","BRAINSOOP1","brain12201","https://www.nl.go.kr/seoji/",""],
-  ["레드포인트","370-88-00019","soop2020@@","","업체코드 80850"],
-  ["롯데닷컴","378359","brain2022!!","",""],
-  ["롯데아이몰 (롯데홈쇼핑)","017341LT","soop2024**","https://scm.10x10.co.kr/index.asp","김미호 MD 02-2168-5809 / 010-7742-8119 / mhkim77@lotte.net\n정경화 MA 02-2168-5336 / jungkh63@lotte.net"],
-  ["롯데ON","LD475664","soop2026!!","https://store.lotteon.com/cm/main/login_SO.wsp","김채영 MD (퇴사) / codud9751_@nate.com / 010-6650-9751"],
-  ["링크트리","brainsoop","317773399","",""],
-  ["망고보드","brainsoopmd@naver.com","Soop2021@@","https://creator.class101.net/creator/projects",""],
-  ["몬스터키즈","brainsoop@naver.com","wood2020!!","https://accounts.kakao.com/login",""],
-  ["무무즈 (공급사 로그인)","brain / moomooz","-","https://selleradmin.tsherpa.co.kr/admin/seller/",""],
-  ["물류 GYS111035","soop3399!!","-","http://www.clipartkorea.co.kr/main/index.php",""],
-  ["바보사랑","brainsoop","soop2020@@","https://ps.hnsmall.com",""],
-  ["베네피아","brainsoop","Soop2026!@!!@","","이옥매 담당자 02-6323-9535"],
-  ["브레인숲 구글 계정","brainsoop.d@gmail.com","317773399","http://silkroad1.co.kr/sellermanager/login/",""],
-  ["브레인숲 유튜브","brainsoopedx@naver.com","edx**soop@","",""],
-  ["브레인숲에듀 사이트 admin","brainsoop02","soop2022@@!","http://bscenter.kr/wp-login.php",""],
-  ["성원애드피아","woorisoop3399","woorisoop3399","https://www.swadpia.co.kr/mypage",""],
-  ["세이베베","brainsoop","peer2020@@","https://shop.kidsnote.com/_manage/","류상훈 과장 010-2863-9225 / hiro925@saybebecorp.com\nCS 1661-2259"],
-  ["셀파몰","brainsoop","soop2023@@","",""],
-  ["수원컨벤션센터","brainsoop","soop2024!!","https://www.scc.or.kr/lease-meeting-rooms-2/",""],
-  ["스마트스토어","brainsoop@naver.com","Soop2025@@","https://sell.smartstore.naver.com/#/login",""],
-  ["스토어팜","brainsoop@naver.com","soop2020@@","http://partner.kidkids.net/partnerLogin.htm",""],
-  ["신세계몰 / 이마트몰","5577065","Soop2026@@@!","https://po.ssgadm.com/","김연대리 010-5173-7273 / yeonsg@nate.com\n박성현 AMD 02-390-2152 / fc8134@ssg.com"],
-  ["실사박사","brainsoop","brain3399!!","",""],
-  ["아이스크림몰","883o1","soop2026!!","https://po.i-screammall.co.kr/main.do","김기연 대리 031-696-2544 / kykim@i-screammedia.com"],
-  ["아이피타임","brainsoop","brain3399!!","",""],
-  ["에이프린트","brainsoop@naver.com","brain3399!","",""],
-  ["예스24","woorisoop","Soop2026!!@@##","","이은혜 과장 02-3215-9328 / design@yes24.com"],
-  ["오늘의집","brainsoop@naver.com","Soop2024@@","",""],
-  ["온라인팀 이메일","brainsoopmd@naver.com","soop**2023","http://store.edupre.co.kr/",""],
-  ["와이파이","Brainsoop / Brainsoop_5G","brainsoop!!","",""],
-  ["우리아이오케이","brainsoop","soop2020@@","http://www.s2b.kr/",""],
-  ["위메프","brainsoop","soop2022@@","https://www.wooriaiok.co.kr/",""],
-  ["이카운트 웹메일","brainsoop@brainsoop.com","Brainsoop2021!!","http://www.happyzone.co.kr/",""],
-  ["이카운트 웹메일 온라인팀","marketing@brainsoop.com","soop2020!!","",""],
-  ["이카운트(홍은영)","홍은영","brain33***","",""],
-  ["인스타계정 (브레인숲)","brainsoop","soop2021!!","http://alliance.saybebe.com/",""],
-  ["인스타계정 (공부방)","brainsoop_official","Soop2021@@","",""],
-  ["인스타그램 (EDX)","brainsoopedx@gmail.com","soop2021!!","",""],
-  ["인터파크","renorim","soop2022!!","https://wmail.ecounterp.com/",""],
-  ["지마켓","woorisoop","Soop2024!!@@","",""],
-  ["카카오비즈","brainsoop@naver.com","soop3399***","",""],
-  ["카페24","brainsoop","soop2022@@","",""],
-  ["코레샵","woorisoopedu","soop3399!!","padmin.ezwel.com",""],
-  ["쿠팡 윙","brainsoop","Soop2025!!@","",""],
-  ["쿠팡(로켓)","brainsoop","Soop2026!!@","https://supplier.coupang.com/login",""],
-  ["큐앤아이","GC00005","soop2020@@","https://silkroad1.co.kr/sellermanager/login/",""],
-  ["클래스101","leesu-sweet@hanmail.net","gozldgkwlakfk","https://smartmessage.plus.kt.com/",""],
-  ["클립아트코리아","brainsoop","soop3399!","https://newmallvenadm.benepia.co.kr/login/loginView.do",""],
-  ["키드키즈","woodpeer","soop2020@@","https://partner.kidkids.net/new/","최지율 MD 070-4245-1142 / jychoi@kidkids.net"],
-  ["키즈노트","store_brainsoop","wood2022!!","http://teachermall.kr/cms/partner_login.php",""],
-  ["킨더스쿨","woodpeer","wood3801","",""],
-  ["텐바이텐","woodpeer","soop@@2026!!#","","김혜빈 MD 070-7515-5462 / been0615@10x10.co.kr"],
-  ["티몬","brainsoop/brainsoop1","Soop2024!!!","",""],
-  ["티쳐몰","woodpeer","wood2019!!!","https://seller.monpass.im/","길근영 대리 010-4557-1337 / gon.md@kidsnote.com"],
-  ["퍼즐리아 도매몰","1232496348","captain35!","https://www.puzzliadome.co.kr/",""],
-  ["퍼즐리아 운영자","puzzliasub","icandoit8!!~","",""],
-  ["프리픽","brainsoop@naver.com","soop2020@@","https://www.freepik.com/",""],
-  ["학교장터","renorim","soop2020@@","",""],
-  ["한국교원연수원","woodpeer","woodpeer","",""],
-  ["한진택배","8009526","soop2026!!@@","",""],
-  ["핫트","-","-","",""],
-  ["해피존","brainsoop","soop2020@@","","1899-2668 / 070-5226-0351"],
-  ["현대몰","hsbrainsoop","soop@@2026!!#","https://partner.hmall.com/",""],
-  ["현대이지웰","brainsoop","Soop2025!!!","https://hpas.ezwel.com/","송예빈 010-2629-5936 / 안원진 02-2131-6211 / 거래처코드 0297317"],
-  ["홈&쇼핑","111235","-","http://coreb2b.cafe24.com/","협력사 코드 491100"],
-  ["홈앤쇼핑","3708800019","soop2021@@","https://forcus.hanjin.co.kr/release/listup",""],
-  ["효성CMS","brainsoop","Soop2023@@","",""],
-  ["AK","37088000191","soop2025#@@!","https://splace.akmall.com/","남연주 MD 031-780-8020 / nyju@aekyung.kr\n임채림 031-780-8023 / dlacofla06@aekyung.kr"],
-  ["CJ몰","brainsoop7","bs2026!!@@##!","https://partner.cjmall.com/","장석희 대리 02-2107-0669 / seokhee.chang@cj.net\n정민영 02-2107-1091 / minyoung.jung1@cj.net"],
-  ["GS","123579","Soop2025!!","http://woodpetr0626.godo.co.kr/",""],
-  ["IP TIME 공유기 메인","Brainsoop","brainsoop!!","192.168.0.1","T3008"],
-  ["IP TIME 공유기 서브","Brainsoop","brainsoop!!","192.168.0.50","A2004 / DHCP X, UPNP X, 허브모드"],
-  ["KPP파레트","P249187","soop2023!!","",""],
-  ["KT스마트메시지","brain031","soop03177*","",""],
-  ["MakeShop 부운영자","puzzliasub1","icandoit8!!~","https://www.makeshop.co.kr/",""],
-  ["MakeShop 운영자(도매)","puzzliasub","icandoit8!!~","https://www.makeshop.co.kr/",""],
-  ["MakeShop 운영자(소매)","puzzlia","icandoit8!!~","https://www.makeshop.co.kr/",""],
-  ["마이리틀타이거","brainsoop","soop2022@@","https://partner.mylittletiger.co.kr/",""],
-  ["카카오톡","brainsoopbuy@naver.com","soop2026@@","",""],
-  ["토스쇼핑","jayden@brainsoop.com","soop2026!@","",""]
-];
+// ====== 채널 6개 그룹별 분리 (B2C/홈쇼핑/기관/B2B/마케팅/거래처) ======
+const LOGIN_GROUPS = {
+  b2c: {
+    icon: "🛒",
+    name: "B2C 오픈마켓",
+    desc: "일반 소비자 대상 판매 채널",
+    data: [
+      ["네이버 통합","(네이버아이디 로그인)","Soop2021@@","",""],
+      ["스마트스토어","brainsoop@naver.com","Soop2025@@","https://sell.smartstore.naver.com/",""],
+      ["쿠팡 윙","brainsoop","Soop2025!!@","https://wing.coupang.com/",""],
+      ["쿠팡(로켓)","brainsoop","Soop2026!!@","https://supplier.coupang.com/",""],
+      ["11번가","brainsoop","peer2023@@","https://login.11st.co.kr/","윤지영 매니저 02-6119-2750"],
+      ["지마켓","woorisoop","Soop2024!!@@","https://signin.esmplus.com/",""],
+      ["옥션","woorisoop","Soop2025!!@@","https://signin.esmplus.com/",""],
+      ["인터파크","renorim","soop2022!!","",""],
+      ["위메프","brainsoop","soop2022@@","",""],
+      ["티몬","brainsoop/brainsoop1","Soop2024!!!","",""],
+      ["카카오톡스토어","brainsoop@naver.com","soop3399***","https://shopping-seller.kakao.com/",""],
+      ["토스쇼핑","jayden@brainsoop.com","soop2026!@","",""],
+      ["오늘의집","brainsoop@naver.com","Soop2024@@","",""],
+      ["바보사랑","brainsoop","soop2020@@","https://ps.hnsmall.com",""],
+      ["텐바이텐","woodpeer","soop@@2026!!#","https://scm.10x10.co.kr/","김혜빈 MD 070-7515-5462"]
+    ]
+  },
+  homeshopping: {
+    icon: "📺",
+    name: "홈쇼핑 / 백화점몰",
+    desc: "TV홈쇼핑·백화점 협력사 채널",
+    data: [
+      ["CJ몰 (CJ온스타일)","brainsoop7","bs2026!!@@##!","https://partner.cjmall.com/","장석희 대리 02-2107-0669 / 협력사 491100"],
+      ["GS shop","123579","Soop2025!!","https://withgs.gsshop.com/","휴대폰 인증 01092873393"],
+      ["롯데ON","LD475664","soop2026!!","https://store.lotteon.com/",""],
+      ["롯데아이몰 (홈쇼핑)","017341LT","soop2024**","https://scm.10x10.co.kr/","김미호 MD 02-2168-5809"],
+      ["롯데닷컴","378359","brain2022!!","",""],
+      ["현대홈쇼핑","hsbrainsoop","persop2401!!","https://partner.hmall.com/",""],
+      ["현대몰","hsbrainsoop","soop@@2026!!#","https://partner.hmall.com/",""],
+      ["신세계몰/이마트몰","5577065","Soop2026@@@!","https://po.ssgadm.com/","김연 대리 010-5173-7273"],
+      ["AK","37088000191","soop2025#@@!","https://splace.akmall.com/","남연주 MD 031-780-8020"],
+      ["홈&쇼핑","e111235","soop2021@@","https://partners.hnsmall.com/","협력사 코드 111235"],
+      ["홈앤쇼핑","3708800019","soop2021@@","https://forcus.hanjin.co.kr/",""],
+      ["공영홈쇼핑","상품등록/수정/정산","GY111033","",""],
+      ["예스24","woorisoop","Soop2026!!@@##","https://scm.yes24.com/","이은혜 과장 02-3215-9328"]
+    ]
+  },
+  institution: {
+    icon: "🏫",
+    name: "기관몰 / 폐쇄몰",
+    desc: "어린이집·학교·복지몰 (B2G/임직원몰)",
+    data: [
+      ["꼬망세","edu000030","soop2020","https://store.edupre.co.kr/","주문 1588-1978 / 반품물류 031-923-1460"],
+      ["키드키즈","woodpeer","soop2020@@","https://partner.kidkids.net/new/","최지율 MD 070-4245-1142"],
+      ["세이베베 (키즈노트)","store_brainsoop","wood2022!!","https://shop.kidsnote.com/_manage/","류상훈 과장 010-2863-9225"],
+      ["키즈노트","store_brainsoop","wood2022!!","",""],
+      ["아이스크림몰","883o1","soop2026!!","https://po.i-screammall.co.kr/","김기연 대리 031-696-2544"],
+      ["큐앤아이","GC00005","soop2020@@","https://silkroad1.co.kr/",""],
+      ["T 셀파몰","brainsoop","soop2023@@","https://mall.tsherpa.co.kr/",""],
+      ["셀파몰","brainsoop","soop2023@@","",""],
+      ["티쳐몰","woodpeer","wood2019!!!","https://seller.monpass.im/","길근영 대리 010-4557-1337"],
+      ["우리아이오케이","brainsoop","soop2020@@","http://www.s2b.kr/",""],
+      ["학교장터","renorim","soop2020@@","","공인인증서 로그인"],
+      ["한국교원연수원","woodpeer","woodpeer","","교육쇼핑몰"],
+      ["코레샵","woorisoopedu","soop3399!!","padmin.ezwel.com",""],
+      ["베네피아","brainsoop","Soop2026!@!!@","https://newmallvenadm.benepia.co.kr/","이옥매 02-6323-9535"],
+      ["현대이지웰 (폐쇄몰)","brainsoop","Soop2025!!!","https://hpas.ezwel.com/","송예빈 010-2629-5936"],
+      ["레드포인트","370-88-00019","soop2020@@","","업체코드 80850"],
+      ["마이리틀타이거","brainsoop","soop2022@@","https://partner.mylittletiger.co.kr/",""],
+      ["몬스터키즈","brainsoop@naver.com","wood2020!!","",""]
+    ]
+  },
+  b2b: {
+    icon: "🏢",
+    name: "B2B 자사몰 / 도매몰",
+    desc: "자체 운영 자사몰·도매 채널",
+    data: [
+      ["까페24 (브레인숲 자사몰)","brainsoop","soop2022@@","https://eclogin.cafe24.com/Shop/",""],
+      ["카페24 호스팅 (에듀)","brainsoop02","soop2022@@!","https://eclogin.cafe24.com/Shop/",""],
+      ["고도몰 (우디피아 자사몰)","woodpeer","wood3399!!","","고도몰 자사몰"],
+      ["브레인숲에듀 admin","brainsoop02","soop2022@@!","http://bscenter.kr/wp-login.php",""],
+      ["퍼즐리아 도매몰","1232496348","captain35!","https://www.puzzliadome.co.kr/","아이디: 1232496348"],
+      ["퍼즐리아 운영자","puzzliasub","icandoit8!!~","https://www.puzzliadome.co.kr/",""],
+      ["MakeShop 부운영자 (도매)","puzzliasub1","icandoit8!!~","https://www.makeshop.co.kr/",""],
+      ["MakeShop 운영자 (도매)","puzzliasub","icandoit8!!~","https://www.makeshop.co.kr/",""],
+      ["MakeShop 운영자 (소매)","puzzlia","icandoit8!!~","https://www.makeshop.co.kr/",""],
+      ["무무즈 (공급사 로그인)","brain / moomooz","-","https://selleradmin.tsherpa.co.kr/",""],
+      ["스토어팜","brainsoop@naver.com","soop2020@@","http://partner.kidkids.net/",""]
+    ]
+  },
+  marketing: {
+    icon: "📱",
+    name: "SNS / 광고 / 마케팅",
+    desc: "인스타그램·광고툴·콘텐츠 플랫폼",
+    data: [
+      ["인스타 (브레인숲)","brainsoop","soop2021!!","","2차인증 010-9287-3393"],
+      ["인스타 (공부방)","brainsoop_official","Soop2021@@","",""],
+      ["인스타 (EDX)","brainsoopedx@gmail.com","soop2021!!","",""],
+      ["브레인숲 유튜브","brainsoopedx@naver.com","edx**soop@","",""],
+      ["네이버 검색광고","brainsoop","Soop2021!!","",""],
+      ["망고보드","brainsoopmd@naver.com","Soop2021@@","",""],
+      ["클래스101","leesu-sweet@hanmail.net","gozldgkwlakfk","",""],
+      ["링크트리","brainsoop","317773399","",""],
+      ["카카오비즈","brainsoop@naver.com","soop3399***","",""],
+      ["카카오톡","brainsoopbuy@naver.com","soop2026@@","",""],
+      ["KT 스마트메시지","brain031","soop03177*","https://smartmessage.plus.kt.com/","문자 발송"],
+      ["인포크링크","brainsoop","Soop2025!!@@","https://business.inpock.co.kr/",""]
+    ]
+  },
+  vendor: {
+    icon: "⚙️",
+    name: "내부 시스템 / 거래처",
+    desc: "호스팅·인쇄·이메일·물류·결제·운영툴",
+    data: [
+      ["네이버 이메일 (브레인숲)","brainsoop@naver.com","Soop2021!!","",""],
+      ["네이버 이메일 (우드피아)","woodpeer1985","wood3233!!","",""],
+      ["온라인팀 이메일","brainsoopmd@naver.com","soop**2023","",""],
+      ["브레인숲 구글","brainsoop.d@gmail.com","317773399","","Drive·YouTube"],
+      ["가비아 (도메인호스팅)","woodpeer","dfqks","https://www.gabia.com/",""],
+      ["가비아 (이미지호스팅)","woodpeer","wood2022!!","http://imagetool.gabia.com/login",""],
+      ["이카운트 웹메일","brainsoop@brainsoop.com","Brainsoop2021!!","https://wmail.ecounterp.com/",""],
+      ["이카운트 온라인팀","marketing@brainsoop.com","soop2020!!","",""],
+      ["이카운트(홍은영)","홍은영","brain33***","",""],
+      ["효성CMS","brainsoop","Soop2023@@","","결제대행"],
+      ["한진택배","8009526","soop2026!!@@","https://forcus.hanjin.co.kr/","담당 010-4411-5040"],
+      ["KPP파레트","P249187","soop2023!!","","파레트 이동전표"],
+      ["도서인증센터 ISBN","BRAINSOOP1","brain12201","https://www.nl.go.kr/seoji/","도서 ISBN 등록"],
+      ["성원애드피아","woorisoop3399","woorisoop3399","https://www.swadpia.co.kr/mypage","인쇄"],
+      ["에이프린트","brainsoop@naver.com","brain3399!","","인쇄"],
+      ["실사박사","brainsoop","brain3399!!","","실사 출력"],
+      ["프리픽 (이미지)","brainsoop@naver.com","soop2020@@","https://www.freepik.com/","이미지 소스"],
+      ["클립아트코리아","brainsoop","soop3399!","http://www.clipartkorea.co.kr/","이미지 소스"],
+      ["해피존","brainsoop","soop2020@@","","1899-2668"],
+      ["그립","-","-","https://www.erpia.net/","ERP 시스템"],
+      ["수원컨벤션센터","brainsoop","soop2024!!","https://www.scc.or.kr/","대관"],
+      ["킨더스쿨","woodpeer","wood3801","",""],
+      ["와이파이","Brainsoop / Brainsoop_5G","brainsoop!!","","사무실 WiFi"],
+      ["IP TIME 공유기 메인","Brainsoop","brainsoop!!","192.168.0.1","T3008"],
+      ["IP TIME 공유기 서브","Brainsoop","brainsoop!!","192.168.0.50","A2004 (허브모드)"]
+    ]
+  }
+};
 
 const SABANG_DATA = [
-  ["11번가","brainsoop","peer2023@@","https://login.11st.co.kr/auth/front/selleroffice/login.tmall","https://shop.11st.co.kr/stores/443012",""],
-  ["CJ온스타일","brainsoop7","bs2025!!@@##","https://partners.cjonstyle.com/login","https://display.cjonstyle.com/p/brand/00019115","협력사 코드 491100"],
-  ["GS shop","123579","Soop2025!!","https://withgs.gsshop.com/cmm/login","https://www.gsshop.com/","휴대폰 인증 01092873393"],
-  ["yes24","woorisoop","Soop2025!!@@##","https://scm.yes24.com/Login/LogOn","https://www.yes24.com/Product/PartnerShop/242447","이은혜 과장 02-3215-9328"],
-  ["롯데온","LD475664","brain2024!!","https://store.lotteon.com/cm/main/login_SO.wsp","https://www.lotteon.com/","휴대폰 인증 01092873393"],
-  ["베네피아","brainsoop","Soop2025!@!","https://newmallvenadm.benepia.co.kr/login/loginView.do","","벤더 이메일인증"],
-  ["비즈마켓 몰플렉스","brainsoop7","-","https://scm.mallflex.co.kr/mim/login.do","",""],
-  ["스마트스토어","brainsoop@naver.com","Soop2025@@","https://accounts.commerce.naver.com/login","https://smartstore.naver.com/brainsoop","공구진행시 상품구매페이지 구성"],
-  ["신세계몰","0005577065","Bs2025!@#!@#","https://po.ssgadm.com/","https://shinsegaemall.ssg.com/","브랜드샵 운영중"],
-  ["옥션","woorisoop","Soop2025!!@@","https://signin.esmplus.com/login","",""],
-  ["지마켓","woorisoop","Soop2025!!@@","https://signin.esmplus.com/login","",""],
-  ["카카오톡스토어","brainsoop@naver.com","soop3399***","https://shopping-seller.kakao.com/","https://store.kakao.com/brainsoop","휴대폰 인증 01092873393"],
+  ["11번가","brainsoop","peer2023@@","https://login.11st.co.kr/","https://shop.11st.co.kr/stores/443012",""],
+  ["CJ온스타일","brainsoop7","bs2025!!@@##","https://partners.cjonstyle.com/","https://display.cjonstyle.com/","협력사 코드 491100"],
+  ["GS shop","123579","Soop2025!!","https://withgs.gsshop.com/","https://www.gsshop.com/","휴대폰 인증"],
+  ["yes24","woorisoop","Soop2025!!@@##","https://scm.yes24.com/","https://www.yes24.com/","이은혜 과장"],
+  ["롯데온","LD475664","brain2024!!","https://store.lotteon.com/","https://www.lotteon.com/",""],
+  ["베네피아","brainsoop","Soop2025!@!","https://newmallvenadm.benepia.co.kr/","","벤더 이메일인증"],
+  ["스마트스토어","brainsoop@naver.com","Soop2025@@","https://accounts.commerce.naver.com/","https://smartstore.naver.com/brainsoop",""],
+  ["신세계몰","0005577065","Bs2025!@#!@#","https://po.ssgadm.com/","https://shinsegaemall.ssg.com/","브랜드샵"],
+  ["옥션","woorisoop","Soop2025!!@@","https://signin.esmplus.com/","",""],
+  ["지마켓","woorisoop","Soop2025!!@@","https://signin.esmplus.com/","",""],
+  ["카카오톡스토어","brainsoop@naver.com","soop3399***","https://shopping-seller.kakao.com/","https://store.kakao.com/brainsoop",""],
   ["쿠팡(wing)","brainsoop","Soop2025!!@@","https://wing.coupang.com/","https://www.coupang.com/",""],
-  ["텐바이텐","woodpeer","Soop2025@@","https://scm.10x10.co.kr/","https://www.10x10.co.kr/","김혜빈 MD 070-7515-5462"],
-  ["현대이지웰 (폐쇄몰)","brainsoop","Soop2025@!!","https://padmin.ezwel.com/","","휴대폰 인증"],
+  ["텐바이텐","woodpeer","Soop2025@@","https://scm.10x10.co.kr/","https://www.10x10.co.kr/","김혜빈 MD"],
+  ["현대이지웰","brainsoop","Soop2025@!!","https://padmin.ezwel.com/","","폐쇄몰"],
   ["홈&쇼핑","e111235","soop2021@@","https://partners.hnsmall.com/","https://www.hnsmall.com/","협력사 코드 111235"],
   ["현대홈쇼핑","hsbrainsoop","persop2401!!","https://partner.hmall.com/","https://www.hmall.com/",""],
-  ["AK","37088000191","soop2025#@","https://splace.akmall.com/","","남연주 MD 031-780-8020"],
-  ["인스타그램","brainsoop","soop2021!!","","","2차인증 010-9287-3393 / SMS"]
+  ["AK","37088000191","soop2025#@","https://splace.akmall.com/","","남연주 MD"],
+  ["인스타그램","brainsoop","soop2021!!","","","2차인증 010-9287-3393"]
 ];
 
 const INST_DATA = [
-  ["꼬망세","edu000030","soop2020","https://store.edupre.co.kr/_prozn/_system/member/login.php","https://store.edupre.co.kr","주문 1588-1978 / 반품물류 031-923-1460"],
-  ["레드포인트","370-88-00019 / 80850","soop2020@@","http://scm.erpia.net/","https://eclogin.cafe24.com/Shop/","redpoint80 / s3708800019 / soop2023@@"],
-  ["T 셀파몰","brainsoop","soop2023@@","https://mall.tsherpa.co.kr/selleradmin/login/index","https://mall.tsherpa.co.kr/",""],
-  ["아이스크림몰","883o1","Soop2025@@","https://po.i-screammall.co.kr/loginForm.do","https://i-screammall.co.kr/","하성욱 과장 031-696-2530 / kronos288@i-screammedia.com\n엄예담 AMD 031-696-2532 / yedam731@i-screammedia.com"],
-  ["큐앤아이","GC00005","soop2020@@","https://silkroad1.co.kr/sellermanager/login/","https://www.qnimall.com/",""],
-  ["키드키즈","woodpeer","soop2020@@","https://partner.kidkids.net/new/","https://www.kidkids.net/","최지율 MD 070-4245-1142 / jychoi@kidkids.net"],
-  ["세이베베 (키즈노트)","store_brainsoop","wood2022!!","https://shop.kidsnote.com/_manage/","app 쇼핑몰","류상훈 과장 010-2863-9225"],
-  ["티처몰","woodpeer","wood2019!!!","https://shop.teacherville.co.kr/selleradmin/login/index","https://shop.teacherville.co.kr/",""]
+  ["꼬망세","edu000030","soop2020","https://store.edupre.co.kr/","https://store.edupre.co.kr","주문 1588-1978"],
+  ["레드포인트","370-88-00019","soop2020@@","http://scm.erpia.net/","https://eclogin.cafe24.com/","80850"],
+  ["T 셀파몰","brainsoop","soop2023@@","https://mall.tsherpa.co.kr/","https://mall.tsherpa.co.kr/",""],
+  ["아이스크림몰","883o1","Soop2025@@","https://po.i-screammall.co.kr/","https://i-screammall.co.kr/","하성욱 과장"],
+  ["큐앤아이","GC00005","soop2020@@","https://silkroad1.co.kr/","https://www.qnimall.com/",""],
+  ["키드키즈","woodpeer","soop2020@@","https://partner.kidkids.net/new/","https://www.kidkids.net/","최지율 MD"],
+  ["세이베베","store_brainsoop","wood2022!!","https://shop.kidsnote.com/_manage/","app","류상훈 과장"],
+  ["티처몰","woodpeer","wood2019!!!","https://shop.teacherville.co.kr/","https://shop.teacherville.co.kr/",""]
 ];
 
 const MARKET_DATA = [
   ["쿠팡로켓","brainsoop","Soop2025!!@@","https://supplier.coupang.com/login"],
-  ["인포크링크 비즈니스","brainsoop","Soop2025!!@@","https://business.inpock.co.kr/admin"],
+  ["인포크링크","brainsoop","Soop2025!!@@","https://business.inpock.co.kr/admin"],
   ["KT 스마트메세지","brain031","soop03177*","https://smartmessage.plus.kt.com/"]
 ];
 
-// 2025 행사 일정 — by month
-const CALENDAR = {
-  1: { firstDow: 3, days: 31, events: {
-    1:[{t:"신정", c:"holiday-text"}],
-    5:[{t:"공구: 션마미 매쓰스틱"}],6:[{t:"공구: 션마미 매쓰스틱"}],7:[{t:"공구: 션마미 매쓰스틱"}],
-    8:[{t:"공구: 션마미"},{t:"공구: 윤우맘 칠교"}],9:[{t:"공구: 션마미"},{t:"공구: 윤우맘"}],
-    10:[{t:"공구: 션마미"},{t:"공구: 윤우맘"}],11:[{t:"공구: 윤우맘"}],
-    12:[{t:"공구: 윤우맘"}],13:[{t:"공구: 윤우맘"}],
-    22:[{t:"공구: 지혜맘 만국기"}],23:[{t:"공구: 지혜맘"}],
-    24:[{t:"공구: 지혜맘"},{t:"공구: 사월이네 사자성어"}],
-    25:[{t:"공구: 지혜맘"},{t:"공구: 사월이네"}],
-    28:[{t:"공구: 지혜맘"},{t:"공구: 사월이네"}],
-    29:[{t:"설날", c:"holiday-text"},{t:"공구"},{t:"공구"}],
-    30:[{t:"공구: 지혜맘"},{t:"공구: 사월이네"}],
-    31:[{t:"공구: 지혜맘"},{t:"공구: 사월이네"}]
-  }},
-  2: { firstDow: 6, days: 28, events: {
-    1:[{t:"공구: 지혜맘"},{t:"공구: 사월이네"}],
-    2:[{t:"공구: 사월이네"}],3:[{t:"공구: 사월이네"}],
-    6:[{t:"공구: 수아맘 만국기"}],7:[{t:"공구: 수아맘"}],8:[{t:"공구: 수아맘"}],
-    9:[{t:"공구: 수아맘"}],10:[{t:"공구: 수아맘"}],11:[{t:"공구: 수아맘"}],
-    24:[{t:"공구: 샤인맘 수학"}],25:[{t:"공구: 샤인맘"}],26:[{t:"공구: 샤인맘"}],27:[{t:"공구: 샤인맘"}]
-  }},
-  3: { firstDow: 6, days: 31, events: {
-    1:[{t:"삼일절", c:"holiday-text"}],
-    3:[{t:"대체휴일", c:"holiday-text"}],
-    5:[{t:"공구: 휘안맘 훈민도장"}],6:[{t:"공구: 휘안맘"}],
-    7:[{t:"공구: 휘안맘"}],8:[{t:"공구: 휘안맘"}],
-    9:[{t:"공구: 휘안맘"}],10:[{t:"공구: 휘안맘"}],
-    11:[{t:"공구: 휘안맘"}],12:[{t:"공구: 휘안맘"}],13:[{t:"공구: 휘안맘"}]
-  }},
-  4: { firstDow: 2, days: 30, events: {
-    7:[{t:"공구: 한쌍홈 칠교"}],8:[{t:"공구: 한쌍홈"}],9:[{t:"공구: 한쌍홈"}],
-    10:[{t:"공구: 한쌍홈"}],11:[{t:"공구: 한쌍홈"}],12:[{t:"공구: 한쌍홈"}],
-    13:[{t:"공구: 한쌍홈"}],14:[{t:"공구: 한쌍홈"}],
-    15:[{t:"공구: 수아맘 한국사"}],16:[{t:"공구: 수아맘"}],17:[{t:"공구: 수아맘"}],
-    18:[{t:"공구: 수아맘"}],19:[{t:"공구: 수아맘"}],20:[{t:"공구: 수아맘"}],
-    24:[{t:"공구: 사월이네 한국사"}],25:[{t:"공구: 사월이네"}],26:[{t:"공구: 사월이네"}],
-    27:[{t:"공구: 사월이네"}],28:[{t:"공구: 사월이네"}],
-    29:[{t:"공구: 지안이네 칠교"}],30:[{t:"공구: 지안이네"},{t:"공구오픈: 에듀나비", c:"event"}]
-  }},
-  5: { firstDow: 4, days: 31, events: {
-    1:[{t:"근로자의날", c:"holiday-text"},{t:"공구: 지안이네"},{t:"공구: 에듀나비"}],
-    2:[{t:"공구: 지안이네"},{t:"공구: 에듀나비"}],
-    3:[{t:"공구: 에듀나비"}],4:[{t:"공구: 에듀나비"}],
-    5:[{t:"어린이날", c:"holiday-text"},{t:"공구"}],
-    6:[{t:"대체휴일", c:"holiday-text"},{t:"공구: 에듀나비"}],
-    16:[{t:"쿠팡 와우위크", c:"coupang"}],17:[{t:"쿠팡 와우위크", c:"coupang"}],
-    20:[{t:"공구오픈: 사월이네 오이스터", c:"event"}],
-    21:[{t:"공구: 사월이네"}],22:[{t:"공구: 사월이네"}],
-    23:[{t:"공구: 사월이네"},{t:"텐바이텐 주말특가", c:"coupang"}],
-    24:[{t:"공구: 사월이네"},{t:"텐바이텐", c:"coupang"}],
-    25:[{t:"공구: 사월이네"}],
-    26:[{t:"공구오픈: 쓰트롱마마", c:"event"}],
-    27:[{t:"공구: 쓰트롱마마"}],28:[{t:"공구: 쓰트롱마마"}],
-    29:[{t:"공구: 쓰트롱마마"}],30:[{t:"공구: 쓰트롱마마"}],31:[{t:"공구: 쓰트롱마마"}]
-  }},
-  6: { firstDow: 0, days: 30, events: {
-    1:[{t:"공구: 쓰트롱마마"}],
-    2:[{t:"공구마감: 쓰트롱마마"},{t:"쿠팡 베이비타겟", c:"coupang"}],
-    3:[{t:"대통령선거", c:"holiday-text"}],
-    6:[{t:"현충일", c:"holiday-text"},{t:"SSG 핫딜", c:"coupang"}],
-    12:[{t:"공구오픈: 여름맘 칠교", c:"event"}],
-    13:[{t:"공구: 여름맘"},{t:"텐바이텐 텐텐위크", c:"coupang"}],
-    14:[{t:"공구: 여름맘"}],15:[{t:"공구: 여름맘"}],
-    16:[{t:"공구: 여름맘"}],17:[{t:"공구: 여름맘"}],
-    19:[{t:"공구오픈: 별주니맘", c:"event"}],
-    20:[{t:"공구: 별주니맘"}],21:[{t:"공구: 별주니맘"}],
-    22:[{t:"공구: 별주니맘"}],23:[{t:"공구: 별주니맘"}],
-    24:[{t:"공구오픈: 지안이네 2차", c:"event"}],
-    25:[{t:"공구: 지안이네"}],26:[{t:"공구: 지안이네"}],
-    27:[{t:"공구마감: 지안이네"}],
-    29:[{t:"공구: 사월이네 앵콜"}],30:[{t:"공구: 사월이네"}]
-  }},
-  7: { firstDow: 2, days: 31, events: {
-    4:[{t:"공구오픈: 휘안맘", c:"event"}],
-    5:[{t:"공구: 휘안맘"}],
-    8:[{t:"공구오픈: 초초쌤", c:"event"}],9:[{t:"공구: 초초쌤"}],
-    10:[{t:"공구: 초초쌤"},{t:"공구: 휘안맘"}],
-    11:[{t:"공구: 초초쌤"},{t:"공구: 휘안맘"}],
-    12:[{t:"공구: 초초쌤"},{t:"공구: 휘안맘"}],
-    16:[{t:"공구마감: 휘안맘"}],
-    17:[{t:"공구오픈: 이안맘", c:"event"},{t:"와디즈 예정", c:"event"}],
-    18:[{t:"공구: 이안맘"}],19:[{t:"공구: 이안맘"}],
-    20:[{t:"공구: 이안맘"}],21:[{t:"공구: 이안맘"}],
-    22:[{t:"공구: 이안맘"}],23:[{t:"공구: 이안맘"}],
-    24:[{t:"공구마감: 이안맘"}],
-    28:[{t:"공구오픈: 사월이네", c:"event"}],
-    29:[{t:"공구: 사월이네"}],30:[{t:"공구: 사월이네"}],
-    31:[{t:"공구: 사월이네"},{t:"와디즈 펀딩", c:"event"}]
-  }},
-  8: { firstDow: 5, days: 31, events: {
-    1:[{t:"와디즈 펀딩", c:"event"}],
-    15:[{t:"광복절", c:"holiday-text"}],
-    17:[{t:"와디즈 펀딩 오픈", c:"event"}],
-    18:[{t:"공구오픈: 솔이엄마", c:"event"}],
-    19:[{t:"공구: 솔이엄마"}],20:[{t:"공구: 솔이엄마"}],
-    21:[{t:"공구: 솔이엄마"}],22:[{t:"공구: 솔이엄마"}],
-    23:[{t:"공구: 솔이엄마"}],24:[{t:"공구: 솔이엄마"}],
-    25:[{t:"공구: 솔이엄마"}]
-  }},
-  9: { firstDow: 1, days: 30, events: {
-    8:[{t:"키드키즈 광고: 훈민도장", c:"event"}],
-    9:[{t:"키드키즈 광고"}],10:[{t:"키드키즈 광고"}],
-    11:[{t:"키드키즈 광고"},{t:"쿠팡 테마위크", c:"coupang"}],
-    12:[{t:"키드키즈 광고"},{t:"공구오픈: 별주니맘", c:"event"}],
-    13:[{t:"키드키즈 광고"},{t:"공구: 별주니맘"}],
-    14:[{t:"키드키즈"}],15:[{t:"키드키즈"}],
-    16:[{t:"키드키즈"}],17:[{t:"키드키즈"}],
-    18:[{t:"키드키즈"}],19:[{t:"키드키즈"}],20:[{t:"키드키즈"}],
-    26:[{t:"공구오픈: 아트맘 훈민도장", c:"event"},{t:"추석 프로모션", c:"coupang"}],
-    27:[{t:"공구: 아트맘"},{t:"추석 프로모션", c:"coupang"}],
-    28:[{t:"공구: 아트맘"}],29:[{t:"공구: 아트맘"}],
-    30:[{t:"공구마감: 아트맘"}]
-  }},
-  10: { firstDow: 3, days: 31, events: {
-    3:[{t:"개천절", c:"holiday-text"}],
-    6:[{t:"추석", c:"holiday-text"}],
-    9:[{t:"한글날", c:"holiday-text"}],
-    23:[{t:"공구오픈: 포포네", c:"event"}],
-    21:[{t:"공구오픈: 차니맘", c:"event"}],
-    22:[{t:"공구: 차니맘"}],
-    24:[{t:"공구: 포포네"},{t:"공구: 차니맘"}],
-    25:[{t:"공구: 포포네"},{t:"공구: 차니맘"}],
-    26:[{t:"공구: 포포네"}],
-    27:[{t:"공구: 차니맘"}],28:[{t:"공구: 차니맘"}]
-  }},
-  11: { firstDow: 6, days: 30, events: {} },
-  12: { firstDow: 1, days: 31, events: {
-    25:[{t:"크리스마스", c:"holiday-text"}]
-  }}
+const YEAR_META = {
+  2025: { months: [
+    {first:3,days:31},{first:6,days:28},{first:6,days:31},{first:2,days:30},
+    {first:4,days:31},{first:0,days:30},{first:2,days:31},{first:5,days:31},
+    {first:1,days:30},{first:3,days:31},{first:6,days:30},{first:1,days:31}
+  ]},
+  2026: { months: [
+    {first:4,days:31},{first:0,days:28},{first:0,days:31},{first:3,days:30},
+    {first:5,days:31},{first:1,days:30},{first:3,days:31},{first:6,days:31},
+    {first:2,days:30},{first:4,days:31},{first:0,days:30},{first:2,days:31}
+  ]}
 };
 
-// ====== STATE ======
-const MASTER_PW_KEY = 'brainsoop_master_pw';
+const DEFAULT_EVENTS = {
+  "2025-01-01":[{t:"신정", c:"holiday-text"}],
+  "2025-01-05":[{t:"공구: 션마미 매쓰스틱", c:"gonggu"}],
+  "2025-01-08":[{t:"공구: 윤우맘 칠교", c:"gonggu"}],
+  "2025-01-22":[{t:"공구: 지혜맘 만국기", c:"gonggu"}],
+  "2025-01-24":[{t:"공구: 사월이네 사자성어", c:"gonggu"}],
+  "2025-01-29":[{t:"설날", c:"holiday-text"}],
+  "2025-02-06":[{t:"공구: 수아맘 만국기", c:"gonggu"}],
+  "2025-02-24":[{t:"공구: 샤인맘 수학", c:"gonggu"}],
+  "2025-03-01":[{t:"삼일절", c:"holiday-text"}],
+  "2025-03-05":[{t:"공구: 휘안맘 훈민도장", c:"gonggu"}],
+  "2025-04-07":[{t:"공구: 한쌍홈 칠교", c:"gonggu"}],
+  "2025-04-15":[{t:"공구: 수아맘 한국사", c:"gonggu"}],
+  "2025-04-24":[{t:"공구: 사월이네 한국사", c:"gonggu"}],
+  "2025-04-29":[{t:"공구: 지안이네 칠교", c:"gonggu"}],
+  "2025-05-01":[{t:"근로자의날", c:"holiday-text"}],
+  "2025-05-05":[{t:"어린이날", c:"holiday-text"}],
+  "2025-05-16":[{t:"쿠팡 와우위크", c:"coupang"}],
+  "2025-05-20":[{t:"공구오픈: 사월이네 오이스터", c:"event"}],
+  "2025-05-26":[{t:"공구오픈: 쓰트롱마마", c:"event"}],
+  "2025-06-03":[{t:"대통령선거", c:"holiday-text"}],
+  "2025-06-06":[{t:"현충일", c:"holiday-text"}],
+  "2025-06-12":[{t:"공구오픈: 여름맘 칠교", c:"event"}],
+  "2025-06-19":[{t:"공구오픈: 별주니맘", c:"event"}],
+  "2025-07-04":[{t:"공구오픈: 휘안맘", c:"event"}],
+  "2025-07-08":[{t:"공구오픈: 초초쌤", c:"event"}],
+  "2025-07-17":[{t:"공구오픈: 이안맘", c:"event"}],
+  "2025-07-28":[{t:"공구오픈: 사월이네", c:"event"}],
+  "2025-08-15":[{t:"광복절", c:"holiday-text"}],
+  "2025-08-17":[{t:"와디즈 펀딩 오픈", c:"event"}],
+  "2025-08-18":[{t:"공구오픈: 솔이엄마", c:"event"}],
+  "2025-09-08":[{t:"키드키즈 광고: 훈민도장", c:"event"}],
+  "2025-09-12":[{t:"공구오픈: 별주니맘", c:"event"}],
+  "2025-09-26":[{t:"추석 프로모션", c:"coupang"}],
+  "2025-10-03":[{t:"개천절", c:"holiday-text"}],
+  "2025-10-06":[{t:"추석", c:"holiday-text"}],
+  "2025-10-09":[{t:"한글날", c:"holiday-text"}],
+  "2025-10-21":[{t:"공구오픈: 차니맘", c:"event"}],
+  "2025-12-25":[{t:"크리스마스", c:"holiday-text"}],
+
+  // ====== 2026년 일정 (회의록/업무일지 기반 - 박지현님 작성) ======
+  // 공휴일
+  "2026-01-01":[{t:"신정", c:"holiday-text"}],
+  "2026-02-16":[{t:"설날", c:"holiday-text"}],
+  "2026-02-17":[{t:"설날", c:"holiday-text"}],
+  "2026-02-18":[{t:"설날", c:"holiday-text"}],
+  "2026-03-01":[{t:"삼일절", c:"holiday-text"}],
+  "2026-03-02":[{t:"대체휴일", c:"holiday-text"}],
+  "2026-05-05":[{t:"어린이날", c:"holiday-text"}],
+  "2026-05-24":[{t:"부처님오신날", c:"holiday-text"}],
+  "2026-05-25":[{t:"대체휴일", c:"holiday-text"}],
+  "2026-06-06":[{t:"현충일", c:"holiday-text"}],
+  "2026-08-15":[{t:"광복절", c:"holiday-text"}],
+  "2026-09-24":[{t:"추석", c:"holiday-text"}],
+  "2026-09-25":[{t:"추석", c:"holiday-text"}],
+  "2026-09-26":[{t:"추석", c:"holiday-text"}],
+  "2026-10-03":[{t:"개천절", c:"holiday-text"}],
+  "2026-10-09":[{t:"한글날", c:"holiday-text"}],
+  "2026-12-25":[{t:"크리스마스", c:"holiday-text"}],
+
+  // 5월 - 회의록 기반
+  "2026-05-04":[
+    {t:"📋 5월 1주 주간회의 (10am)", c:"meeting", note:"하반기 매출계획 / 상품 가격 조정 / 인수인계"}
+  ],
+  "2026-05-06":[
+    {t:"🎉 브레인숲 패밀리 페스타 (자사몰 시작)", c:"event", note:"5/6~5/31 자사몰 프로모션"}
+  ],
+  "2026-05-11":[
+    {t:"📋 5월 2주 주간회의 (10am)", c:"meeting"},
+    {t:"🎁 가정의달 기관본사 특판 시작", c:"event", note:"5/11~5/29"},
+    {t:"👤 권희석 대리 연차", c:"internal"}
+  ],
+  "2026-05-15":[
+    {t:"👤 유통발주: 김승희 과장 업무 시작", c:"internal", note:"김보민 차장 인수인계 지속"}
+  ],
+  "2026-05-18":[
+    {t:"📋 5월 3주 주간회의 (10am)", c:"meeting"},
+    {t:"📑 업무기술서 제출 마감 (김준석 팀장)", c:"internal"}
+  ],
+  "2026-05-19":[
+    {t:"👤 김준석 팀장 연차", c:"internal"},
+    {t:"🤝 김민영 대리 - 선트리즈 업무협약 (샌드뮤지엄)", c:"internal"}
+  ],
+  "2026-05-25":[
+    {t:"📋 5월 4주 주간회의 (10am)", c:"meeting"}
+  ],
+  "2026-05-26":[
+    {t:"📑 업무기술서 KPI 설정 마감", c:"internal"},
+    {t:"📊 포캐스팅 자료 전달 마감", c:"internal"}
+  ],
+  "2026-05-29":[
+    {t:"🎁 가정의달 기관본사 특판 종료", c:"event"}
+  ],
+  "2026-05-31":[
+    {t:"🎉 브레인숲 패밀리 페스타 종료", c:"event"}
+  ],
+
+  // 6월 - 신상품 입고 일정
+  "2026-06-01":[{t:"📋 6월 1주 주간회의 (10am)", c:"meeting"}],
+  "2026-06-08":[{t:"📋 6월 2주 주간회의 (10am)", c:"meeting"}],
+  "2026-06-15":[
+    {t:"📋 6월 3주 주간회의 (10am)", c:"meeting"},
+    {t:"📦 6월 중순 입고: EDX 입체도형 마스터, 카운팅프레임, 지오볼 등", c:"internal", note:"지오볼기하학레드 / 다면체 풀세트 / 홈스쿨 풀세트 / 7세 오감각 아트놀이"}
+  ],
+  "2026-06-22":[{t:"📋 6월 4주 주간회의 (10am)", c:"meeting"}],
+  "2026-06-29":[{t:"📋 6월 5주 주간회의 (10am)", c:"meeting"}],
+
+  // 7월 - 구매 월결제 시행
+  "2026-07-01":[
+    {t:"💳 구매 월결제 시행 시작", c:"internal", note:"7월 주문건부터 결제와 마감 일원화"}
+  ],
+  "2026-07-06":[{t:"📋 7월 1주 주간회의 (10am)", c:"meeting"}],
+  "2026-07-13":[{t:"📋 7월 2주 주간회의 (10am)", c:"meeting"}],
+  "2026-07-20":[{t:"📋 7월 3주 주간회의 (10am)", c:"meeting"}],
+  "2026-07-27":[{t:"📋 7월 4주 주간회의 (10am)", c:"meeting"}],
+
+  // 8월 - 입고 일정
+  "2026-08-03":[{t:"📋 8월 1주 주간회의 (10am)", c:"meeting"}],
+  "2026-08-10":[{t:"📋 8월 2주 주간회의 (10am)", c:"meeting"}],
+  "2026-08-17":[
+    {t:"📋 8월 3주 주간회의 (10am)", c:"meeting"},
+    {t:"📦 8월 입고 예정: 연결수모형(저학년), 도시블럭", c:"internal", note:"클링클링연산세트 / 자동차 블럭놀이 매트세트 등"}
+  ],
+  "2026-08-24":[{t:"📋 8월 4주 주간회의 (10am)", c:"meeting"}],
+  "2026-08-31":[{t:"📋 8월 5주 주간회의 (10am)", c:"meeting"}]
+};
+
+const MASTER_PW_KEY = 'pjh_master_pw';
+const EVENTS_KEY = 'pjh_events_v2';
 const DEFAULT_PW = 'brainsoop';
 let isUnlocked = false;
+let currentYear = 2026;
+let events = {};
 
-function getStoredPw() {
-  return localStorage.getItem(MASTER_PW_KEY) || DEFAULT_PW;
-}
-function setStoredPw(pw) {
-  localStorage.setItem(MASTER_PW_KEY, pw);
-}
+function getStoredPw() { return localStorage.getItem(MASTER_PW_KEY) || DEFAULT_PW; }
+function setStoredPw(pw) { localStorage.setItem(MASTER_PW_KEY, pw); }
 
-// ====== RENDER TABLES ======
+function loadEvents() {
+  const stored = localStorage.getItem(EVENTS_KEY);
+  if (stored) {
+    try { events = JSON.parse(stored); return; } catch(e) {}
+  }
+  events = JSON.parse(JSON.stringify(DEFAULT_EVENTS));
+}
+function saveEvents() { localStorage.setItem(EVENTS_KEY, JSON.stringify(events)); }
+
 function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+function pad(n){return String(n).padStart(2,'0');}
+function dateKey(y,m,d){return y+'-'+pad(m)+'-'+pad(d);}
 
-function renderLoginTable() {
-  const body = document.getElementById('loginTbody');
-  body.innerHTML = LOGIN_DATA.map(row => `
-    <tr>
-      <td><b>${escapeHtml(row[0])}</b></td>
-      <td class="mono"><span class="secret">${escapeHtml(row[1])}</span></td>
-      <td class="mono"><span class="secret">${escapeHtml(row[2])}</span></td>
-      <td>${row[3] ? `<a href="${escapeHtml(row[3])}" target="_blank">${escapeHtml(row[3].length>40?row[3].slice(0,40)+'…':row[3])}</a>` : '-'}</td>
-      <td class="note">${escapeHtml(row[4])}</td>
-    </tr>
-  `).join('');
+let currentLoginGroup = 'b2c';
+function renderLoginGroupTabs() {
+  const tabs = document.getElementById('loginGroupTabs');
+  tabs.innerHTML = Object.keys(LOGIN_GROUPS).map(k => {
+    const g = LOGIN_GROUPS[k];
+    return `<button class="year-tab ${k===currentLoginGroup?'active':''}" data-group="${k}">${g.icon} ${g.name} <span style="opacity:0.6">(${g.data.length})</span></button>`;
+  }).join('');
+  tabs.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentLoginGroup = btn.dataset.group;
+      renderLoginGroupTabs();
+      renderLoginGroup();
+    });
+  });
 }
-
+function renderLoginGroup() {
+  const g = LOGIN_GROUPS[currentLoginGroup];
+  const host = document.getElementById('loginGroupHost');
+  const rows = g.data.map(row => `
+    <tr><td><b>${escapeHtml(row[0])}</b></td>
+    <td class="mono"><span class="secret">${escapeHtml(row[1])}</span></td>
+    <td class="mono"><span class="secret">${escapeHtml(row[2])}</span></td>
+    <td>${row[3] ? `<a href="${escapeHtml(row[3])}" target="_blank">${escapeHtml(row[3].length>40?row[3].slice(0,40)+'…':row[3])}</a>` : '-'}</td>
+    <td class="note">${escapeHtml(row[4])}</td></tr>`).join('');
+  host.innerHTML = `
+    <div class="card">
+      <div class="card-head">
+        <h3>${g.icon} ${escapeHtml(g.name)} <span style="font-weight:500; font-size:13px; color:var(--ink-soft); margin-left:6px;">${escapeHtml(g.desc)}</span></h3>
+        <span class="badge">${g.data.length}개 채널</span>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th style="width:22%">몰명</th><th style="width:18%">ID</th><th style="width:18%">PW</th><th style="width:22%">URL</th><th>담당자/비고</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>`;
+}
+function renderLoginTable() { renderLoginGroupTabs(); renderLoginGroup(); }
 function renderSabangTable() {
   document.getElementById('sabangTbody').innerHTML = SABANG_DATA.map(row => `
-    <tr>
-      <td><b>${escapeHtml(row[0])}</b></td>
-      <td class="mono"><span class="secret">${escapeHtml(row[1])}</span></td>
-      <td class="mono"><span class="secret">${escapeHtml(row[2])}</span></td>
-      <td>${row[3]?`<a href="${escapeHtml(row[3])}" target="_blank">관리</a>`:'-'}</td>
-      <td>${row[4]?`<a href="${escapeHtml(row[4])}" target="_blank">마켓</a>`:'-'}</td>
-      <td class="note">${escapeHtml(row[5])}</td>
-    </tr>
-  `).join('');
+    <tr><td><b>${escapeHtml(row[0])}</b></td>
+    <td class="mono"><span class="secret">${escapeHtml(row[1])}</span></td>
+    <td class="mono"><span class="secret">${escapeHtml(row[2])}</span></td>
+    <td>${row[3]?`<a href="${escapeHtml(row[3])}" target="_blank">관리</a>`:'-'}</td>
+    <td>${row[4]?`<a href="${escapeHtml(row[4])}" target="_blank">마켓</a>`:'-'}</td>
+    <td class="note">${escapeHtml(row[5])}</td></tr>`).join('');
 }
-
 function renderInstTable() {
   document.getElementById('instTbody').innerHTML = INST_DATA.map(row => `
-    <tr>
-      <td><b>${escapeHtml(row[0])}</b></td>
-      <td class="mono"><span class="secret">${escapeHtml(row[1])}</span></td>
-      <td class="mono"><span class="secret">${escapeHtml(row[2])}</span></td>
-      <td>${row[3]?`<a href="${escapeHtml(row[3])}" target="_blank">관리</a>`:'-'}</td>
-      <td>${row[4]?`<a href="${escapeHtml(row[4])}" target="_blank">마켓</a>`:'-'}</td>
-      <td class="note">${escapeHtml(row[5])}</td>
-    </tr>
-  `).join('');
+    <tr><td><b>${escapeHtml(row[0])}</b></td>
+    <td class="mono"><span class="secret">${escapeHtml(row[1])}</span></td>
+    <td class="mono"><span class="secret">${escapeHtml(row[2])}</span></td>
+    <td>${row[3]?`<a href="${escapeHtml(row[3])}" target="_blank">관리</a>`:'-'}</td>
+    <td>${row[4]?`<a href="${escapeHtml(row[4])}" target="_blank">마켓</a>`:'-'}</td>
+    <td class="note">${escapeHtml(row[5])}</td></tr>`).join('');
 }
-
 function renderMarketTable() {
   document.getElementById('marketTbody').innerHTML = MARKET_DATA.map(row => `
-    <tr>
-      <td><b>${escapeHtml(row[0])}</b></td>
-      <td class="mono"><span class="secret">${escapeHtml(row[1])}</span></td>
-      <td class="mono"><span class="secret">${escapeHtml(row[2])}</span></td>
-      <td><a href="${escapeHtml(row[3])}" target="_blank">${escapeHtml(row[3])}</a></td>
-    </tr>
-  `).join('');
+    <tr><td><b>${escapeHtml(row[0])}</b></td>
+    <td class="mono"><span class="secret">${escapeHtml(row[1])}</span></td>
+    <td class="mono"><span class="secret">${escapeHtml(row[2])}</span></td>
+    <td><a href="${escapeHtml(row[3])}" target="_blank">${escapeHtml(row[3])}</a></td></tr>`).join('');
 }
 
-// ====== CALENDAR RENDERING ======
+function renderStats() {
+  const yearEvents = Object.keys(events).filter(k => k.startsWith(currentYear + '-'));
+  let counts = {gonggu:0, coupang:0, event:0, meeting:0, internal:0, user:0};
+  yearEvents.forEach(k => {
+    (events[k]||[]).forEach(e => {
+      const c = e.c || 'user';
+      if (counts[c] !== undefined) counts[c]++;
+      else if (c !== 'holiday-text') counts.user++;
+    });
+  });
+  document.getElementById('statsHost').innerHTML = `
+    <div class="stat"><div class="stat-label">공동구매</div>
+      <div class="stat-value">${counts.gonggu}</div>
+      <div class="stat-sub">${currentYear}년 진행</div></div>
+    <div class="stat"><div class="stat-label">오픈마켓/쿠팡</div>
+      <div class="stat-value">${counts.coupang}</div>
+      <div class="stat-sub">${currentYear}년 행사</div></div>
+    <div class="stat"><div class="stat-label">펀딩/특별행사</div>
+      <div class="stat-value">${counts.event}</div>
+      <div class="stat-sub">${currentYear}년</div></div>
+    <div class="stat"><div class="stat-label">회의 / 사내일정</div>
+      <div class="stat-value">${counts.meeting + counts.internal}</div>
+      <div class="stat-sub">회의 ${counts.meeting} · 사내 ${counts.internal}</div></div>`;
+}
+
 function renderCalendar() {
   const host = document.getElementById('calendarHost');
   const dowNames = ['일','월','화','수','목','금','토'];
   const monthNames = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  const meta = YEAR_META[currentYear];
   let html = '';
-
-  for (let m = 1; m <= 12; m++) {
-    const mData = CALENDAR[m];
+  for (let m = 0; m < 12; m++) {
+    const mData = meta.months[m];
     html += `<div class="cal-month">
-      <h3>2025년 ${monthNames[m-1]}</h3>
+      <h3>${currentYear}년 ${monthNames[m]}</h3>
       <div class="cal-grid">`;
-    for (let i = 0; i < 7; i++) {
-      html += `<div class="cal-dow">${dowNames[i]}</div>`;
-    }
-    // empty cells before day 1
-    for (let i = 0; i < mData.firstDow; i++) {
-      html += `<div class="cal-cell empty"></div>`;
-    }
+    for (let i = 0; i < 7; i++) html += `<div class="cal-dow">${dowNames[i]}</div>`;
+    for (let i = 0; i < mData.first; i++) html += `<div class="cal-cell empty"></div>`;
     for (let d = 1; d <= mData.days; d++) {
-      const dow = (mData.firstDow + d - 1) % 7;
-      const evts = mData.events[d] || [];
+      const dow = (mData.first + d - 1) % 7;
+      const key = dateKey(currentYear, m+1, d);
+      const evts = events[key] || [];
       const isHoliday = evts.some(e => e.c === 'holiday-text');
       let cls = 'cal-cell';
       if (dow === 0) cls += ' sun';
       if (dow === 6) cls += ' sat';
       if (isHoliday) cls += ' holiday';
-      let evtHtml = evts.map(e => `<span class="cal-evt ${e.c||'gonggu'}">${escapeHtml(e.t)}</span>`).join('');
-      html += `<div class="${cls}"><div class="cal-date">${d}</div>${evtHtml}</div>`;
+      const evtHtml = evts.map((e, ei) => `<span class="cal-evt ${e.c||'user'}" title="${escapeHtml(e.note||e.t)}" onclick="event.stopPropagation();openModalEdit('${key}',${ei})">${escapeHtml(e.t)}</span>`).join('');
+      html += `<div class="${cls}" onclick="openModalAdd('${key}')"><div class="cal-date">${d}<span class="cal-add-mini">＋</span></div>${evtHtml}</div>`;
     }
-    // fill remaining
-    const total = mData.firstDow + mData.days;
+    const total = mData.first + mData.days;
     const remaining = (7 - (total % 7)) % 7;
-    for (let i = 0; i < remaining; i++) {
-      html += `<div class="cal-cell empty"></div>`;
-    }
+    for (let i = 0; i < remaining; i++) html += `<div class="cal-cell empty"></div>`;
     html += `</div></div>`;
   }
   host.innerHTML = html;
 }
 
-// ====== TABS ======
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1131,7 +957,114 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// ====== LOCK / UNLOCK ======
+document.querySelectorAll('.year-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.year-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentYear = parseInt(btn.dataset.year, 10);
+    renderStats(); renderCalendar();
+  });
+});
+
+let editingKey = null, editingIdx = null;
+
+function openModalAdd(key) {
+  editingKey = null; editingIdx = null;
+  document.getElementById('modalTitle').textContent = '일정 추가';
+  document.getElementById('modalSub').textContent = key + ' 에 새 일정을 추가합니다';
+  document.getElementById('evtDate').value = key;
+  document.getElementById('evtTitle').value = '';
+  document.getElementById('evtCat').value = 'user';
+  document.getElementById('evtNote').value = '';
+  document.getElementById('evtDelBtn').style.display = 'none';
+  document.getElementById('modalBg').classList.add('show');
+  setTimeout(() => document.getElementById('evtTitle').focus(), 100);
+}
+
+function openModalEdit(key, idx) {
+  editingKey = key; editingIdx = idx;
+  const e = events[key][idx];
+  document.getElementById('modalTitle').textContent = '일정 수정';
+  document.getElementById('modalSub').textContent = key + ' 의 일정을 수정합니다';
+  document.getElementById('evtDate').value = key;
+  document.getElementById('evtTitle').value = e.t;
+  document.getElementById('evtCat').value = e.c || 'user';
+  document.getElementById('evtNote').value = e.note || '';
+  document.getElementById('evtDelBtn').style.display = 'inline-block';
+  document.getElementById('modalBg').classList.add('show');
+}
+
+function closeModal() { document.getElementById('modalBg').classList.remove('show'); }
+
+document.getElementById('evtCancelBtn').addEventListener('click', closeModal);
+document.getElementById('modalBg').addEventListener('click', e => {
+  if (e.target.id === 'modalBg') closeModal();
+});
+
+document.getElementById('evtSaveBtn').addEventListener('click', () => {
+  const date = document.getElementById('evtDate').value;
+  const title = document.getElementById('evtTitle').value.trim();
+  const cat = document.getElementById('evtCat').value;
+  const note = document.getElementById('evtNote').value.trim();
+  if (!date || !title) { alert('날짜와 내용은 필수입니다.'); return; }
+  if (editingKey !== null && editingIdx !== null) {
+    events[editingKey].splice(editingIdx, 1);
+    if (events[editingKey].length === 0) delete events[editingKey];
+  }
+  if (!events[date]) events[date] = [];
+  events[date].push({t: title, c: cat, note: note});
+  saveEvents(); closeModal(); renderStats(); renderCalendar();
+});
+
+document.getElementById('evtDelBtn').addEventListener('click', () => {
+  if (editingKey === null) return;
+  if (!confirm('이 일정을 삭제하시겠습니까?')) return;
+  events[editingKey].splice(editingIdx, 1);
+  if (events[editingKey].length === 0) delete events[editingKey];
+  saveEvents(); closeModal(); renderStats(); renderCalendar();
+});
+
+document.getElementById('addEvtBtn').addEventListener('click', () => {
+  const today = new Date();
+  const k = dateKey(currentYear, today.getMonth()+1, today.getDate());
+  openModalAdd(k);
+});
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(events, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'park-jihyun-events-' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('importBtn').addEventListener('click', () => {
+  document.getElementById('importFile').click();
+});
+document.getElementById('importFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (confirm('현재 일정을 덮어쓰시겠습니까? (취소하면 병합)')) events = data;
+      else Object.keys(data).forEach(k => { events[k] = (events[k]||[]).concat(data[k]); });
+      saveEvents(); renderStats(); renderCalendar();
+      alert('✅ 일정을 불러왔습니다.');
+    } catch(err) { alert('❌ 파일을 읽을 수 없습니다.'); }
+  };
+  reader.readAsText(file);
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (!confirm('모든 일정을 기본값으로 되돌립니다. 추가한 일정은 삭제됩니다. 계속할까요?')) return;
+  events = JSON.parse(JSON.stringify(DEFAULT_EVENTS));
+  saveEvents(); renderStats(); renderCalendar();
+});
+
 function updateLockUI() {
   const body = document.body;
   const lockStatus = document.getElementById('lockStatus');
@@ -1161,8 +1094,7 @@ document.getElementById('unlockBtn').addEventListener('click', () => {
   const input = document.getElementById('pwInput').value;
   const err = document.getElementById('errMsg');
   if (input === getStoredPw()) {
-    isUnlocked = true;
-    err.textContent = '';
+    isUnlocked = true; err.textContent = '';
     document.getElementById('pwInput').value = '';
     updateLockUI();
   } else {
@@ -1176,8 +1108,7 @@ document.getElementById('pwInput').addEventListener('keypress', (e) => {
 });
 
 document.getElementById('lockBtn').addEventListener('click', () => {
-  isUnlocked = false;
-  updateLockUI();
+  isUnlocked = false; updateLockUI();
 });
 
 document.getElementById('changePwBtn').addEventListener('click', () => {
@@ -1186,19 +1117,27 @@ document.getElementById('changePwBtn').addEventListener('click', () => {
   if (cur !== getStoredPw()) { alert('현재 비밀번호가 일치하지 않습니다.'); return; }
   const newPw = prompt('새 비밀번호를 입력하세요 (4자 이상):');
   if (!newPw || newPw.length < 4) { alert('비밀번호는 4자 이상이어야 합니다.'); return; }
-  const confirm = prompt('새 비밀번호를 다시 입력하세요:');
-  if (confirm !== newPw) { alert('비밀번호가 일치하지 않습니다.'); return; }
+  const cf = prompt('새 비밀번호를 다시 입력하세요:');
+  if (cf !== newPw) { alert('비밀번호가 일치하지 않습니다.'); return; }
   setStoredPw(newPw);
   alert('✅ 비밀번호가 변경되었습니다.');
 });
 
-// ====== INIT ======
+function setTodayPill() {
+  const now = new Date();
+  const dateStr = now.getFullYear() + '.' + pad(now.getMonth()+1) + '.' + pad(now.getDate());
+  document.getElementById('todayPill').textContent = dateStr + ' · 운영중';
+}
+
+loadEvents();
 renderLoginTable();
 renderSabangTable();
 renderInstTable();
 renderMarketTable();
+renderStats();
 renderCalendar();
 updateLockUI();
+setTodayPill();
 </script>
 
 </body>
