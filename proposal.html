@@ -723,8 +723,38 @@ const CATALOG = [
   }
 ];
 
+// ============ CATEGORY GROUP & AGE MAPPING ============
+const SERIES_META = {
+  matchcube:  { group: "수학놀이",  ages: ["5~7세", "초등"] },
+  akirail:    { group: "조작/쌓기", ages: ["3~5세", "5~7세"] },
+  geoboard:   { group: "수학놀이",  ages: ["5~7세", "초등"] },
+  oyster:     { group: "수학놀이",  ages: ["5~7세", "초등"] },
+  algorithm:  { group: "보드게임",  ages: ["초등"] },
+  schoolwise: { group: "수학놀이",  ages: ["초등"] },
+  infant3:    { group: "조작/쌓기", ages: ["0~3세", "3~5세"] },
+  boardmath:  { group: "보드게임",  ages: ["5~7세", "초등"] },
+  boardkorea: { group: "보드게임",  ages: ["초등"] },
+  hunmin:     { group: "언어/퍼즐", ages: ["3~5세", "5~7세"] },
+  chilgyo:    { group: "언어/퍼즐", ages: ["5~7세", "초등"] },
+  magnet3d:   { group: "언어/퍼즐", ages: ["5~7세", "초등"] },
+  mathstick:  { group: "수학놀이",  ages: ["5~7세", "초등"] },
+  thinking:   { group: "수학놀이",  ages: ["5~7세", "초등"] },
+  domino:     { group: "수학놀이",  ages: ["3~5세", "5~7세", "초등"] },
+  edxpattern: { group: "수학놀이",  ages: ["5~7세", "초등"] },
+  edxgeo:     { group: "수학놀이",  ages: ["5~7세", "초등"] },
+  huntint:    { group: "언어/퍼즐", ages: ["3~5세", "5~7세"] }
+};
+const GROUPS = [
+  { id: "수학놀이",  icon: "🔢" },
+  { id: "언어/퍼즐", icon: "📝" },
+  { id: "보드게임",  icon: "🎲" },
+  { id: "조작/쌓기", icon: "🧱" }
+];
+const AGES = ["0~3세", "3~5세", "5~7세", "초등"];
+
 // ============ STATE ============
-let currentCat = 'all';
+let currentGroup = 'all';
+let currentAge = 'all';
 let currentFilter = 'all';
 let cart = [];
 let searchTerm = '';
@@ -753,67 +783,107 @@ function calcMargin(item) {
   return item.sale - item.cost - f.naver - f.seller - f.vendor;
 }
 
-// ============ RENDER CATEGORY TABS ============
+// ============ RENDER FILTER TABS (그룹 + 연령) ============
 function renderCatTabs() {
   const tabs = document.getElementById('catTabs');
   const allCount = CATALOG.reduce((s,c) => s + c.items.length, 0);
-  let html = `<div class="cat-tab ${currentCat==='all'?'active':''}" data-cat="all">📦 전체 <span class="cnt">${allCount}</span></div>`;
-  CATALOG.forEach(c => {
-    html += `<div class="cat-tab ${currentCat===c.id?'active':''}" data-cat="${c.id}">${c.icon} ${escapeHtml(c.name)} <span class="cnt">${c.items.length}</span></div>`;
+  // Row 1: 큰 카테고리 그룹
+  let html = `<div style="width:100%; display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:8px;">
+    <span style="font-size:10.5px; font-weight:800; color:var(--purple-deep); margin-right:6px; text-transform:uppercase; letter-spacing:0.4px;">카테고리</span>
+    <div class="cat-tab ${currentGroup==='all'?'active':''}" data-group="all">📦 전체 <span class="cnt">${allCount}</span></div>`;
+  GROUPS.forEach(g => {
+    const count = CATALOG.filter(c => SERIES_META[c.id] && SERIES_META[c.id].group === g.id)
+      .reduce((s,c) => s + c.items.length, 0);
+    html += `<div class="cat-tab ${currentGroup===g.id?'active':''}" data-group="${g.id}">${g.icon} ${escapeHtml(g.id)} <span class="cnt">${count}</span></div>`;
   });
+  html += `</div>`;
+  // Row 2: 연령
+  html += `<div style="width:100%; display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+    <span style="font-size:10.5px; font-weight:800; color:var(--purple-deep); margin-right:6px; text-transform:uppercase; letter-spacing:0.4px;">연령</span>
+    <div class="cat-tab ${currentAge==='all'?'active':''}" data-age="all">👶 전체</div>`;
+  AGES.forEach(a => {
+    html += `<div class="cat-tab ${currentAge===a?'active':''}" data-age="${a}">${escapeHtml(a)}</div>`;
+  });
+  html += `</div>`;
   tabs.innerHTML = html;
-  tabs.querySelectorAll('.cat-tab').forEach(t => {
+  tabs.querySelectorAll('.cat-tab[data-group]').forEach(t => {
     t.addEventListener('click', () => {
-      currentCat = t.dataset.cat;
+      currentGroup = t.dataset.group;
+      renderCatTabs(); renderCatalog();
+    });
+  });
+  tabs.querySelectorAll('.cat-tab[data-age]').forEach(t => {
+    t.addEventListener('click', () => {
+      currentAge = t.dataset.age;
       renderCatTabs(); renderCatalog();
     });
   });
 }
 
-// ============ RENDER CATALOG ============
+// ============ RENDER CATALOG (큰 카테고리별 그룹화) ============
 function renderCatalog() {
   const host = document.getElementById('catalogBody');
-  const cats = currentCat === 'all' ? CATALOG : CATALOG.filter(c => c.id === currentCat);
-  let html = '';
-  cats.forEach(c => {
-    const filtered = c.items.filter(item => {
-      if (searchTerm && !item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          !c.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
-      if (currentFilter === '추천') return item.badge && item.badge.includes('★');
-      if (currentFilter === '세트') return item.type === '세트' || item.type === '메인';
-      if (currentFilter === '단품') return item.type === '단품' || item.type === '추가옵션';
-      return true;
-    });
-    if (filtered.length === 0) return;
-    html += `<div class="series-block">
-      <div class="series-head">
-        <div class="series-name">${c.icon} ${escapeHtml(c.name)}</div>
-      </div>
-      <div class="series-notice">📍 ${escapeHtml(c.notice)}</div>
-      <div class="series-items">`;
-    filtered.forEach((item, idx) => {
-      const key = c.id + '__' + c.items.indexOf(item);
-      const isAdded = cart.find(ci => ci.key === key);
-      const imgSrc = item.img || c.img || '';
-      const typeClass = item.type === '세트' || item.type === '메인' ? 'set' :
-                        item.type === '추가옵션' ? 'option' : '';
-      const badgeHtml = item.badge ? `<span class="item-type recommended">${escapeHtml(item.badge)}</span>` : '';
-      html += `<div class="item-card ${isAdded?'added':''}" data-key="${key}">
-        <div class="item-img">${imgSrc ? `<img src="${imgSrc}" alt="" onerror="this.style.display='none'">` : c.icon}</div>
-        <div class="item-info">
-          <span class="item-type ${typeClass}">${escapeHtml(item.type)}</span>${badgeHtml}
-          <div class="item-name">${escapeHtml(item.name)}</div>
-          <div class="item-price">
-            <span class="strike">${fmt(item.consumer)}</span>
-            <span class="sale">${fmt(item.sale)}원</span>
-          </div>
-        </div>
-        <button class="item-add" data-key="${key}">${isAdded?'✓':'＋'}</button>
-      </div>`;
-    });
-    html += `</div></div>`;
+  // 필터: 그룹/연령에 맞는 시리즈만 추림
+  const matchSeries = CATALOG.filter(c => {
+    const meta = SERIES_META[c.id];
+    if (!meta) return true;
+    if (currentGroup !== 'all' && meta.group !== currentGroup) return false;
+    if (currentAge !== 'all' && !meta.ages.includes(currentAge)) return false;
+    return true;
   });
-  if (!html) html = '<div style="padding:40px 20px; text-align:center; color:var(--ink-soft);">검색 결과가 없습니다.</div>';
+  // 큰 카테고리별로 그룹화 (수학놀이 → 언어/퍼즐 → 보드게임 → 조작/쌓기 순)
+  const groupOrder = currentGroup === 'all' ? GROUPS.map(g=>g.id) : [currentGroup];
+  let html = '';
+  groupOrder.forEach(groupId => {
+    const seriesInGroup = matchSeries.filter(c => SERIES_META[c.id] && SERIES_META[c.id].group === groupId);
+    if (seriesInGroup.length === 0) return;
+    const groupIcon = GROUPS.find(g => g.id === groupId)?.icon || '📦';
+    // 큰 카테고리 헤더
+    html += `<div style="margin: 24px 0 12px; padding: 10px 14px; background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-main) 100%); color: white; border-radius: 10px; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+      ${groupIcon} ${escapeHtml(groupId)} <span style="opacity:0.7; font-size:12px; font-weight:500;">· ${seriesInGroup.length}개 시리즈</span>
+    </div>`;
+    seriesInGroup.forEach(c => {
+      const filtered = c.items.filter(item => {
+        if (searchTerm && !item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            !c.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+        if (currentFilter === '추천') return item.badge && item.badge.includes('★');
+        if (currentFilter === '세트') return item.type === '세트' || item.type === '메인';
+        if (currentFilter === '단품') return item.type === '단품' || item.type === '추가옵션';
+        return true;
+      });
+      if (filtered.length === 0) return;
+      const meta = SERIES_META[c.id];
+      const ageBadges = meta ? meta.ages.map(a => `<span style="display:inline-block; padding:1px 6px; background:var(--purple-bg); color:var(--purple-deep); border-radius:8px; font-size:9.5px; font-weight:600; margin-left:4px;">${a}</span>`).join('') : '';
+      html += `<div class="series-block">
+        <div class="series-head">
+          <div class="series-name">${c.icon} ${escapeHtml(c.name)}${ageBadges}</div>
+        </div>
+        <div class="series-notice">📍 ${escapeHtml(c.notice)}</div>
+        <div class="series-items">`;
+      filtered.forEach(item => {
+        const key = c.id + '__' + c.items.indexOf(item);
+        const isAdded = cart.find(ci => ci.key === key);
+        const imgSrc = item.img || c.img || '';
+        const typeClass = item.type === '세트' || item.type === '메인' ? 'set' :
+                          item.type === '추가옵션' ? 'option' : '';
+        const badgeHtml = item.badge ? `<span class="item-type recommended">${escapeHtml(item.badge)}</span>` : '';
+        html += `<div class="item-card ${isAdded?'added':''}" data-key="${key}">
+          <div class="item-img">${imgSrc ? `<img src="${imgSrc}" alt="" onerror="this.style.display='none'">` : c.icon}</div>
+          <div class="item-info">
+            <span class="item-type ${typeClass}">${escapeHtml(item.type)}</span>${badgeHtml}
+            <div class="item-name">${escapeHtml(item.name)}</div>
+            <div class="item-price">
+              <span class="strike">${fmt(item.consumer)}</span>
+              <span class="sale">${fmt(item.sale)}원</span>
+            </div>
+          </div>
+          <button class="item-add" data-key="${key}">${isAdded?'✓':'＋'}</button>
+        </div>`;
+      });
+      html += `</div></div>`;
+    });
+  });
+  if (!html) html = '<div style="padding:40px 20px; text-align:center; color:var(--ink-soft);">선택한 조건에 맞는 상품이 없습니다.</div>';
   host.innerHTML = html;
   host.querySelectorAll('.item-add').forEach(btn => {
     btn.addEventListener('click', e => {
