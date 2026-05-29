@@ -102,33 +102,37 @@
   .series-name { font-size: 15px; font-weight: 800; color: var(--purple-deep);
     display: flex; align-items: center; gap: 6px; }
   .series-notice { font-size: 11px; color: var(--ink-soft); margin-bottom: 8px; font-style: italic; }
-  .series-items { display: grid; gap: 6px; }
-  .item-card { display: grid; grid-template-columns: 60px 1fr auto; gap: 10px;
-    align-items: center; padding: 8px; border: 1px solid var(--line);
-    border-radius: 8px; background: white; transition: all 0.15s; }
+  .series-items { display: grid; gap: 6px; grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 720px) { .series-items { grid-template-columns: 1fr; } }
+  .item-card { display: grid; grid-template-columns: 48px 1fr 28px; gap: 8px;
+    align-items: center; padding: 6px; border: 1px solid var(--line);
+    border-radius: 8px; background: white; transition: all 0.15s; min-height: 60px; }
   .item-card:hover { border-color: var(--purple-soft); background: #FCFBFF; }
   .item-card.added { border-color: var(--success); background: #F0FDF4; }
-  .item-img { width: 60px; height: 60px; border-radius: 6px; background: var(--purple-bg);
+  .item-img { width: 48px; height: 48px; border-radius: 6px; background: var(--purple-bg);
     display: flex; align-items: center; justify-content: center; overflow: hidden;
-    font-size: 20px; color: var(--purple-mid); }
+    font-size: 18px; color: var(--purple-mid); position: relative; }
   .item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .item-img .fallback-emoji { position: absolute; inset: 0; display: flex;
+    align-items: center; justify-content: center; font-size: 22px; }
   .item-info { min-width: 0; }
-  .item-type { display: inline-block; padding: 2px 6px; background: var(--purple-bg);
-    color: var(--purple-deep); border-radius: 4px; font-size: 10px; font-weight: 700;
-    margin-bottom: 4px; }
+  .item-type { display: inline-block; padding: 1px 5px; background: var(--purple-bg);
+    color: var(--purple-deep); border-radius: 3px; font-size: 9.5px; font-weight: 700;
+    margin-right: 3px; }
   .item-type.set { background: #DBEAFE; color: #1E3A8A; }
   .item-type.option { background: #FEF3C7; color: #92400E; }
   .item-type.recommended { background: #FECACA; color: #991B1B; }
-  .item-name { font-size: 12.5px; font-weight: 600; color: var(--ink); line-height: 1.3;
-    word-break: break-word; margin-bottom: 3px; }
-  .item-price { font-size: 11.5px; color: var(--ink-soft); }
-  .item-price .sale { color: var(--purple-deep); font-weight: 700; font-size: 13px; }
-  .item-price .strike { text-decoration: line-through; color: #AAA; margin-right: 4px; }
+  .item-name { font-size: 11.5px; font-weight: 600; color: var(--ink); line-height: 1.25;
+    word-break: break-word; margin: 2px 0; overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .item-price { font-size: 10.5px; color: var(--ink-soft); }
+  .item-price .sale { color: var(--purple-deep); font-weight: 700; font-size: 12px; }
+  .item-price .strike { text-decoration: line-through; color: #AAA; margin-right: 3px; font-size: 9.5px; }
   .item-margin { color: var(--success); font-weight: 600; }
-  .item-add { width: 32px; height: 32px; border: none; cursor: pointer;
+  .item-add { width: 28px; height: 28px; border: none; cursor: pointer;
     background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-mid) 100%);
-    color: white; border-radius: 8px; font-size: 16px; font-weight: 700;
-    transition: all 0.15s; }
+    color: white; border-radius: 6px; font-size: 14px; font-weight: 700;
+    transition: all 0.15s; padding: 0; }
   .item-add:hover { transform: scale(1.05); }
   .item-card.added .item-add { background: var(--success); }
 
@@ -253,6 +257,68 @@
   .catalog-body::-webkit-scrollbar, .cart-list::-webkit-scrollbar { width: 8px; }
   .catalog-body::-webkit-scrollbar-thumb, .cart-list::-webkit-scrollbar-thumb {
     background: var(--purple-soft); border-radius: 8px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1280px) {
+    .workspace { grid-template-columns: 1fr 420px; gap: 16px; padding: 16px; }
+  }
+  @media (max-width: 1024px) {
+    .workspace { grid-template-columns: 1fr; padding: 14px; }
+    .catalog { height: auto; max-height: 70vh; position: static; }
+    .builder { position: sticky; bottom: 0; max-height: 85vh; overflow-y: auto; }
+    .header { padding: 16px 20px; }
+    .brand-title { font-size: 18px; }
+    .brand-sub { font-size: 11px; }
+  }
+  @media (max-width: 768px) {
+    body { font-size: 13px; }
+    .header { padding: 14px 16px; }
+    .header-inner { gap: 10px; }
+    .logo-mark { width: 40px; height: 40px; font-size: 20px; }
+    .brand-title { font-size: 16px; }
+    .brand-sub { font-size: 10px; }
+    .back-link { font-size: 11px; padding: 6px 10px; }
+    .workspace { padding: 10px; gap: 12px; }
+    .catalog-head, .builder-head { padding: 12px 14px; }
+    .catalog-title, .builder-title { font-size: 14px; }
+    .builder-body { padding: 14px; }
+    .catalog-body { padding: 12px 14px; }
+    .search-row { flex-direction: column; align-items: stretch; }
+    .search-box { width: 100%; }
+    .filter-chip { padding: 6px 10px; font-size: 11px; }
+    .cat-tabs { padding: 8px 12px; }
+    .cat-tab { padding: 6px 10px; font-size: 11px; }
+    .series-name { font-size: 13.5px; }
+    .item-card { grid-template-columns: 50px 1fr auto; padding: 6px; gap: 8px; }
+    .item-img { width: 50px; height: 50px; font-size: 18px; }
+    .item-name { font-size: 11.5px; }
+    .item-add { width: 28px; height: 28px; font-size: 14px; }
+    .field-row { grid-template-columns: 1fr; }
+    .commission-box .row { grid-template-columns: 80px 1fr; }
+    .commission-box .row > span:last-child { display: none; }
+    .actions { grid-template-columns: 1fr; }
+    .modal { border-radius: 12px; }
+    .proposal-output { padding: 18px; }
+    .proposal-head h1 { font-size: 18px; }
+    .proposal-meta { grid-template-columns: 1fr; gap: 6px; padding: 10px; }
+    .proposal-table { font-size: 10.5px; display: block; overflow-x: auto; white-space: nowrap; }
+    .proposal-table thead, .proposal-table tbody, .proposal-table tr { display: table; width: 100%; table-layout: auto; }
+    .modal-bg { padding: 10px; }
+    .modal > div:last-child { flex-wrap: wrap; }
+    .modal > div:last-child .btn { flex: 1; min-width: 110px; font-size: 11.5px; padding: 9px 10px; }
+  }
+  @media (max-width: 480px) {
+    .header { padding: 12px; }
+    .header-inner { flex-direction: column; align-items: stretch; }
+    .back-link { text-align: center; }
+    .brand-title { font-size: 15px; }
+    .item-card { grid-template-columns: 44px 1fr 28px; }
+    .item-img { width: 44px; height: 44px; }
+    .item-price .sale { font-size: 12px; }
+    .item-price .strike { font-size: 10px; }
+    .totals { font-size: 11.5px; padding: 10px; }
+    .totals .row.bold { font-size: 13px; }
+  }
 </style>
 </head>
 <body>
@@ -378,6 +444,7 @@
 const CATALOG = [
   {
     id: "matchcube", icon: "🔢", name: "매쓰큐브 / 넘버블럭",
+    img: "https://brainsoop.com/web/product/medium/202605/5733ad23016d94a9a62c2afb1b0bbbd9.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"세트", name:"매쓰큐브 100피스 + 펜토미노 기초편", desc:"매쓰큐브 100pcs + 가이드북 + 펜토미노교재-기초", consumer:55000, sale:29500, cost:15500, vrate:12},
@@ -395,6 +462,7 @@ const CATALOG = [
   },
   {
     id: "akirail", icon: "🚂", name: "아키레일 티니",
+    img: "https://brainsoop.com/web/upload/share-image-1-1dc45d6fe61d015e10eac3e3f96847e0.jpg",
     notice: "한진택배 / 무료배송",
     items: [
       {type:"세트", name:"아키레일 - 티니베이직 105pcs + 전용교재", consumer:38000, sale:23900, cost:8636, vrate:12},
@@ -403,6 +471,7 @@ const CATALOG = [
   },
   {
     id: "geoboard", icon: "📐", name: "지오보드",
+    img: "https://brainsoop.com/web/product/medium/202505/07564d76e03248dd37e35475a27cacf3.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     storeUrl: "https://smartstore.naver.com/brainsoop/products/7942974719",
     items: [
@@ -432,6 +501,7 @@ const CATALOG = [
   },
   {
     id: "algorithm", icon: "🧩", name: "알고리즘 시리즈",
+    img: "https://brainsoop.com/web/product/medium/202506/1d86c697e3de53185eb19d235cc5541b.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원 · 공구마감 후 정답지 메일 발송",
     items: [
       {type:"세트", name:"알고리즘 하노이탑 + 교재", consumer:43000, sale:29500, cost:10729, vrate:12},
@@ -445,6 +515,7 @@ const CATALOG = [
   },
   {
     id: "schoolwise", icon: "🎓", name: "스쿨와이즈 시리즈",
+    img: "https://brainsoop.com/web/product/medium/202505/a41ca5a2c34bf87b74a1ba491be9b019.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"세트", name:"스쿨와이즈 - 로드맵 + 교재", consumer:45000, sale:24500, cost:13000, vrate:12},
@@ -456,6 +527,7 @@ const CATALOG = [
   },
   {
     id: "infant3", icon: "🍼", name: "영유아 놀이교구 3종",
+    img: "https://brainsoop.com/web/product/medium/201712/856_shop1_444109.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"단품", code:"MRC02301", name:"말랑말랑 식기세트", consumer:100000, sale:45000, cost:21000, vrate:12, note:"한정수량 80개"},
@@ -466,6 +538,7 @@ const CATALOG = [
   },
   {
     id: "boardmath", icon: "🎲", name: "수학 보드게임",
+    img: "https://brainsoop.com/web/product/medium/202508/2966f53e6ddc32d92124f1897bd837e3.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"세트", name:"수학세트 (피자+99+피쉬+타임+퀵)", consumer:157000, sale:97000, cost:67352, vrate:12, badge:"★추천"},
@@ -481,6 +554,7 @@ const CATALOG = [
   },
   {
     id: "boardkorea", icon: "🏛️", name: "한국사 보드게임",
+    img: "https://brainsoop.com/web/product/medium/202304/b0388095c544bc057ea827fc02ffb101.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"세트", name:"한국사세트 (1~4편)", consumer:157000, sale:85000, cost:49280, vrate:10, badge:"★추천"},
@@ -508,6 +582,7 @@ const CATALOG = [
   },
   {
     id: "chilgyo", icon: "🔷", name: "일곱조각 칠교 / 교과칠교",
+    img: "https://brainsoop.com/web/product/medium/202506/cb9d1745d0956fd19d80f62e25bd843a.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"메인", name:"칠교놀이 풀세트 (원목칠교1 + 교재1 + 교재2)", consumer:41000, sale:29000, cost:15110, vrate:10, badge:"★추천"},
@@ -527,6 +602,7 @@ const CATALOG = [
   },
   {
     id: "magnet3d", icon: "🧲", name: "속담 3D자석칠교",
+    img: "https://brainsoop.com/web/product/medium/202304/4d2a456af5b6bd2846bebc5f308e4dfd.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원 · 원자재 상승으로 일부 단가 인상",
     items: [
       {type:"세트", code:"600123", name:"속담자석칠교 활동세트", desc:"3D자석입체칠교 + 활동북", consumer:45000, sale:28000, cost:14750, vrate:10},
@@ -545,6 +621,7 @@ const CATALOG = [
   },
   {
     id: "mathstick", icon: "📏", name: "매쓰스틱",
+    img: "https://brainsoop.com/web/product/medium/202509/447e9eb115d0035af08e69938b8c1189.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"세트", name:"매쓰스틱 + 교재1", consumer:38000, sale:19500, cost:9500, vrate:10},
@@ -555,6 +632,7 @@ const CATALOG = [
   },
   {
     id: "thinking", icon: "💭", name: "사고력 시리즈",
+    img: "https://brainsoop.com/web/product/medium/202505/573c3a9d43164bbe89bfcf195181e0c6.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"단품", code:"THP03101", name:"사고력 - 육각퍼즐세트", consumer:33000, sale:18900, cost:7300, vrate:12},
@@ -567,6 +645,7 @@ const CATALOG = [
   },
   {
     id: "domino", icon: "🎯", name: "도미노",
+    img: "https://brainsoop.com/web/product/medium/201908/e7e56f6e2ce8515c6f87e671c085f9a1.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"단품", code:"100580", name:"패밀리 도미노그램 18 + 활동카드", consumer:75000, sale:49000, cost:36001, vrate:10, note:"최저가 55,000"},
@@ -580,6 +659,7 @@ const CATALOG = [
   },
   {
     id: "edxpattern", icon: "🔶", name: "EDX 패턴블럭",
+    img: "https://brainsoop.com/web/product/medium/202504/78fb1ba22929449251a0d1c566586b10.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"세트", name:"패턴블럭 100 유아용", consumer:40000, sale:24000, cost:9869, vrate:12},
@@ -592,6 +672,7 @@ const CATALOG = [
   },
   {
     id: "edxgeo", icon: "⚪", name: "EDX 지오볼",
+    img: "https://brainsoop.com/web/product/medium/202506/b44bd1058f2de9cd98c2d1cff05f52a2.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"세트", code:"E03001", name:"[EDX] 지오볼기하학레드 330 + 지도서 + 활동카드", consumer:95000, sale:57000, cost:35540, vrate:12, note:"최저가 80,350"},
@@ -602,6 +683,7 @@ const CATALOG = [
   },
   {
     id: "huntint", icon: "✏️", name: "훈민틴트 82",
+    img: "https://brainsoop.com/web/product/medium/202011/f148b580be146ba1d9ad4859747d17ec.jpg",
     notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
     items: [
       {type:"세트", code:"HUT04101", name:"훈민틴트82 + 전용놀이북", consumer:184000, sale:105000, cost:64270, vrate:10},
