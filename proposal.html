@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>박지현 팀장 · 공구 제안서 빌더 · 브레인숲</title>
+<style>
+  :root {
+    color-scheme: light;
+    --purple-deep: #4C1D95;
+    --purple-main: #6D28D9;
+    --purple-mid: #8B5CF6;
+    --purple-soft: #C4B5FD;
+    --purple-bg: #F3EFFF;
+    --yellow-deep: #B7791F;
+    --yellow-main: #ECC94B;
+    --yellow-soft: #FAF089;
+    --yellow-bg: #FEF9E7;
+    --cream: #FCFBF7;
+    --paper: #FFFFFF;
+    --ink: #1A1033;
+    --ink-soft: #5B4B7A;
+    --line: #E8E2F0;
+    --danger: #C53030;
+    --success: #16A34A;
+    --shadow: 0 4px 20px rgba(109, 40, 217, 0.08);
+    --shadow-lg: 0 10px 40px rgba(109, 40, 217, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+    background: linear-gradient(135deg, #FAF8FF 0%, #F5F0FA 100%);
+    color: var(--ink); line-height: 1.55; min-height: 100vh; font-size: 14px;
+  }
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-main) 60%, var(--purple-mid) 100%);
+    color: white; padding: 20px 32px;
+    box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+  }
+  .header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(236,201,75,0.25) 0%, transparent 70%); pointer-events: none; }
+  .header-inner { max-width: 1600px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;
+    position: relative; z-index: 1; flex-wrap: wrap; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .logo-mark { width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--yellow-main) 0%, var(--yellow-soft) 100%);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(236,201,75,0.4); font-size: 24px; }
+  .brand-title { font-size: 21px; font-weight: 800; letter-spacing: -0.5px; }
+  .brand-sub { font-size: 12px; opacity: 0.9; font-weight: 400; margin-top: 2px; letter-spacing: 0.5px; }
+  .back-link { color: white; text-decoration: none; font-size: 13px; opacity: 0.9;
+    padding: 8px 14px; background: rgba(255,255,255,0.15); border-radius: 100px;
+    backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.2s; }
+  .back-link:hover { background: rgba(255,255,255,0.25); }
+
+  /* ===== LAYOUT ===== */
+  .workspace {
+    max-width: 1600px; margin: 0 auto; padding: 20px 24px 80px;
+    display: grid; grid-template-columns: 1fr 480px; gap: 20px;
+  }
+  @media (max-width: 1024px) { .workspace { grid-template-columns: 1fr; } }
+
+  /* ===== LEFT: CATALOG ===== */
+  .catalog { background: var(--paper); border-radius: 16px;
+    box-shadow: var(--shadow); border: 1px solid var(--line);
+    display: flex; flex-direction: column; height: calc(100vh - 130px); position: sticky; top: 20px;
+  }
+  .catalog-head { padding: 16px 20px; border-bottom: 1px solid var(--line);
+    background: linear-gradient(135deg, var(--purple-bg) 0%, #FBF9FF 100%);
+    border-radius: 16px 16px 0 0; }
+  .catalog-title { font-size: 16px; font-weight: 800; color: var(--purple-deep); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px; }
+  .search-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .search-box { flex: 1; min-width: 180px; padding: 10px 14px; border: 1.5px solid var(--line);
+    border-radius: 10px; font-family: inherit; font-size: 13.5px; background: white;
+    transition: border-color 0.2s; }
+  .search-box:focus { outline: none; border-color: var(--purple-mid); }
+  .filter-chip { padding: 8px 12px; background: white; border: 1.5px solid var(--line);
+    border-radius: 100px; cursor: pointer; font-size: 12px; font-weight: 600;
+    color: var(--ink-soft); transition: all 0.15s; }
+  .filter-chip:hover { border-color: var(--purple-soft); }
+  .filter-chip.active { background: var(--purple-main); color: white; border-color: var(--purple-main); }
+
+  .cat-tabs { display: flex; gap: 4px; padding: 12px 16px; border-bottom: 1px solid var(--line);
+    overflow-x: auto; background: var(--cream); }
+  .cat-tab { padding: 7px 12px; background: white; border: 1px solid var(--line);
+    border-radius: 100px; cursor: pointer; font-size: 12px; font-weight: 600;
+    color: var(--ink-soft); white-space: nowrap; transition: all 0.15s; }
+  .cat-tab:hover { color: var(--purple-deep); }
+  .cat-tab.active { background: var(--purple-deep); color: white; border-color: var(--purple-deep); }
+  .cat-tab .cnt { opacity: 0.7; font-size: 10.5px; margin-left: 4px; }
+
+  .catalog-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
+  .series-block { margin-bottom: 24px; }
+  .series-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--yellow-main);
+  }
+  .series-name { font-size: 15px; font-weight: 800; color: var(--purple-deep);
+    display: flex; align-items: center; gap: 6px; }
+  .series-notice { font-size: 11px; color: var(--ink-soft); margin-bottom: 8px; font-style: italic; }
+  .series-items { display: grid; gap: 6px; }
+  .item-card { display: grid; grid-template-columns: 60px 1fr auto; gap: 10px;
+    align-items: center; padding: 8px; border: 1px solid var(--line);
+    border-radius: 8px; background: white; transition: all 0.15s; }
+  .item-card:hover { border-color: var(--purple-soft); background: #FCFBFF; }
+  .item-card.added { border-color: var(--success); background: #F0FDF4; }
+  .item-img { width: 60px; height: 60px; border-radius: 6px; background: var(--purple-bg);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    font-size: 20px; color: var(--purple-mid); }
+  .item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .item-info { min-width: 0; }
+  .item-type { display: inline-block; padding: 2px 6px; background: var(--purple-bg);
+    color: var(--purple-deep); border-radius: 4px; font-size: 10px; font-weight: 700;
+    margin-bottom: 4px; }
+  .item-type.set { background: #DBEAFE; color: #1E3A8A; }
+  .item-type.option { background: #FEF3C7; color: #92400E; }
+  .item-type.recommended { background: #FECACA; color: #991B1B; }
+  .item-name { font-size: 12.5px; font-weight: 600; color: var(--ink); line-height: 1.3;
+    word-break: break-word; margin-bottom: 3px; }
+  .item-price { font-size: 11.5px; color: var(--ink-soft); }
+  .item-price .sale { color: var(--purple-deep); font-weight: 700; font-size: 13px; }
+  .item-price .strike { text-decoration: line-through; color: #AAA; margin-right: 4px; }
+  .item-margin { color: var(--success); font-weight: 600; }
+  .item-add { width: 32px; height: 32px; border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-mid) 100%);
+    color: white; border-radius: 8px; font-size: 16px; font-weight: 700;
+    transition: all 0.15s; }
+  .item-add:hover { transform: scale(1.05); }
+  .item-card.added .item-add { background: var(--success); }
+
+  /* ===== RIGHT: BUILDER ===== */
+  .builder { background: var(--paper); border-radius: 16px;
+    box-shadow: var(--shadow); border: 1px solid var(--line);
+    display: flex; flex-direction: column; }
+  .builder-head { padding: 16px 20px; border-bottom: 1px solid var(--line);
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-main) 100%);
+    color: white; border-radius: 16px 16px 0 0; }
+  .builder-title { font-size: 16px; font-weight: 800; }
+  .builder-sub { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+  .builder-body { padding: 18px 20px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 11px; font-weight: 800;
+    color: var(--purple-deep); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .field input, .field select { width: 100%; padding: 10px 12px;
+    border: 1.5px solid var(--line); border-radius: 8px; font-family: inherit;
+    font-size: 13.5px; background: var(--cream); transition: border-color 0.2s; }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--purple-mid); background: white; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .commission-box { background: var(--yellow-bg); border-radius: 10px; padding: 12px; margin-bottom: 16px; }
+  .commission-box .row { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 8px; align-items: center;
+    font-size: 12.5px; margin-bottom: 6px; }
+  .commission-box .row:last-child { margin-bottom: 0; }
+  .commission-box .lbl { color: var(--ink-soft); font-weight: 600; }
+  .commission-input { padding: 6px 10px; border: 1.5px solid var(--line);
+    border-radius: 6px; font-family: inherit; font-size: 13px; background: white; }
+
+  .cart-list { max-height: 350px; overflow-y: auto; margin-bottom: 12px; }
+  .cart-empty { padding: 30px 0; text-align: center; color: var(--ink-soft); font-size: 13px;
+    border: 2px dashed var(--line); border-radius: 10px; }
+  .cart-item { display: grid; grid-template-columns: 40px 1fr auto; gap: 8px;
+    padding: 8px; border-radius: 8px; background: var(--cream); margin-bottom: 6px;
+    align-items: center; }
+  .cart-img { width: 40px; height: 40px; border-radius: 6px; background: var(--purple-bg);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    font-size: 14px; }
+  .cart-img img { width: 100%; height: 100%; object-fit: cover; }
+  .cart-info { min-width: 0; font-size: 11.5px; }
+  .cart-name { font-weight: 700; color: var(--ink); margin-bottom: 2px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cart-price { color: var(--ink-soft); font-size: 10.5px; }
+  .cart-price .b { color: var(--purple-deep); font-weight: 700; }
+  .cart-del { width: 26px; height: 26px; border: none; cursor: pointer; background: #FEE2E2;
+    color: var(--danger); border-radius: 6px; font-size: 12px; font-weight: 700; }
+
+  .totals { padding: 12px; background: var(--purple-bg); border-radius: 10px; margin-bottom: 12px; font-size: 12.5px; }
+  .totals .row { display: flex; justify-content: space-between; padding: 3px 0; }
+  .totals .row.bold { font-weight: 800; color: var(--purple-deep); font-size: 14px;
+    border-top: 1px solid var(--purple-soft); margin-top: 6px; padding-top: 8px; }
+
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .btn { padding: 11px 14px; border: none; border-radius: 10px; cursor: pointer;
+    font-family: inherit; font-size: 12.5px; font-weight: 700;
+    transition: all 0.15s; }
+  .btn.primary { background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-mid) 100%);
+    color: white; box-shadow: 0 4px 12px rgba(109,40,217,0.25); }
+  .btn.primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(109,40,217,0.35); }
+  .btn.gold { background: linear-gradient(135deg, var(--yellow-main) 0%, #D4A93A 100%); color: #4A3A14; }
+  .btn.ghost { background: white; color: var(--purple-main); border: 1.5px solid var(--purple-mid); }
+  .btn.ghost:hover { background: var(--purple-bg); }
+
+  .toggle-row { display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px; background: var(--cream); border-radius: 8px; margin-bottom: 10px;
+    font-size: 12.5px; font-weight: 600; }
+  .toggle { position: relative; display: inline-block; width: 38px; height: 22px; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #CBD5E0;
+    border-radius: 22px; transition: 0.2s; }
+  .toggle-slider::before { content: ''; position: absolute; height: 16px; width: 16px;
+    left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.2s; }
+  .toggle input:checked + .toggle-slider { background: var(--purple-main); }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(16px); }
+
+  /* ===== PREVIEW MODAL ===== */
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(26,16,51,0.55);
+    z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); padding: 20px; }
+  .modal-bg.show { display: flex; }
+  .modal { background: white; border-radius: 16px; box-shadow: var(--shadow-lg);
+    width: 800px; max-width: 100%; max-height: 92vh; overflow: auto;
+    animation: modalIn 0.2s ease; }
+  @keyframes modalIn { from { transform: scale(0.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  /* ===== PROPOSAL OUTPUT ===== */
+  .proposal-output { padding: 32px; background: white; }
+  .proposal-head { text-align: center; padding-bottom: 20px; border-bottom: 3px solid var(--purple-main);
+    margin-bottom: 20px; }
+  .proposal-head h1 { color: var(--purple-deep); font-size: 24px; margin-bottom: 6px; letter-spacing: -0.5px; }
+  .proposal-head .sub { color: var(--ink-soft); font-size: 13px; }
+  .proposal-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    padding: 14px 16px; background: var(--purple-bg); border-radius: 10px; margin-bottom: 16px; font-size: 13px; }
+  .proposal-meta b { color: var(--purple-deep); display: block; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; }
+  .proposal-notice { padding: 12px 14px; background: var(--yellow-bg); border-radius: 8px;
+    margin-bottom: 16px; font-size: 12.5px; color: #6B5520; }
+  .proposal-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12px; }
+  .proposal-table th { background: var(--purple-deep); color: white; padding: 8px 6px;
+    font-weight: 700; text-align: center; font-size: 11px; }
+  .proposal-table td { padding: 8px 6px; border-bottom: 1px solid var(--line); }
+  .proposal-table .p-name { font-weight: 700; }
+  .proposal-table .p-img { width: 44px; height: 44px; }
+  .proposal-table .p-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+  .proposal-table .num { text-align: right; font-family: 'SF Mono', monospace; font-size: 11.5px; }
+  .proposal-table tfoot td { background: var(--purple-bg); font-weight: 700;
+    color: var(--purple-deep); border-top: 2px solid var(--purple-main); }
+  .internal-only { background: #FEE2E2 !important; }
+  .proposal-foot { padding-top: 16px; border-top: 1px solid var(--line); text-align: center;
+    color: var(--ink-soft); font-size: 11.5px; }
+
+  /* PRINT */
+  @media print {
+    body { background: white; }
+    .header, .workspace, .modal-bg { display: none !important; }
+    .modal-bg.show { display: block !important; position: static; padding: 0; background: white; }
+    .modal { box-shadow: none; max-height: none; width: 100%; }
+    .proposal-output { padding: 0; }
+  }
+
+  /* SCROLLBARS */
+  .catalog-body::-webkit-scrollbar, .cart-list::-webkit-scrollbar { width: 8px; }
+  .catalog-body::-webkit-scrollbar-thumb, .cart-list::-webkit-scrollbar-thumb {
+    background: var(--purple-soft); border-radius: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo-mark">📋</div>
+      <div>
+        <div class="brand-title">공구 제안서 빌더</div>
+        <div class="brand-sub">박지현 팀장 · 브레인숲 Operation Center</div>
+      </div>
+    </div>
+    <a href="index.html" class="back-link">← 대시보드로 돌아가기</a>
+  </div>
+</div>
+
+<div class="workspace">
+  <!-- ========== LEFT: CATALOG ========== -->
+  <div class="catalog">
+    <div class="catalog-head">
+      <div class="catalog-title">🛍️ 상품 카탈로그 <span style="font-weight:500; color:var(--ink-soft); font-size:12px;">(상품 클릭 → 제안서에 추가)</span></div>
+      <div class="search-row">
+        <input type="text" class="search-box" id="searchInput" placeholder="🔍 상품명·시리즈 검색...">
+        <div class="filter-chip active" data-filter="all">전체</div>
+        <div class="filter-chip" data-filter="세트">세트</div>
+        <div class="filter-chip" data-filter="단품">단품</div>
+        <div class="filter-chip" data-filter="추천">★ 추천</div>
+      </div>
+    </div>
+    <div class="cat-tabs" id="catTabs"></div>
+    <div class="catalog-body" id="catalogBody"></div>
+  </div>
+
+  <!-- ========== RIGHT: BUILDER ========== -->
+  <div class="builder">
+    <div class="builder-head">
+      <div class="builder-title">✏️ 제안서 빌더</div>
+      <div class="builder-sub">셀러 정보 입력 → 상품 선택 → 제안서 생성</div>
+    </div>
+    <div class="builder-body">
+
+      <div class="field">
+        <label>인플루언서 / 셀러명</label>
+        <input type="text" id="sellerName" placeholder="예: 별주니맘, 사월이네">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>행사 시작일</label>
+          <input type="date" id="eventStart">
+        </div>
+        <div class="field">
+          <label>행사 종료일</label>
+          <input type="date" id="eventEnd">
+        </div>
+      </div>
+
+      <div class="commission-box">
+        <div style="font-size:11px; font-weight:800; color:var(--yellow-deep); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.4px;">⚖️ 수수료 설정</div>
+        <div class="row">
+          <span class="lbl">셀러 수수료</span>
+          <input type="number" class="commission-input" id="sellerFeeRate" value="10" min="0" max="50" step="0.5">
+          <span style="font-size:11.5px; color:var(--ink-soft);">% (인플루언서 받는 비율)</span>
+        </div>
+        <div class="row">
+          <span class="lbl">업체 수수료</span>
+          <input type="number" class="commission-input" id="vendorFeeRate" value="10" min="0" max="50" step="0.5">
+          <span style="font-size:11.5px; color:var(--ink-soft);">% (중간 벤더 비율)</span>
+        </div>
+        <div class="row">
+          <span class="lbl">네이버 결제</span>
+          <input type="number" class="commission-input" id="naverFeeRate" value="3.63" min="0" max="10" step="0.01">
+          <span style="font-size:11.5px; color:var(--ink-soft);">% (PG 수수료)</span>
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <span>💼 내부용 (원가·마진 표시)</span>
+        <label class="toggle">
+          <input type="checkbox" id="internalToggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div style="font-size:11.5px; font-weight:800; color:var(--purple-deep); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.4px;">🛒 선택된 상품 <span id="cartCount" style="background:var(--purple-main); color:white; padding:2px 8px; border-radius:100px; font-size:11px;">0</span></div>
+      <div class="cart-list" id="cartList">
+        <div class="cart-empty">왼쪽 카탈로그에서 상품을 추가해주세요</div>
+      </div>
+
+      <div class="totals" id="totals" style="display:none;">
+        <div class="row"><span>총 행사가</span><span class="b" id="totalSale">0원</span></div>
+        <div class="row"><span>네이버결제 수수료</span><span id="totalNaver">0원</span></div>
+        <div class="row"><span>셀러 수수료</span><span id="totalSeller">0원</span></div>
+        <div class="row"><span>업체 수수료</span><span id="totalVendor">0원</span></div>
+        <div class="row bold"><span>예상 브레인숲 마진</span><span id="totalMargin">0원</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn ghost" id="clearBtn">↺ 비우기</button>
+        <button class="btn primary" id="previewBtn">📄 제안서 보기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PREVIEW MODAL ============ -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="proposal-output" id="proposalOutput"></div>
+    <div style="padding: 14px 20px; border-top: 1px solid var(--line); display: flex; gap: 8px; background: var(--cream); position: sticky; bottom: 0;">
+      <button class="btn ghost" onclick="document.getElementById('modalBg').classList.remove('show')">닫기</button>
+      <button class="btn ghost" id="copyTextBtn">📋 카톡용 텍스트 복사</button>
+      <button class="btn gold" id="downloadBtn">💾 HTML 다운로드</button>
+      <button class="btn primary" onclick="window.print()">🖨️ 인쇄 / PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ CATALOG DATA ============
+// 브레인숲 공구제안서 기반 / 이미지 URL은 brainsoop.com 공식 CDN
+const CATALOG = [
+  {
+    id: "matchcube", icon: "🔢", name: "매쓰큐브 / 넘버블럭",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"세트", name:"매쓰큐브 100피스 + 펜토미노 기초편", desc:"매쓰큐브 100pcs + 가이드북 + 펜토미노교재-기초", consumer:55000, sale:29500, cost:15500, vrate:12},
+      {type:"세트", name:"매쓰큐브 100피스 + 지도서", desc:"매쓰큐브 100pcs + 가이드북 + 지도서", consumer:55000, sale:29500, cost:15500, vrate:12},
+      {type:"세트", name:"매쓰큐브 100피스 + 소마큐브 기초+응용", desc:"매쓰큐브 100pcs + 소마큐브 교재 기초/응용", consumer:69000, sale:39500, cost:19500, vrate:12},
+      {type:"세트", name:"매쓰큐브 100피스 + 플러스 60피스", consumer:69000, sale:39500, cost:22000, vrate:12},
+      {type:"세트", name:"매쓰큐브 200피스 + 매쓰큐브플러스 120피스", consumer:138000, sale:75900, cost:44000, vrate:12, badge:"★추천"},
+      {type:"세트", name:"매쓰큐브 100피스 + 가이드북", desc:"매쓰큐브 100pcs + 전용파우치 + 가이드북", consumer:33000, sale:20500, cost:11500, vrate:12, note:"메인상품 선택시에만 구매 가능"},
+      {type:"단품", name:"매쓰큐브 플러스 60피스", consumer:40000, sale:20000, cost:11000, vrate:12},
+      {type:"단품", name:"지도서 (교재단품)", consumer:22000, sale:13500, cost:4000, vrate:12},
+      {type:"단품", name:"펜토미노 - 기초 (교재단품)", consumer:20000, sale:13500, cost:4000, vrate:12},
+      {type:"단품", name:"소마큐브 - 기초 (교재단품)", consumer:20000, sale:13500, cost:4000, vrate:12},
+      {type:"단품", name:"소마큐브 - 응용 (교재단품)", consumer:20000, sale:13500, cost:4000, vrate:12}
+    ]
+  },
+  {
+    id: "akirail", icon: "🚂", name: "아키레일 티니",
+    notice: "한진택배 / 무료배송",
+    items: [
+      {type:"세트", name:"아키레일 - 티니베이직 105pcs + 전용교재", consumer:38000, sale:23900, cost:8636, vrate:12},
+      {type:"세트", name:"아키레일 - 티니그로우 210pcs + 전용교재 + 보관함", consumer:72000, sale:48500, cost:26801, vrate:12, badge:"★추천"}
+    ]
+  },
+  {
+    id: "geoboard", icon: "📐", name: "지오보드",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    storeUrl: "https://smartstore.naver.com/brainsoop/products/7942974719",
+    items: [
+      {type:"메인", code:"BGS901", name:"두뇌 지오보드 활동세트", consumer:26000, sale:19300, cost:8213, vrate:12},
+      {type:"메인", code:"E60002", name:"첫 지오보드 놀이세트", consumer:30000, sale:22500, cost:7532, vrate:12, badge:"★추천"},
+      {type:"단품", code:"BGB501", name:"(교재단품) 두뇌 지오보드 교재", consumer:18000, sale:14500, cost:4500, vrate:12},
+      {type:"단품", code:"E50001", name:"(교재단품) 첫 지오보드 교재", consumer:18000, sale:14500, cost:4500, vrate:12},
+      {type:"단품", code:"EMC601", name:"태엽 12시간 시계", consumer:4400, sale:3900, cost:2061, vrate:12, note:"최저가 5,500원"}
+    ]
+  },
+  {
+    id: "oyster", icon: "🕐", name: "오이스터앤팝 시계",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    storeUrl: "https://smartstore.naver.com/brainsoop/products/9916486643",
+    img: "https://brainsoop.com/web/product/medium/202402/5a371600d1ca8f462e77c3fad4307a8b.jpg",
+    items: [
+      {type:"메인", name:"오이스터앤팝시계", consumer:56000, sale:38000, cost:20000, vrate:10, img:"https://brainsoop.com/web/product/medium/202402/5a371600d1ca8f462e77c3fad4307a8b.jpg"},
+      {type:"세트", name:"오이스터앤팝시계 + 시계학습 2종", desc:"시계학습보드판 + 24시간소형모형시계", consumer:69200, sale:46000, cost:25032, vrate:10},
+      {type:"세트", name:"오이스터앤팝시계 + 12시간 대형모형시계", consumer:84000, sale:56000, cost:30251, vrate:10},
+      {type:"세트", name:"오이스터앤팝시계 + 시계놀이활동세트", desc:"썼다지웠다 시계놀이 활동세트", consumer:84000, sale:56000, cost:28811, vrate:10},
+      {type:"세트", name:"오이스터앤팝시계 + 타임챌린지", consumer:89000, sale:59000, cost:30582, vrate:10, badge:"★추천"},
+      {type:"세트", name:"오이스터앤팝시계 + 시계학습 3종 (풀세트)", consumer:120800, sale:80500, cost:42033, vrate:10},
+      {type:"단품", name:"시계학습 2종", desc:"시계학습보드판 + 24시간소형모형시계", consumer:13200, sale:11900, cost:5032, vrate:10},
+      {type:"단품", name:"12시간 대형모형시계", consumer:28000, sale:21600, cost:10251, vrate:10},
+      {type:"단품", name:"시계놀이활동세트", desc:"썼다지웠다 시계카드 + 12시간소형모형시계", consumer:28000, sale:21600, cost:8811, vrate:10}
+    ]
+  },
+  {
+    id: "algorithm", icon: "🧩", name: "알고리즘 시리즈",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원 · 공구마감 후 정답지 메일 발송",
+    items: [
+      {type:"세트", name:"알고리즘 하노이탑 + 교재", consumer:43000, sale:29500, cost:10729, vrate:12},
+      {type:"단품", name:"[교구단품] 하노이탑", consumer:25000, sale:19000, cost:6342, vrate:12},
+      {type:"단품", name:"[교재단품] 알고리즘 하노이탑", consumer:18000, sale:14500, cost:4000, vrate:12},
+      {type:"세트", name:"테셀레이션 + 육십갑자", consumer:85000, sale:49000, cost:26454, vrate:12, badge:"★추천"},
+      {type:"단품", name:"(교구단품) 테셀레이션", consumer:59000, sale:35400, cost:15454, vrate:12},
+      {type:"단품", name:"육십갑자", consumer:26000, sale:18200, cost:11000, vrate:12},
+      {type:"단품", name:"(교재단품) 테셀레이션", consumer:18000, sale:15000, cost:4500, vrate:12}
+    ]
+  },
+  {
+    id: "schoolwise", icon: "🎓", name: "스쿨와이즈 시리즈",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"세트", name:"스쿨와이즈 - 로드맵 + 교재", consumer:45000, sale:24500, cost:13000, vrate:12},
+      {type:"세트", name:"스쿨와이즈 - 펜토미노(펜토체스) + 교재", consumer:45000, sale:24500, cost:13000, vrate:12},
+      {type:"세트", name:"스쿨와이즈 - 하노이탑(컬러) + 교재", consumer:45000, sale:24500, cost:13000, vrate:12},
+      {type:"세트", name:"스쿨와이즈 - 폴리헥스 + 교재", consumer:45000, sale:24500, cost:13000, vrate:12},
+      {type:"세트", name:"스쿨와이즈 - 스도쿠 + 교재", consumer:45000, sale:24500, cost:13000, vrate:12}
+    ]
+  },
+  {
+    id: "infant3", icon: "🍼", name: "영유아 놀이교구 3종",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"단품", code:"MRC02301", name:"말랑말랑 식기세트", consumer:100000, sale:45000, cost:21000, vrate:12, note:"한정수량 80개"},
+      {type:"단품", code:"BOL01301", name:"팡팡볼", consumer:55000, sale:32000, cost:15249, vrate:12},
+      {type:"세트", name:"손잡이퍼즐 5종세트 A", desc:"도형+채소+과일+밥상+숫자", consumer:75000, sale:43000, cost:23685, vrate:12},
+      {type:"세트", name:"손잡이퍼즐 5종세트 B", desc:"도형+동물+사파리+자동차+공룡", consumer:75000, sale:43000, cost:23685, vrate:12}
+    ]
+  },
+  {
+    id: "boardmath", icon: "🎲", name: "수학 보드게임",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"세트", name:"수학세트 (피자+99+피쉬+타임+퀵)", consumer:157000, sale:97000, cost:67352, vrate:12, badge:"★추천"},
+      {type:"세트", name:"수학세트 (키키+99)", consumer:66000, sale:54000, cost:23760, vrate:12},
+      {type:"세트", name:"수학세트 (피자+퀵)", consumer:66000, sale:54000, cost:23760, vrate:12},
+      {type:"단품", name:"피자파티", consumer:33000, sale:27500, cost:11550, vrate:12},
+      {type:"단품", name:"키키의 대모험", consumer:33000, sale:27500, cost:11550, vrate:12},
+      {type:"단품", name:"99챌린지", consumer:33000, sale:27500, cost:12210, vrate:12},
+      {type:"단품", name:"피쉬피쉬", consumer:25000, sale:20000, cost:9250, vrate:12},
+      {type:"단품", name:"타임챌린지", consumer:33000, sale:22500, cost:10582, vrate:12},
+      {type:"단품", name:"퀵딜리버리", consumer:33000, sale:27500, cost:12210, vrate:12}
+    ]
+  },
+  {
+    id: "boardkorea", icon: "🏛️", name: "한국사 보드게임",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"세트", name:"한국사세트 (1~4편)", consumer:157000, sale:85000, cost:49280, vrate:10, badge:"★추천"},
+      {type:"세트", name:"한국사 1편", consumer:66000, sale:24500, cost:12320, vrate:10},
+      {type:"세트", name:"한국사 2편", consumer:66000, sale:24500, cost:12320, vrate:10},
+      {type:"단품", name:"한국사 3편", consumer:33000, sale:24500, cost:12320, vrate:10},
+      {type:"단품", name:"한국사 4편", consumer:33000, sale:24500, cost:12320, vrate:10},
+      {type:"단품", name:"딱지세트 (1~4편)", consumer:15000, sale:11400, cost:1650, vrate:10}
+    ]
+  },
+  {
+    id: "hunmin", icon: "🇰🇷", name: "훈민도장",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    img: "https://brainsoop.com/web/product/medium/202302/c37e285051d22ede1372beed920c7117.jpg",
+    items: [
+      {type:"세트", code:"TMP01301", name:"훈민도장 + 놀이북", consumer:68000, sale:45000, cost:23328, vrate:12},
+      {type:"세트", code:"600094", name:"(풀세트) 훈민도장 + 놀이북 + 김콕콕 활동북", consumer:85000, sale:55800, cost:26528, vrate:12, badge:"★추천", img:"https://brainsoop.com/web/product/medium/202302/c37e285051d22ede1372beed920c7117.jpg"},
+      {type:"단품", code:"HDB01201", name:"훈민도장 놀이북 8권", consumer:33000, sale:19000, cost:7500, vrate:12},
+      {type:"단품", code:"600093", name:"(단품) 김콕콕 활동북 (훈민도장 전용교재)", consumer:18000, sale:14500, cost:3200, vrate:12, note:"단품만 구매시 배송비 추가"},
+      {type:"단품", code:"HUC003101", name:"훈민칼라35 + 훈민놀이북", consumer:68000, sale:34000, cost:12637, vrate:12},
+      {type:"단품", code:"HCB03101", name:"훈민카드 블록", desc:"훈민원목75 + 훈민한글카드 + 에코파우치", consumer:130000, sale:67000, cost:33434, vrate:12},
+      {type:"단품", code:"HUL04101", name:"훈민모노 카드 블록50", desc:"일체형 훈민모노블록 + 한글카드 + 보관주머니", consumer:97000, sale:58000, cost:31000, vrate:12},
+      {type:"단품", name:"훈민한글카드", consumer:25000, sale:17000, cost:5000, vrate:12}
+    ]
+  },
+  {
+    id: "chilgyo", icon: "🔷", name: "일곱조각 칠교 / 교과칠교",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"메인", name:"칠교놀이 풀세트 (원목칠교1 + 교재1 + 교재2)", consumer:41000, sale:29000, cost:15110, vrate:10, badge:"★추천"},
+      {type:"세트", name:"칠교놀이1 - 1인세트 (원목칠교1 + 교재1)", consumer:25000, sale:18800, cost:8710, vrate:10},
+      {type:"세트", name:"칠교놀이1 - 2인세트 (원목칠교2 + 교재1)", consumer:34000, sale:24000, cost:11020, vrate:10},
+      {type:"세트", name:"칠교놀이2 - 1인세트 (원목칠교1 + 교재2)", consumer:25000, sale:18800, cost:8710, vrate:10},
+      {type:"세트", name:"칠교놀이2 - 2인세트 (원목칠교2 + 교재1 + 교재2)", consumer:57000, sale:34000, cost:17420, vrate:10},
+      {type:"단품", code:"SPC01308", name:"(교구단품) 원목칠교", consumer:9000, sale:6300, cost:2310, vrate:10},
+      {type:"단품", code:"CNT02201", name:"(교재단품) 일곱조각교재 1", consumer:16000, sale:13500, cost:5600, vrate:10},
+      {type:"단품", code:"CNT02203", name:"(교재단품) 일곱조각교재 2", consumer:16000, sale:13500, cost:5600, vrate:10},
+      {type:"세트", code:"600493", name:"교과칠교놀이 2권 (기본+심화)", consumer:36000, sale:30000, cost:9000, vrate:12},
+      {type:"세트", code:"600491", name:"[세트] 교과칠교놀이 2권 + 탱탱칠교북", consumer:50000, sale:38000, cost:11350, vrate:12},
+      {type:"세트", code:"600491", name:"[세트] 교과칠교놀이 2권 + 칼라칠교", consumer:45000, sale:33000, cost:13400, vrate:12},
+      {type:"단품", code:"600489", name:"교과칠교놀이 (기본)", consumer:18000, sale:15500, cost:6700, vrate:12},
+      {type:"단품", code:"600490", name:"교과칠교놀이 (심화)", consumer:18000, sale:15500, cost:6700, vrate:12}
+    ]
+  },
+  {
+    id: "magnet3d", icon: "🧲", name: "속담 3D자석칠교",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원 · 원자재 상승으로 일부 단가 인상",
+    items: [
+      {type:"세트", code:"600123", name:"속담자석칠교 활동세트", desc:"3D자석입체칠교 + 활동북", consumer:45000, sale:28000, cost:14750, vrate:10},
+      {type:"세트", code:"600124", name:"속담자석칠교 활동풀세트", desc:"3D자석입체칠교 + 속담3종교재 + 양면자석칠판", consumer:120000, sale:75000, cost:40050, vrate:10, badge:"★추천"},
+      {type:"세트", name:"3D자석입체칠교 1+1세트", consumer:54000, sale:29000, cost:16500, vrate:10},
+      {type:"세트", name:"3D자석칠교 2개 + 3D입체칠교 플레이북", consumer:69000, sale:36500, cost:20500, vrate:10, badge:"★추천"},
+      {type:"세트", code:"600458", name:"3D자석칠교 2개 + 플레이북 + 속담활동북(키즈)", consumer:87000, sale:52000, cost:27000, vrate:10},
+      {type:"세트", code:"600523", name:"3D자석칠교 2개 + 플레이북 + 속담3종교재", consumer:130000, sale:82500, cost:44600, vrate:10},
+      {type:"단품", code:"600102", name:"3D자석입체칠교 (1개단품)", consumer:27000, sale:16500, cost:8250, vrate:10},
+      {type:"단품", code:"600112", name:"속담활동북 (키즈)", consumer:18000, sale:15500, cost:6500, vrate:10},
+      {type:"단품", code:"600113", name:"속담카드", consumer:28000, sale:22000, cost:12000, vrate:10},
+      {type:"단품", code:"600110", name:"속담지도서", consumer:15000, sale:11000, cost:5600, vrate:10},
+      {type:"단품", code:"600444", name:"플레이북", consumer:15000, sale:8500, cost:4000, vrate:10},
+      {type:"단품", code:"100989", name:"양면자석칠판", consumer:32000, sale:22000, cost:7700, vrate:10}
+    ]
+  },
+  {
+    id: "mathstick", icon: "📏", name: "매쓰스틱",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"세트", name:"매쓰스틱 + 교재1", consumer:38000, sale:19500, cost:9500, vrate:10},
+      {type:"세트", code:"MSB03101", name:"매쓰스틱 + 교재1 + 교재2", consumer:53000, sale:26000, cost:13500, vrate:10, badge:"★추천"},
+      {type:"단품", name:"(교재단품) 교재1 + 교재2", consumer:18000, sale:9000, cost:5335, vrate:10},
+      {type:"단품", code:"MSC02301", name:"(교구단품) 매쓰스틱", consumer:20000, sale:13000, cost:7000, vrate:10}
+    ]
+  },
+  {
+    id: "thinking", icon: "💭", name: "사고력 시리즈",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"단품", code:"THP03101", name:"사고력 - 육각퍼즐세트", consumer:33000, sale:18900, cost:7300, vrate:12},
+      {type:"단품", code:"THZ03101", name:"사고력 - 하트퍼즐세트", consumer:33000, sale:18900, cost:7300, vrate:12},
+      {type:"단품", code:"TCP03101", name:"사고력 - 칠교퍼즐 (탱그램)", consumer:33000, sale:18900, cost:6100, vrate:12},
+      {type:"단품", code:"TSP03101", name:"사고력 - 스네이크퍼즐", consumer:33000, sale:19900, cost:8800, vrate:12},
+      {type:"단품", code:"TPS03101", name:"사고력 폴리미노 + 교재", consumer:33000, sale:19900, cost:8800, vrate:12},
+      {type:"세트", code:"TSS10101", name:"사고력 5종 풀세트", consumer:165000, sale:75000, cost:38300, vrate:12, badge:"★추천"}
+    ]
+  },
+  {
+    id: "domino", icon: "🎯", name: "도미노",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"단품", code:"100580", name:"패밀리 도미노그램 18 + 활동카드", consumer:75000, sale:49000, cost:36001, vrate:10, note:"최저가 55,000"},
+      {type:"단품", code:"FDO04101", name:"패밀리 도미노그램 36 + 활동카드", consumer:140000, sale:89000, cost:66382, vrate:10, note:"최저가 105,840"},
+      {type:"단품", code:"PDO05101", name:"패턴도미노 아트그램 48 + 활동카드", consumer:99000, sale:53000, cost:37300, vrate:10},
+      {type:"단품", code:"EDO03501", name:"익사이팅 도미노 115", consumer:120000, sale:65000, cost:41695, vrate:10, note:"최저가 87,190"},
+      {type:"단품", code:"NFD01101", name:"만국기 도미노 100", consumer:88000, sale:47000, cost:26818, vrate:10},
+      {type:"세트", name:"다문화만국기세트", desc:"만국기도미노100 + 다문화퍼즐3종(건축,의상,음식+가이드북)", consumer:148000, sale:79000, cost:40000, vrate:10, badge:"★추천"},
+      {type:"단품", code:"NDO02101", name:"숫자도미노 120p", consumer:59000, sale:35000, cost:15000, vrate:10, note:"최저가 47,600"}
+    ]
+  },
+  {
+    id: "edxpattern", icon: "🔶", name: "EDX 패턴블럭",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"세트", name:"패턴블럭 100 유아용", consumer:40000, sale:24000, cost:9869, vrate:12},
+      {type:"세트", code:"E60022", name:"패턴블럭 100 (1단계)", consumer:45000, sale:28000, cost:13415, vrate:12},
+      {type:"세트", code:"E60022", name:"패턴블럭 100 (2단계)", consumer:45000, sale:28000, cost:13415, vrate:12},
+      {type:"세트", name:"패턴블럭 100 활용세트 (1+2단계 교재 포함)", consumer:78000, sale:45500, cost:19830, vrate:12, badge:"★추천"},
+      {type:"단품", code:"ERP601", name:"EDX 조약돌 쌓기놀이 36", desc:"활동카드, 놀이북 포함", consumer:55000, sale:32000, cost:16325, vrate:10},
+      {type:"단품", code:"E60020", name:"EDX 서클로 베이직 72", desc:"활동카드, 놀이북 포함", consumer:49000, sale:32000, cost:12508, vrate:10}
+    ]
+  },
+  {
+    id: "edxgeo", icon: "⚪", name: "EDX 지오볼",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"세트", code:"E03001", name:"[EDX] 지오볼기하학레드 330 + 지도서 + 활동카드", consumer:95000, sale:57000, cost:35540, vrate:12, note:"최저가 80,350"},
+      {type:"세트", code:"E03002", name:"[EDX] 지오볼기하학레드 660 + 지도서 + 활동카드", consumer:195000, sale:93000, cost:57080, vrate:12, badge:"★추천", note:"최저가 153,450"},
+      {type:"세트", code:"E01002", name:"[EDX] 지오볼기하학화이트 330 (미니카드37)", desc:"곡선 포함 330pcs", consumer:88000, sale:47000, cost:23171, vrate:12, note:"최저가 64,680"},
+      {type:"단품", code:"E01001", name:"(교구단품) [EDX] 지오볼기하학레드 330", consumer:55000, sale:38000, cost:19694, vrate:12, note:"최저가 49,500"}
+    ]
+  },
+  {
+    id: "huntint", icon: "✏️", name: "훈민틴트 82",
+    notice: "한진택배 / 3만원 이상 무배 · 미만 3,500원",
+    items: [
+      {type:"세트", code:"HUT04101", name:"훈민틴트82 + 전용놀이북", consumer:184000, sale:105000, cost:64270, vrate:10},
+      {type:"세트", name:"훈민틴트82 + 다국어훈민카드", consumer:190000, sale:117000, cost:67788, vrate:10},
+      {type:"세트", name:"[풀세트] 훈민틴트82 + 전용놀이북 + 다국어훈민카드", consumer:209000, sale:130000, cost:70788, vrate:10, badge:"★추천"},
+      {type:"단품", code:"HUT03501", name:"[교구단품] 훈민틴트82", desc:"전용놀이북, 훈민카드 미포함", consumer:165000, sale:99000, cost:61270, vrate:10}
+    ]
+  }
+];
+
+// ============ STATE ============
+let currentCat = 'all';
+let currentFilter = 'all';
+let cart = [];
+let searchTerm = '';
+
+// ============ UTILITY ============
+function fmt(n) { return Math.round(n).toLocaleString('ko-KR'); }
+function escapeHtml(s) {
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function getRates() {
+  return {
+    seller: parseFloat(document.getElementById('sellerFeeRate').value) || 0,
+    vendor: parseFloat(document.getElementById('vendorFeeRate').value) || 0,
+    naver: parseFloat(document.getElementById('naverFeeRate').value) || 0
+  };
+}
+function calcFees(sale) {
+  const r = getRates();
+  const naver = sale * r.naver / 100;
+  const seller = sale * r.seller / 100;
+  const vendor = sale * r.vendor / 100;
+  return {naver, seller, vendor};
+}
+function calcMargin(item) {
+  const f = calcFees(item.sale);
+  return item.sale - item.cost - f.naver - f.seller - f.vendor;
+}
+
+// ============ RENDER CATEGORY TABS ============
+function renderCatTabs() {
+  const tabs = document.getElementById('catTabs');
+  const allCount = CATALOG.reduce((s,c) => s + c.items.length, 0);
+  let html = `<div class="cat-tab ${currentCat==='all'?'active':''}" data-cat="all">📦 전체 <span class="cnt">${allCount}</span></div>`;
+  CATALOG.forEach(c => {
+    html += `<div class="cat-tab ${currentCat===c.id?'active':''}" data-cat="${c.id}">${c.icon} ${escapeHtml(c.name)} <span class="cnt">${c.items.length}</span></div>`;
+  });
+  tabs.innerHTML = html;
+  tabs.querySelectorAll('.cat-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      currentCat = t.dataset.cat;
+      renderCatTabs(); renderCatalog();
+    });
+  });
+}
+
+// ============ RENDER CATALOG ============
+function renderCatalog() {
+  const host = document.getElementById('catalogBody');
+  const cats = currentCat === 'all' ? CATALOG : CATALOG.filter(c => c.id === currentCat);
+  let html = '';
+  cats.forEach(c => {
+    const filtered = c.items.filter(item => {
+      if (searchTerm && !item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+          !c.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+      if (currentFilter === '추천') return item.badge && item.badge.includes('★');
+      if (currentFilter === '세트') return item.type === '세트' || item.type === '메인';
+      if (currentFilter === '단품') return item.type === '단품' || item.type === '추가옵션';
+      return true;
+    });
+    if (filtered.length === 0) return;
+    html += `<div class="series-block">
+      <div class="series-head">
+        <div class="series-name">${c.icon} ${escapeHtml(c.name)}</div>
+      </div>
+      <div class="series-notice">📍 ${escapeHtml(c.notice)}</div>
+      <div class="series-items">`;
+    filtered.forEach((item, idx) => {
+      const key = c.id + '__' + c.items.indexOf(item);
+      const isAdded = cart.find(ci => ci.key === key);
+      const imgSrc = item.img || c.img || '';
+      const typeClass = item.type === '세트' || item.type === '메인' ? 'set' :
+                        item.type === '추가옵션' ? 'option' : '';
+      const badgeHtml = item.badge ? `<span class="item-type recommended">${escapeHtml(item.badge)}</span>` : '';
+      html += `<div class="item-card ${isAdded?'added':''}" data-key="${key}">
+        <div class="item-img">${imgSrc ? `<img src="${imgSrc}" alt="" onerror="this.style.display='none'">` : c.icon}</div>
+        <div class="item-info">
+          <span class="item-type ${typeClass}">${escapeHtml(item.type)}</span>${badgeHtml}
+          <div class="item-name">${escapeHtml(item.name)}</div>
+          <div class="item-price">
+            <span class="strike">${fmt(item.consumer)}</span>
+            <span class="sale">${fmt(item.sale)}원</span>
+          </div>
+        </div>
+        <button class="item-add" data-key="${key}">${isAdded?'✓':'＋'}</button>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  if (!html) html = '<div style="padding:40px 20px; text-align:center; color:var(--ink-soft);">검색 결과가 없습니다.</div>';
+  host.innerHTML = html;
+  host.querySelectorAll('.item-add').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      toggleCart(btn.dataset.key);
+    });
+  });
+}
+
+// ============ CART ============
+function toggleCart(key) {
+  const existing = cart.findIndex(c => c.key === key);
+  if (existing >= 0) {
+    cart.splice(existing, 1);
+  } else {
+    const [catId, idx] = key.split('__');
+    const cat = CATALOG.find(c => c.id === catId);
+    const item = cat.items[parseInt(idx)];
+    cart.push({key, catId, catName: cat.name, catIcon: cat.icon, catNotice: cat.notice, catImg: cat.img, ...item});
+  }
+  renderCatalog(); renderCart();
+}
+
+function renderCart() {
+  const list = document.getElementById('cartList');
+  const totals = document.getElementById('totals');
+  const cntEl = document.getElementById('cartCount');
+  cntEl.textContent = cart.length;
+  if (cart.length === 0) {
+    list.innerHTML = '<div class="cart-empty">왼쪽 카탈로그에서 상품을 추가해주세요</div>';
+    totals.style.display = 'none';
+    return;
+  }
+  list.innerHTML = cart.map(item => {
+    const imgSrc = item.img || item.catImg || '';
+    return `<div class="cart-item">
+      <div class="cart-img">${imgSrc ? `<img src="${imgSrc}" alt="" onerror="this.style.display='none'">` : item.catIcon}</div>
+      <div class="cart-info">
+        <div class="cart-name">${escapeHtml(item.name)}</div>
+        <div class="cart-price"><span class="b">${fmt(item.sale)}원</span> · 마진 ${fmt(calcMargin(item))}원</div>
+      </div>
+      <button class="cart-del" data-key="${item.key}">×</button>
+    </div>`;
+  }).join('');
+  list.querySelectorAll('.cart-del').forEach(b => {
+    b.addEventListener('click', e => { e.stopPropagation(); toggleCart(b.dataset.key); });
+  });
+
+  // totals
+  let tSale = 0, tNaver = 0, tSeller = 0, tVendor = 0, tCost = 0;
+  cart.forEach(item => {
+    tSale += item.sale; tCost += item.cost;
+    const f = calcFees(item.sale);
+    tNaver += f.naver; tSeller += f.seller; tVendor += f.vendor;
+  });
+  const tMargin = tSale - tCost - tNaver - tSeller - tVendor;
+  document.getElementById('totalSale').textContent = fmt(tSale) + '원';
+  document.getElementById('totalNaver').textContent = fmt(tNaver) + '원';
+  document.getElementById('totalSeller').textContent = fmt(tSeller) + '원';
+  document.getElementById('totalVendor').textContent = fmt(tVendor) + '원';
+  document.getElementById('totalMargin').textContent = fmt(tMargin) + '원';
+  totals.style.display = 'block';
+}
+
+// ============ PREVIEW ============
+function renderPreview() {
+  const sellerName = document.getElementById('sellerName').value || '(셀러명 미입력)';
+  const evStart = document.getElementById('eventStart').value || '';
+  const evEnd = document.getElementById('eventEnd').value || '';
+  const internal = document.getElementById('internalToggle').checked;
+  const rates = getRates();
+
+  // group by category
+  const groups = {};
+  cart.forEach(item => {
+    if (!groups[item.catId]) groups[item.catId] = {catName: item.catName, catIcon: item.catIcon, catNotice: item.catNotice, items: []};
+    groups[item.catId].items.push(item);
+  });
+
+  let html = `<div class="proposal-head">
+    <h1>🌳 브레인숲 공구 행사 제안서</h1>
+    <div class="sub">(주)브레인숲 · 박지현 팀장</div>
+  </div>
+  <div class="proposal-meta">
+    <div><b>셀러명</b>${escapeHtml(sellerName)}</div>
+    <div><b>행사 기간</b>${evStart && evEnd ? evStart + ' ~ ' + evEnd : '협의'}</div>
+    <div><b>셀러/업체 수수료</b>${rates.seller}% / ${rates.vendor}%</div>
+  </div>`;
+
+  Object.values(groups).forEach(g => {
+    html += `<h3 style="color:var(--purple-deep); margin: 20px 0 8px; font-size:16px;">${g.catIcon} ${escapeHtml(g.catName)} 행사 제안서</h3>
+    <div class="proposal-notice">📍 ${escapeHtml(g.catNotice)}</div>
+    <table class="proposal-table">
+      <thead><tr>
+        <th>구분</th><th>이미지</th><th style="text-align:left">제품명</th>
+        <th>소비자가</th><th>행사가</th>
+        ${internal ? '<th class="internal-only">원가</th><th class="internal-only">마진</th>' : ''}
+        <th>셀러수수료</th><th>업체수수료</th>
+      </tr></thead>
+      <tbody>`;
+    g.items.forEach(item => {
+      const f = calcFees(item.sale);
+      const m = calcMargin(item);
+      const imgSrc = item.img || g.catImg || '';
+      html += `<tr>
+        <td style="text-align:center">${escapeHtml(item.type)}${item.badge?'<br><small style="color:#C53030">'+escapeHtml(item.badge)+'</small>':''}</td>
+        <td class="p-img">${imgSrc ? `<img src="${imgSrc}" alt="">` : ''}</td>
+        <td class="p-name">${escapeHtml(item.name)}${item.desc?'<br><small style="color:#666">'+escapeHtml(item.desc)+'</small>':''}</td>
+        <td class="num"><s>${fmt(item.consumer)}</s></td>
+        <td class="num"><b>${fmt(item.sale)}</b></td>
+        ${internal ? `<td class="num internal-only">${fmt(item.cost)}</td><td class="num internal-only" style="color:${m>=0?'#16A34A':'#C53030'}">${fmt(m)}</td>` : ''}
+        <td class="num">${fmt(f.seller)}</td>
+        <td class="num">${fmt(f.vendor)}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  });
+
+  if (internal) {
+    let tSale=0, tCost=0, tMargin=0;
+    cart.forEach(item => { tSale+=item.sale; tCost+=item.cost; tMargin+=calcMargin(item); });
+    html += `<div style="padding:14px; background:var(--purple-bg); border-radius:10px; margin-top:16px;">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; text-align:center;">
+        <div><div style="font-size:11px; color:var(--ink-soft); text-transform:uppercase;">총 행사가</div><div style="font-size:18px; font-weight:800; color:var(--purple-deep);">${fmt(tSale)}원</div></div>
+        <div><div style="font-size:11px; color:var(--ink-soft); text-transform:uppercase;">총 원가</div><div style="font-size:18px; font-weight:800; color:var(--ink);">${fmt(tCost)}원</div></div>
+        <div><div style="font-size:11px; color:var(--ink-soft); text-transform:uppercase;">예상 마진</div><div style="font-size:18px; font-weight:800; color:var(--success);">${fmt(tMargin)}원</div></div>
+      </div>
+    </div>`;
+  }
+
+  html += `<div class="proposal-foot">
+    💜 (주)브레인숲 · CEO 이채림 · 경기도 성남시 중원구 둔촌대로 555 선일테크노피아 611호 · 031-777-3399 · brainsoop@naver.com
+  </div>`;
+
+  document.getElementById('proposalOutput').innerHTML = html;
+}
+
+// ============ EVENTS ============
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value;
+  renderCatalog();
+});
+document.querySelectorAll('.filter-chip').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.filter-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    currentFilter = c.dataset.filter;
+    renderCatalog();
+  });
+});
+document.getElementById('clearBtn').addEventListener('click', () => {
+  if (cart.length && !confirm('선택한 상품을 모두 비우시겠습니까?')) return;
+  cart = []; renderCatalog(); renderCart();
+});
+document.getElementById('previewBtn').addEventListener('click', () => {
+  if (cart.length === 0) { alert('먼저 상품을 선택해주세요.'); return; }
+  renderPreview();
+  document.getElementById('modalBg').classList.add('show');
+});
+document.getElementById('modalBg').addEventListener('click', e => {
+  if (e.target.id === 'modalBg') e.currentTarget.classList.remove('show');
+});
+['sellerFeeRate','vendorFeeRate','naverFeeRate'].forEach(id => {
+  document.getElementById(id).addEventListener('input', renderCart);
+});
+document.getElementById('internalToggle').addEventListener('change', () => {
+  if (document.getElementById('modalBg').classList.contains('show')) renderPreview();
+});
+
+document.getElementById('copyTextBtn').addEventListener('click', () => {
+  const sellerName = document.getElementById('sellerName').value || '(셀러명)';
+  let txt = `🌳 브레인숲 공구 제안서\n셀러: ${sellerName}\n\n`;
+  const groups = {};
+  cart.forEach(item => {
+    if (!groups[item.catId]) groups[item.catId] = {catName: item.catName, items: []};
+    groups[item.catId].items.push(item);
+  });
+  Object.values(groups).forEach(g => {
+    txt += `▼ ${g.catName}\n`;
+    g.items.forEach(item => {
+      txt += `· ${item.name} | 소비자가 ${fmt(item.consumer)}원 → 행사가 ${fmt(item.sale)}원\n`;
+    });
+    txt += '\n';
+  });
+  txt += '문의: (주)브레인숲 박지현 팀장';
+  navigator.clipboard.writeText(txt).then(() => alert('✅ 카톡용 텍스트가 복사되었습니다.'));
+});
+
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  const html = document.getElementById('proposalOutput').innerHTML;
+  const sellerName = document.getElementById('sellerName').value || 'proposal';
+  const full = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>공구제안서 - ${sellerName}</title>
+    <style>body{font-family:'Pretendard',sans-serif;padding:32px;max-width:900px;margin:0 auto;}
+    table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;}
+    th{background:#4C1D95;color:white;padding:8px;text-align:center;}
+    td{padding:8px;border-bottom:1px solid #ddd;} .num{text-align:right;font-family:monospace;}
+    .p-img img{width:44px;height:44px;object-fit:cover;border-radius:4px;}
+    .proposal-head{text-align:center;border-bottom:3px solid #6D28D9;padding-bottom:20px;margin-bottom:20px;}
+    .proposal-head h1{color:#4C1D95;}
+    .proposal-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:14px;background:#F3EFFF;border-radius:10px;margin-bottom:16px;font-size:13px;}
+    .proposal-meta b{display:block;font-size:11px;color:#4C1D95;margin-bottom:3px;}
+    .proposal-notice{padding:12px;background:#FEF9E7;border-radius:8px;margin-bottom:16px;font-size:12.5px;color:#6B5520;}
+    .internal-only{background:#FEE2E2 !important;} .proposal-foot{text-align:center;color:#666;font-size:11px;margin-top:20px;}
+    </style></head><body>${html}</body></html>`;
+  const blob = new Blob([full], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `공구제안서_${sellerName}_${new Date().toISOString().split('T')[0]}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+// ============ INIT ============
+renderCatTabs();
+renderCatalog();
+renderCart();
+</script>
+
+</body>
+</html>
