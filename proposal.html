@@ -56,17 +56,22 @@
     transition: all 0.2s; }
   .back-link:hover { background: rgba(255,255,255,0.25); }
 
-  /* ===== LAYOUT ===== */
+  /* ===== LAYOUT (세로형 단일 컬럼) ===== */
   .workspace {
-    max-width: 1600px; margin: 0 auto; padding: 20px 24px 80px;
-    display: grid; grid-template-columns: 1fr 480px; gap: 20px;
+    max-width: 1400px; margin: 0 auto; padding: 16px 20px 80px;
+    display: flex; flex-direction: column; gap: 16px;
   }
-  @media (max-width: 1024px) { .workspace { grid-template-columns: 1fr; } }
 
-  /* ===== LEFT: CATALOG ===== */
-  .catalog { background: var(--paper); border-radius: 16px;
+  /* ===== TOP STICKY BUILDER BAR ===== */
+  .builder { background: var(--paper); border-radius: 14px;
     box-shadow: var(--shadow); border: 1px solid var(--line);
-    display: flex; flex-direction: column; height: calc(100vh - 130px); position: sticky; top: 20px;
+    position: sticky; top: 12px; z-index: 50;
+  }
+
+  /* ===== CATALOG (full width) ===== */
+  .catalog { background: var(--paper); border-radius: 14px;
+    box-shadow: var(--shadow); border: 1px solid var(--line);
+    display: flex; flex-direction: column;
   }
   .catalog-head { padding: 16px 20px; border-bottom: 1px solid var(--line);
     background: linear-gradient(135deg, var(--purple-bg) 0%, #FBF9FF 100%);
@@ -93,7 +98,7 @@
   .cat-tab.active { background: var(--purple-deep); color: white; border-color: var(--purple-deep); }
   .cat-tab .cnt { opacity: 0.7; font-size: 10.5px; margin-left: 4px; }
 
-  .catalog-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
+  .catalog-body { padding: 16px 20px; }
   .series-block { margin-bottom: 24px; }
   .series-head {
     display: flex; align-items: center; justify-content: space-between;
@@ -102,8 +107,8 @@
   .series-name { font-size: 15px; font-weight: 800; color: var(--purple-deep);
     display: flex; align-items: center; gap: 6px; }
   .series-notice { font-size: 11px; color: var(--ink-soft); margin-bottom: 8px; font-style: italic; }
-  .series-items { display: grid; gap: 6px; grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 720px) { .series-items { grid-template-columns: 1fr; } }
+  .series-items { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  @media (max-width: 600px) { .series-items { grid-template-columns: 1fr; } }
   .item-card { display: grid; grid-template-columns: 48px 1fr 28px; gap: 8px;
     align-items: center; padding: 6px; border: 1px solid var(--line);
     border-radius: 8px; background: white; transition: all 0.15s; min-height: 60px; }
@@ -136,36 +141,38 @@
   .item-add:hover { transform: scale(1.05); }
   .item-card.added .item-add { background: var(--success); }
 
-  /* ===== RIGHT: BUILDER ===== */
-  .builder { background: var(--paper); border-radius: 16px;
-    box-shadow: var(--shadow); border: 1px solid var(--line);
-    display: flex; flex-direction: column; }
-  .builder-head { padding: 16px 20px; border-bottom: 1px solid var(--line);
+  /* ===== TOP BUILDER (compact horizontal) ===== */
+  .builder-head { padding: 12px 18px; border-bottom: 1px solid var(--line);
     background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-main) 100%);
-    color: white; border-radius: 16px 16px 0 0; }
-  .builder-title { font-size: 16px; font-weight: 800; }
-  .builder-sub { font-size: 12px; opacity: 0.85; margin-top: 2px; }
-  .builder-body { padding: 18px 20px; }
-  .field { margin-bottom: 14px; }
-  .field label { display: block; font-size: 11px; font-weight: 800;
-    color: var(--purple-deep); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
-  .field input, .field select { width: 100%; padding: 10px 12px;
-    border: 1.5px solid var(--line); border-radius: 8px; font-family: inherit;
-    font-size: 13.5px; background: var(--cream); transition: border-color 0.2s; }
-  .field input:focus, .field select:focus { outline: none; border-color: var(--purple-mid); background: white; }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    color: white; border-radius: 14px 14px 0 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .builder-title { font-size: 15px; font-weight: 800; }
+  .builder-sub { font-size: 11.5px; opacity: 0.85; margin-top: 2px; }
+  .builder-body { padding: 14px 18px;
+    display: grid; grid-template-columns: 1.2fr 1.5fr 1fr; gap: 14px; align-items: start; }
+  @media (max-width: 980px) { .builder-body { grid-template-columns: 1fr; } }
 
-  .commission-box { background: var(--yellow-bg); border-radius: 10px; padding: 12px; margin-bottom: 16px; }
-  .commission-box .row { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 8px; align-items: center;
-    font-size: 12.5px; margin-bottom: 6px; }
+  .builder-col { display: flex; flex-direction: column; gap: 10px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-size: 10.5px; font-weight: 800;
+    color: var(--purple-deep); text-transform: uppercase; letter-spacing: 0.4px; }
+  .field input, .field select { width: 100%; padding: 8px 10px;
+    border: 1.5px solid var(--line); border-radius: 7px; font-family: inherit;
+    font-size: 13px; background: var(--cream); transition: border-color 0.2s; }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--purple-mid); background: white; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .commission-box { background: var(--yellow-bg); border-radius: 8px; padding: 10px; }
+  .commission-box .row { display: grid; grid-template-columns: 80px 70px 1fr; gap: 6px; align-items: center;
+    font-size: 12px; margin-bottom: 5px; }
   .commission-box .row:last-child { margin-bottom: 0; }
   .commission-box .lbl { color: var(--ink-soft); font-weight: 600; }
-  .commission-input { padding: 6px 10px; border: 1.5px solid var(--line);
-    border-radius: 6px; font-family: inherit; font-size: 13px; background: white; }
+  .commission-input { padding: 5px 8px; border: 1.5px solid var(--line);
+    border-radius: 5px; font-family: inherit; font-size: 12.5px; background: white; }
 
-  .cart-list { max-height: 350px; overflow-y: auto; margin-bottom: 12px; }
-  .cart-empty { padding: 30px 0; text-align: center; color: var(--ink-soft); font-size: 13px;
-    border: 2px dashed var(--line); border-radius: 10px; }
+  .cart-list { max-height: 180px; overflow-y: auto; margin-bottom: 8px; }
+  .cart-empty { padding: 18px 0; text-align: center; color: var(--ink-soft); font-size: 12px;
+    border: 2px dashed var(--line); border-radius: 8px; }
   .cart-item { display: grid; grid-template-columns: 40px 1fr auto; gap: 8px;
     padding: 8px; border-radius: 8px; background: var(--cream); margin-bottom: 6px;
     align-items: center; }
@@ -259,17 +266,6 @@
     background: var(--purple-soft); border-radius: 8px; }
 
   /* ===== RESPONSIVE ===== */
-  @media (max-width: 1280px) {
-    .workspace { grid-template-columns: 1fr 420px; gap: 16px; padding: 16px; }
-  }
-  @media (max-width: 1024px) {
-    .workspace { grid-template-columns: 1fr; padding: 14px; }
-    .catalog { height: auto; max-height: 70vh; position: static; }
-    .builder { position: sticky; bottom: 0; max-height: 85vh; overflow-y: auto; }
-    .header { padding: 16px 20px; }
-    .brand-title { font-size: 18px; }
-    .brand-sub { font-size: 11px; }
-  }
   @media (max-width: 768px) {
     body { font-size: 13px; }
     .header { padding: 14px 16px; }
@@ -281,7 +277,7 @@
     .workspace { padding: 10px; gap: 12px; }
     .catalog-head, .builder-head { padding: 12px 14px; }
     .catalog-title, .builder-title { font-size: 14px; }
-    .builder-body { padding: 14px; }
+    .builder-body { padding: 12px 14px; }
     .catalog-body { padding: 12px 14px; }
     .search-row { flex-direction: column; align-items: stretch; }
     .search-box { width: 100%; }
@@ -289,20 +285,14 @@
     .cat-tabs { padding: 8px 12px; }
     .cat-tab { padding: 6px 10px; font-size: 11px; }
     .series-name { font-size: 13.5px; }
-    .item-card { grid-template-columns: 50px 1fr auto; padding: 6px; gap: 8px; }
-    .item-img { width: 50px; height: 50px; font-size: 18px; }
-    .item-name { font-size: 11.5px; }
-    .item-add { width: 28px; height: 28px; font-size: 14px; }
     .field-row { grid-template-columns: 1fr; }
-    .commission-box .row { grid-template-columns: 80px 1fr; }
+    .commission-box .row { grid-template-columns: 70px 1fr; }
     .commission-box .row > span:last-child { display: none; }
-    .actions { grid-template-columns: 1fr; }
     .modal { border-radius: 12px; }
     .proposal-output { padding: 18px; }
     .proposal-head h1 { font-size: 18px; }
     .proposal-meta { grid-template-columns: 1fr; gap: 6px; padding: 10px; }
-    .proposal-table { font-size: 10.5px; display: block; overflow-x: auto; white-space: nowrap; }
-    .proposal-table thead, .proposal-table tbody, .proposal-table tr { display: table; width: 100%; table-layout: auto; }
+    .proposal-table { font-size: 10.5px; }
     .modal-bg { padding: 10px; }
     .modal > div:last-child { flex-wrap: wrap; }
     .modal > div:last-child .btn { flex: 1; min-width: 110px; font-size: 11.5px; padding: 9px 10px; }
@@ -312,12 +302,11 @@
     .header-inner { flex-direction: column; align-items: stretch; }
     .back-link { text-align: center; }
     .brand-title { font-size: 15px; }
-    .item-card { grid-template-columns: 44px 1fr 28px; }
-    .item-img { width: 44px; height: 44px; }
     .item-price .sale { font-size: 12px; }
     .item-price .strike { font-size: 10px; }
     .totals { font-size: 11.5px; padding: 10px; }
     .totals .row.bold { font-size: 13px; }
+    .proposal-table { font-size: 9.5px; display: block; overflow-x: auto; white-space: nowrap; }
   }
 </style>
 </head>
@@ -337,10 +326,92 @@
 </div>
 
 <div class="workspace">
-  <!-- ========== LEFT: CATALOG ========== -->
+  <!-- ========== TOP: BUILDER ========== -->
+  <div class="builder">
+    <div class="builder-head">
+      <div>
+        <div class="builder-title">✏️ 제안서 빌더</div>
+        <div class="builder-sub">셀러 정보 입력 → 아래에서 상품 선택 → 제안서 생성</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; opacity:0.9;">선택된 상품</span>
+        <span id="cartCount" style="background:var(--yellow-main); color:#4A3A14; padding:4px 12px; border-radius:100px; font-size:13px; font-weight:800;">0</span>
+      </div>
+    </div>
+    <div class="builder-body">
+
+      <!-- Column 1: 셀러 정보 -->
+      <div class="builder-col">
+        <div class="field">
+          <label>인플루언서 / 셀러명</label>
+          <input type="text" id="sellerName" placeholder="예: 별주니맘, 사월이네">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>행사 시작일</label>
+            <input type="date" id="eventStart">
+          </div>
+          <div class="field">
+            <label>행사 종료일</label>
+            <input type="date" id="eventEnd">
+          </div>
+        </div>
+        <div class="toggle-row">
+          <span>💼 내부용 (원가·마진 표시)</span>
+          <label class="toggle">
+            <input type="checkbox" id="internalToggle" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Column 2: 장바구니 -->
+      <div class="builder-col">
+        <label style="font-size:10.5px; font-weight:800; color:var(--purple-deep); text-transform:uppercase; letter-spacing:0.4px;">🛒 선택된 상품</label>
+        <div class="cart-list" id="cartList">
+          <div class="cart-empty">아래 카탈로그에서 상품을 추가해주세요</div>
+        </div>
+        <div class="totals" id="totals" style="display:none;">
+          <div class="row"><span>총 행사가</span><span class="b" id="totalSale">0원</span></div>
+          <div class="row"><span>네이버결제</span><span id="totalNaver">0원</span></div>
+          <div class="row"><span>셀러수수료</span><span id="totalSeller">0원</span></div>
+          <div class="row"><span>업체수수료</span><span id="totalVendor">0원</span></div>
+          <div class="row bold"><span>예상 마진</span><span id="totalMargin">0원</span></div>
+        </div>
+      </div>
+
+      <!-- Column 3: 수수료 + 액션 -->
+      <div class="builder-col">
+        <div class="commission-box">
+          <div style="font-size:10.5px; font-weight:800; color:var(--yellow-deep); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.4px;">⚖️ 수수료 설정</div>
+          <div class="row">
+            <span class="lbl">셀러</span>
+            <input type="number" class="commission-input" id="sellerFeeRate" value="10" min="0" max="50" step="0.5">
+            <span style="font-size:11px; color:var(--ink-soft);">% 인플루언서</span>
+          </div>
+          <div class="row">
+            <span class="lbl">업체</span>
+            <input type="number" class="commission-input" id="vendorFeeRate" value="10" min="0" max="50" step="0.5">
+            <span style="font-size:11px; color:var(--ink-soft);">% 중간벤더</span>
+          </div>
+          <div class="row">
+            <span class="lbl">네이버결제</span>
+            <input type="number" class="commission-input" id="naverFeeRate" value="3.63" min="0" max="10" step="0.01">
+            <span style="font-size:11px; color:var(--ink-soft);">% PG</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn ghost" id="clearBtn">↺ 비우기</button>
+          <button class="btn primary" id="previewBtn">📄 제안서 보기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== BOTTOM: CATALOG (full width) ========== -->
   <div class="catalog">
     <div class="catalog-head">
-      <div class="catalog-title">🛍️ 상품 카탈로그 <span style="font-weight:500; color:var(--ink-soft); font-size:12px;">(상품 클릭 → 제안서에 추가)</span></div>
+      <div class="catalog-title">🛍️ 상품 카탈로그 <span style="font-weight:500; color:var(--ink-soft); font-size:12px;">(＋ 버튼 클릭 → 위 제안서에 추가)</span></div>
       <div class="search-row">
         <input type="text" class="search-box" id="searchInput" placeholder="🔍 상품명·시리즈 검색...">
         <div class="filter-chip active" data-filter="all">전체</div>
@@ -351,77 +422,6 @@
     </div>
     <div class="cat-tabs" id="catTabs"></div>
     <div class="catalog-body" id="catalogBody"></div>
-  </div>
-
-  <!-- ========== RIGHT: BUILDER ========== -->
-  <div class="builder">
-    <div class="builder-head">
-      <div class="builder-title">✏️ 제안서 빌더</div>
-      <div class="builder-sub">셀러 정보 입력 → 상품 선택 → 제안서 생성</div>
-    </div>
-    <div class="builder-body">
-
-      <div class="field">
-        <label>인플루언서 / 셀러명</label>
-        <input type="text" id="sellerName" placeholder="예: 별주니맘, 사월이네">
-      </div>
-
-      <div class="field-row">
-        <div class="field">
-          <label>행사 시작일</label>
-          <input type="date" id="eventStart">
-        </div>
-        <div class="field">
-          <label>행사 종료일</label>
-          <input type="date" id="eventEnd">
-        </div>
-      </div>
-
-      <div class="commission-box">
-        <div style="font-size:11px; font-weight:800; color:var(--yellow-deep); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.4px;">⚖️ 수수료 설정</div>
-        <div class="row">
-          <span class="lbl">셀러 수수료</span>
-          <input type="number" class="commission-input" id="sellerFeeRate" value="10" min="0" max="50" step="0.5">
-          <span style="font-size:11.5px; color:var(--ink-soft);">% (인플루언서 받는 비율)</span>
-        </div>
-        <div class="row">
-          <span class="lbl">업체 수수료</span>
-          <input type="number" class="commission-input" id="vendorFeeRate" value="10" min="0" max="50" step="0.5">
-          <span style="font-size:11.5px; color:var(--ink-soft);">% (중간 벤더 비율)</span>
-        </div>
-        <div class="row">
-          <span class="lbl">네이버 결제</span>
-          <input type="number" class="commission-input" id="naverFeeRate" value="3.63" min="0" max="10" step="0.01">
-          <span style="font-size:11.5px; color:var(--ink-soft);">% (PG 수수료)</span>
-        </div>
-      </div>
-
-      <div class="toggle-row">
-        <span>💼 내부용 (원가·마진 표시)</span>
-        <label class="toggle">
-          <input type="checkbox" id="internalToggle" checked>
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-
-      <div style="font-size:11.5px; font-weight:800; color:var(--purple-deep); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.4px;">🛒 선택된 상품 <span id="cartCount" style="background:var(--purple-main); color:white; padding:2px 8px; border-radius:100px; font-size:11px;">0</span></div>
-      <div class="cart-list" id="cartList">
-        <div class="cart-empty">왼쪽 카탈로그에서 상품을 추가해주세요</div>
-      </div>
-
-      <div class="totals" id="totals" style="display:none;">
-        <div class="row"><span>총 행사가</span><span class="b" id="totalSale">0원</span></div>
-        <div class="row"><span>네이버결제 수수료</span><span id="totalNaver">0원</span></div>
-        <div class="row"><span>셀러 수수료</span><span id="totalSeller">0원</span></div>
-        <div class="row"><span>업체 수수료</span><span id="totalVendor">0원</span></div>
-        <div class="row bold"><span>예상 브레인숲 마진</span><span id="totalMargin">0원</span></div>
-      </div>
-
-      <div class="actions">
-        <button class="btn ghost" id="clearBtn">↺ 비우기</button>
-        <button class="btn primary" id="previewBtn">📄 제안서 보기</button>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -814,7 +814,7 @@ function renderCart() {
   const cntEl = document.getElementById('cartCount');
   cntEl.textContent = cart.length;
   if (cart.length === 0) {
-    list.innerHTML = '<div class="cart-empty">왼쪽 카탈로그에서 상품을 추가해주세요</div>';
+    list.innerHTML = '<div class="cart-empty">아래 카탈로그에서 상품을 추가해주세요</div>';
     totals.style.display = 'none';
     return;
   }
