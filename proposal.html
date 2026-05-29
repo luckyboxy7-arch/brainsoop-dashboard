@@ -251,13 +251,42 @@
   .proposal-foot { padding-top: 16px; border-top: 1px solid var(--line); text-align: center;
     color: var(--ink-soft); font-size: 11.5px; }
 
-  /* PRINT */
+  /* ===== PRINT / PDF ===== */
   @media print {
-    body { background: white; }
-    .header, .workspace, .modal-bg { display: none !important; }
-    .modal-bg.show { display: block !important; position: static; padding: 0; background: white; }
-    .modal { box-shadow: none; max-height: none; width: 100%; }
-    .proposal-output { padding: 0; }
+    @page { margin: 1.2cm; size: A4; }
+    /* 색상 강제 보존 (Chrome/Edge/Safari) */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+    html, body { background: white !important; margin: 0; padding: 0; }
+    /* 헤더, 작업 영역, 모달 배경 모두 숨김 */
+    .header, .workspace, .nav-wrap { display: none !important; }
+    /* 모달이 열려있어도 배경/오버레이 제거 */
+    .modal-bg { display: block !important; position: static !important;
+      padding: 0 !important; background: white !important; backdrop-filter: none !important; }
+    .modal-bg:not(.show) { display: none !important; }
+    .modal { box-shadow: none !important; max-height: none !important;
+      width: 100% !important; max-width: 100% !important; border-radius: 0 !important;
+      animation: none !important; overflow: visible !important; }
+    /* 모달 하단 버튼 영역 (닫기/카톡복사/다운로드/인쇄) 숨김 */
+    .modal > div:last-child,
+    .modal .btn,
+    #copyTextBtn, #downloadBtn { display: none !important; }
+    .proposal-output { padding: 20px 0 !important; }
+    /* 페이지 나눔 방지 */
+    .proposal-output h3, .proposal-output .proposal-notice { page-break-after: avoid; }
+    .proposal-table { page-break-inside: avoid; }
+    .proposal-table tr { page-break-inside: avoid; }
+    /* 색상이 확실히 인쇄되도록 표 헤더 강제 */
+    .proposal-table th { background: #4C1D95 !important; color: white !important; }
+    .proposal-meta { background: #F3EFFF !important; }
+    .proposal-notice { background: #FEF9E7 !important; color: #6B5520 !important; }
+    .proposal-head { border-bottom: 3px solid #6D28D9 !important; }
+    .proposal-head h1 { color: #4C1D95 !important; }
+    .internal-only { background: #FEE2E2 !important; }
+    .proposal-table tfoot td { background: #F3EFFF !important; color: #4C1D95 !important; }
   }
 
   /* SCROLLBARS */
